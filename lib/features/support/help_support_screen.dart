@@ -21,16 +21,17 @@ class HelpSupportScreen extends ConsumerWidget {
         elevation: 0,
         title: Text(
           'Help & Support',
-          style: AppTypography.headlineSm(
-            color: AppColors.primary,
-          ).copyWith(fontWeight: FontWeight.w700),
+          style: AppTypography.headlineSm(color: AppColors.primary)
+              .copyWith(fontWeight: FontWeight.w700),
         ),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16),
             child: CircleAvatar(
               radius: 16,
-              backgroundColor: AppColors.primaryContainer.withValues(alpha: 0.1),
+              backgroundColor: AppColors.primaryContainer.withValues(
+                alpha: 0.1,
+              ),
               child: Text(
                 profileState.profile.name.isNotEmpty
                     ? profileState.profile.name[0]
@@ -68,13 +69,12 @@ class HelpSupportScreen extends ConsumerWidget {
                       const SizedBox(width: 6),
                       Text(
                         'SEDAM ROAD HUB • KALABURAGI',
-                        style: AppTypography.labelSm(
-                          color: AppColors.secondary,
-                        ).copyWith(
-                          letterSpacing: 0.8,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 10,
-                        ),
+                        style: AppTypography.labelSm(color: AppColors.secondary)
+                            .copyWith(
+                              letterSpacing: 0.8,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 10,
+                            ),
                       ),
                     ],
                   ),
@@ -189,33 +189,36 @@ class HelpSupportScreen extends ConsumerWidget {
                                     children: [
                                       Text(
                                         'ACTIVE HARVEST DISPATCH',
-                                        style: AppTypography.labelSm(
-                                          color: AppColors.secondary,
-                                        ).copyWith(
-                                          fontSize: 9,
-                                          fontWeight: FontWeight.w700,
-                                        ),
+                                        style:
+                                            AppTypography.labelSm(
+                                              color: AppColors.secondary,
+                                            ).copyWith(
+                                              fontSize: 9,
+                                              fontWeight: FontWeight.w700,
+                                            ),
                                       ),
                                       const SizedBox(width: 4),
                                       Text(
                                         '• #HO-89241',
-                                        style: AppTypography.labelSm(
-                                          color: AppColors.deepText,
-                                        ).copyWith(
-                                          fontSize: 9,
-                                          fontWeight: FontWeight.w700,
-                                        ),
+                                        style:
+                                            AppTypography.labelSm(
+                                              color: AppColors.deepText,
+                                            ).copyWith(
+                                              fontSize: 9,
+                                              fontWeight: FontWeight.w700,
+                                            ),
                                       ),
                                     ],
                                   ),
                                   Text(
                                     'Arriving today by 3:45 PM',
-                                    style: AppTypography.headlineSm(
-                                      color: AppColors.primary,
-                                    ).copyWith(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 14,
-                                    ),
+                                    style:
+                                        AppTypography.headlineSm(
+                                          color: AppColors.primary,
+                                        ).copyWith(
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 14,
+                                        ),
                                   ),
                                 ],
                               ),
@@ -232,9 +235,13 @@ class HelpSupportScreen extends ConsumerWidget {
                             ),
                             child: Text(
                               'On Route',
-                              style: AppTypography.labelSm(
-                                color: AppColors.deepText,
-                              ).copyWith(fontSize: 10, fontWeight: FontWeight.w700),
+                              style:
+                                  AppTypography.labelSm(
+                                    color: AppColors.deepText,
+                                  ).copyWith(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w700,
+                                  ),
                             ),
                           ),
                         ],
@@ -267,12 +274,13 @@ class HelpSupportScreen extends ConsumerWidget {
                                   children: [
                                     Text(
                                       'Sedam Sunrise Basket (4 items)',
-                                      style: AppTypography.titleCard(
-                                        color: AppColors.deepText,
-                                      ).copyWith(
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 13,
-                                      ),
+                                      style:
+                                          AppTypography.titleCard(
+                                            color: AppColors.deepText,
+                                          ).copyWith(
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 13,
+                                          ),
                                     ),
                                     Text(
                                       'Fresh A2 Milk (1L), Palak, Country Tomatoes',
@@ -287,22 +295,27 @@ class HelpSupportScreen extends ConsumerWidget {
                               ),
                               Text(
                                 '₹348',
-                                style: AppTypography.headlineSm(
-                                  color: AppColors.primary,
-                                ).copyWith(fontWeight: FontWeight.w700, fontSize: 16),
+                                style:
+                                    AppTypography.headlineSm(
+                                      color: AppColors.primary,
+                                    ).copyWith(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 16,
+                                    ),
                               ),
                             ],
                           ),
                           const SizedBox(height: 12),
                           Text(
                             'NEED ASSISTANCE WITH THIS BATCH?',
-                            style: AppTypography.labelSm(
-                              color: AppColors.mutedText,
-                            ).copyWith(
-                              fontSize: 10,
-                              letterSpacing: 0.6,
-                              fontWeight: FontWeight.w700,
-                            ),
+                            style:
+                                AppTypography.labelSm(
+                                  color: AppColors.mutedText,
+                                ).copyWith(
+                                  fontSize: 10,
+                                  letterSpacing: 0.6,
+                                  fontWeight: FontWeight.w700,
+                                ),
                           ),
                           const SizedBox(height: 8),
                           // 3 Quick Action Buttons
@@ -319,7 +332,8 @@ class HelpSupportScreen extends ConsumerWidget {
                                         content: Text(
                                           'Request sent: Rider requested to hold until 4:30 PM',
                                         ),
-                                        backgroundColor: AppColors.primaryContainer,
+                                        backgroundColor:
+                                            AppColors.primaryContainer,
                                       ),
                                     );
                                   },
@@ -337,7 +351,8 @@ class HelpSupportScreen extends ConsumerWidget {
                                         content: Text(
                                           'Note added: Please leave with gate security',
                                         ),
-                                        backgroundColor: AppColors.primaryContainer,
+                                        backgroundColor:
+                                            AppColors.primaryContainer,
                                       ),
                                     );
                                   },
@@ -355,7 +370,8 @@ class HelpSupportScreen extends ConsumerWidget {
                                         content: Text(
                                           'Opening produce guarantee photo verification form...',
                                         ),
-                                        backgroundColor: AppColors.primaryContainer,
+                                        backgroundColor:
+                                            AppColors.primaryContainer,
                                       ),
                                     );
                                   },
@@ -379,9 +395,8 @@ class HelpSupportScreen extends ConsumerWidget {
                 children: [
                   Text(
                     'Direct Farmstead Care',
-                    style: AppTypography.headlineSm(
-                      color: AppColors.primary,
-                    ).copyWith(fontWeight: FontWeight.w700),
+                    style: AppTypography.headlineSm(color: AppColors.primary)
+                        .copyWith(fontWeight: FontWeight.w700),
                   ),
                   Text(
                     'No robotic queues',
@@ -463,12 +478,13 @@ class HelpSupportScreen extends ConsumerWidget {
                                       children: [
                                         Text(
                                           'Somnath K.',
-                                          style: AppTypography.titleCard(
-                                            color: AppColors.deepText,
-                                          ).copyWith(
-                                            fontWeight: FontWeight.w700,
-                                            fontSize: 14,
-                                          ),
+                                          style:
+                                              AppTypography.titleCard(
+                                                color: AppColors.deepText,
+                                              ).copyWith(
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: 14,
+                                              ),
                                         ),
                                         const SizedBox(width: 6),
                                         Container(
@@ -478,16 +494,19 @@ class HelpSupportScreen extends ConsumerWidget {
                                           ),
                                           decoration: BoxDecoration(
                                             color: AppColors.softGreen,
-                                            borderRadius: BorderRadius.circular(8),
+                                            borderRadius: BorderRadius.circular(
+                                              8,
+                                            ),
                                           ),
                                           child: Text(
                                             'On Hub Duty',
-                                            style: AppTypography.labelSm(
-                                              color: AppColors.primary,
-                                            ).copyWith(
-                                              fontSize: 9,
-                                              fontWeight: FontWeight.w700,
-                                            ),
+                                            style:
+                                                AppTypography.labelSm(
+                                                  color: AppColors.primary,
+                                                ).copyWith(
+                                                  fontSize: 9,
+                                                  fontWeight: FontWeight.w700,
+                                                ),
                                           ),
                                         ),
                                       ],
@@ -513,9 +532,13 @@ class HelpSupportScreen extends ConsumerWidget {
                               ),
                               child: Text(
                                 '9 AM – 8 PM',
-                                style: AppTypography.labelSm(
-                                  color: AppColors.secondary,
-                                ).copyWith(fontSize: 10, fontWeight: FontWeight.w600),
+                                style:
+                                    AppTypography.labelSm(
+                                      color: AppColors.secondary,
+                                    ).copyWith(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w600,
+                                    ),
                               ),
                             ),
                           ],
@@ -523,9 +546,8 @@ class HelpSupportScreen extends ConsumerWidget {
                         const SizedBox(height: 8),
                         Text(
                           'Talk directly to our Kalaburagi route team for urgent address edits, gate drop coordination, or driver rerouting.',
-                          style: AppTypography.bodySm(
-                            color: AppColors.deepText,
-                          ).copyWith(fontSize: 11),
+                          style: AppTypography.bodySm(color: AppColors.deepText)
+                              .copyWith(fontSize: 11),
                         ),
                         const SizedBox(height: 12),
                         Row(
@@ -535,7 +557,9 @@ class HelpSupportScreen extends ConsumerWidget {
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: AppColors.primary,
                                   foregroundColor: Colors.white,
-                                  padding: const EdgeInsets.symmetric(vertical: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 10,
+                                  ),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10),
                                   ),
@@ -544,8 +568,11 @@ class HelpSupportScreen extends ConsumerWidget {
                                 onPressed: () {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
-                                      content: Text('Dialing Sedam Hub: +91 8472 258900'),
-                                      backgroundColor: AppColors.primaryContainer,
+                                      content: Text(
+                                        'Dialing Sedam Hub: +91 8472 258900',
+                                      ),
+                                      backgroundColor:
+                                          AppColors.primaryContainer,
                                     ),
                                   );
                                 },
@@ -559,7 +586,9 @@ class HelpSupportScreen extends ConsumerWidget {
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: AppColors.softGreen,
                                   foregroundColor: AppColors.primary,
-                                  padding: const EdgeInsets.symmetric(vertical: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 10,
+                                  ),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10),
                                   ),
@@ -571,7 +600,8 @@ class HelpSupportScreen extends ConsumerWidget {
                                       content: Text(
                                         'Opening WhatsApp Farm Chat with Somnath K.',
                                       ),
-                                      backgroundColor: AppColors.primaryContainer,
+                                      backgroundColor:
+                                          AppColors.primaryContainer,
                                     ),
                                   );
                                 },
@@ -627,12 +657,13 @@ class HelpSupportScreen extends ConsumerWidget {
                                     children: [
                                       Text(
                                         'Heera Botanist & Trace Bot',
-                                        style: AppTypography.titleCard(
-                                          color: AppColors.deepText,
-                                        ).copyWith(
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 13,
-                                        ),
+                                        style:
+                                            AppTypography.titleCard(
+                                              color: AppColors.deepText,
+                                            ).copyWith(
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 13,
+                                            ),
                                       ),
                                       const SizedBox(width: 4),
                                       Container(
@@ -642,7 +673,9 @@ class HelpSupportScreen extends ConsumerWidget {
                                         ),
                                         decoration: BoxDecoration(
                                           color: AppColors.surfaceContainer,
-                                          borderRadius: BorderRadius.circular(8),
+                                          borderRadius: BorderRadius.circular(
+                                            8,
+                                          ),
                                         ),
                                         child: Text(
                                           '24/7 AI',
@@ -669,10 +702,7 @@ class HelpSupportScreen extends ConsumerWidget {
                           'Ask: "When was today\'s spinach harvested?" or "Show NPOP certification for Aland curd."',
                           style: AppTypography.bodySm(
                             color: AppColors.deepText,
-                          ).copyWith(
-                            fontStyle: FontStyle.italic,
-                            fontSize: 11,
-                          ),
+                          ).copyWith(fontStyle: FontStyle.italic, fontSize: 11),
                         ),
                         const SizedBox(height: 10),
                         SizedBox(
@@ -750,12 +780,13 @@ class HelpSupportScreen extends ConsumerWidget {
                                 children: [
                                   Text(
                                     'Produce Quality Guarantee',
-                                    style: AppTypography.titleCard(
-                                      color: AppColors.deepText,
-                                    ).copyWith(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 13,
-                                    ),
+                                    style:
+                                        AppTypography.titleCard(
+                                          color: AppColors.deepText,
+                                        ).copyWith(
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 13,
+                                        ),
                                   ),
                                   Text(
                                     'Zero-argument replacement or instant wallet credit',
@@ -771,9 +802,8 @@ class HelpSupportScreen extends ConsumerWidget {
                         const SizedBox(height: 8),
                         Text(
                           'Received broken bottle seals, wilted greens, or missing items? Upload a quick snap for auto-approval.',
-                          style: AppTypography.bodySm(
-                            color: AppColors.deepText,
-                          ).copyWith(fontSize: 11),
+                          style: AppTypography.bodySm(color: AppColors.deepText)
+                              .copyWith(fontSize: 11),
                         ),
                         const SizedBox(height: 10),
                         SizedBox(
@@ -798,8 +828,13 @@ class HelpSupportScreen extends ConsumerWidget {
                                 ),
                               );
                             },
-                            icon: const Icon(Icons.add_photo_alternate, size: 16),
-                            label: const Text('Claim Replacement / Wallet Credit'),
+                            icon: const Icon(
+                              Icons.add_photo_alternate,
+                              size: 16,
+                            ),
+                            label: const Text(
+                              'Claim Replacement / Wallet Credit',
+                            ),
                           ),
                         ),
                       ],
@@ -817,9 +852,8 @@ class HelpSupportScreen extends ConsumerWidget {
                 children: [
                   Text(
                     'Farm & Service Guides',
-                    style: AppTypography.headlineSm(
-                      color: AppColors.primary,
-                    ).copyWith(fontWeight: FontWeight.w700),
+                    style: AppTypography.headlineSm(color: AppColors.primary)
+                        .copyWith(fontWeight: FontWeight.w700),
                   ),
                   Text(
                     '4 key topics',
@@ -901,9 +935,8 @@ class HelpSupportScreen extends ConsumerWidget {
             const SizedBox(height: 3),
             Text(
               label,
-              style: AppTypography.labelSm(
-                color: AppColors.deepText,
-              ).copyWith(fontSize: 10, fontWeight: FontWeight.w600),
+              style: AppTypography.labelSm(color: AppColors.deepText)
+                  .copyWith(fontSize: 10, fontWeight: FontWeight.w600),
               textAlign: TextAlign.center,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
@@ -956,17 +989,15 @@ class HelpSupportScreen extends ConsumerWidget {
               children: [
                 Text(
                   title,
-                  style: AppTypography.titleCard(
-                    color: AppColors.deepText,
-                  ).copyWith(fontWeight: FontWeight.w700, fontSize: 12),
+                  style: AppTypography.titleCard(color: AppColors.deepText)
+                      .copyWith(fontWeight: FontWeight.w700, fontSize: 12),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
                 Text(
                   desc,
-                  style: AppTypography.bodySm(
-                    color: AppColors.mutedText,
-                  ).copyWith(fontSize: 10),
+                  style: AppTypography.bodySm(color: AppColors.mutedText)
+                      .copyWith(fontSize: 10),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -976,12 +1007,15 @@ class HelpSupportScreen extends ConsumerWidget {
               children: [
                 Text(
                   'Read Guide',
-                  style: AppTypography.labelSm(
-                    color: AppColors.primary,
-                  ).copyWith(fontWeight: FontWeight.w700, fontSize: 10),
+                  style: AppTypography.labelSm(color: AppColors.primary)
+                      .copyWith(fontWeight: FontWeight.w700, fontSize: 10),
                 ),
                 const SizedBox(width: 2),
-                const Icon(Icons.arrow_forward, size: 11, color: AppColors.primary),
+                const Icon(
+                  Icons.arrow_forward,
+                  size: 11,
+                  color: AppColors.primary,
+                ),
               ],
             ),
           ],

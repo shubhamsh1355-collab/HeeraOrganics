@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_typography.dart';
 import '../../core/utils/currency_formatter.dart';
+import '../../core/widgets/app_empty_view.dart';
 import '../../core/widgets/quantity_stepper.dart';
 import '../../data/mock/mock_data.dart';
 import '../../data/repositories/cart_repository.dart';
@@ -31,46 +32,53 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
     'https://lh3.googleusercontent.com/aida-public/AB6AXuB7y15OYZodxPtXrd5WUQDRtucDayg_searGsa-WmewIiuur3yjwVHBx8nhC69wEuMJWoOBmSGOyRGdW6x_ME5S2E2wGXrlzA4Xsy3CkTIPsaspeviBo3W6xBYPZ7dJdnW_4n1ottbUiL6iUzqMHmEKUxwfFcINuKRPhiFSp2-lscNlbfxlsSO0Wvou2-V0xu-oD63uRzvotcvCLARyIEJf3kUsJSnxPL-st0Se80kJg6seiNy9FLWB',
   ];
 
-  final List<Map<String, dynamic>> _packVariants = [
-    {
-      'label': '500 g',
-      'price': 28,
-      'originalPrice': 35,
-      'unitPrice': '₹56 / kg',
-      'tag': 'Regular Kitchen',
-    },
-    {
-      'label': '1 kg',
-      'price': 52,
-      'originalPrice': 65,
-      'unitPrice': '₹52 / kg',
-      'tag': 'Save ₹4 extra',
-    },
-    {
-      'label': '2 kg',
-      'price': 98,
-      'originalPrice': 125,
-      'unitPrice': '₹49 / kg',
-      'tag': 'Best Value',
-    },
-  ];
-
   @override
   Widget build(BuildContext context) {
-    final product =
-        MockData.products.where((p) => p.id == widget.productId).firstOrNull ??
-        MockData.products.first;
+    final product = MockData.products
+        .where((p) => p.id == widget.productId)
+        .firstOrNull;
+
+    if (product == null) {
+      return Scaffold(
+        backgroundColor: AppColors.surface,
+        appBar: AppBar(
+          title: Text('Product Not Found', style: AppTypography.headlineSm()),
+        ),
+        body: AppEmptyView(
+          icon: Icons.search_off,
+          title: 'Product Not Found',
+          message: 'The requested harvest item is currently unavailable or does not exist.',
+          actionText: 'Back to Fresh Produce',
+          onActionPressed: () => context.go('/home'),
+        ),
+      );
+    }
 
     final cartState = ref.watch(cartProvider);
     final profileState = ref.watch(profileProvider);
     final cartNotifier = ref.read(cartProvider.notifier);
     final profileNotifier = ref.read(profileProvider.notifier);
 
-    final currentVariant = _packVariants[_selectedPackIndex];
-    final effectivePrice = (currentVariant['price'] as num).toInt();
-    final originalPrice = (currentVariant['originalPrice'] as num).toInt();
-    final qty = cartState.getQuantity(product.id);
+    final packOptions = product.effectivePackOptions;
+    final selectedPackIndex = _selectedPackIndex < packOptions.length
+        ? _selectedPackIndex
+        : 0;
+    final selectedPack = packOptions.isNotEmpty
+        ? packOptions[selectedPackIndex]
+        : null;
+
+    final effectivePrice = selectedPack?.price ?? product.price;
+    final originalPrice = selectedPack?.originalPrice ?? product.originalPrice;
+    final qty = cartState.getItemQuantity(product.id, pack: selectedPack);
     final isFav = profileState.wishlistProductIds.contains(product.id);
+
+    final galleryImages = [
+      product.imageUrl,
+      ..._galleryImages.where((img) => img != product.imageUrl),
+    ];
+    final activePhotoIndex = _selectedPhotoIndex < galleryImages.length
+        ? _selectedPhotoIndex
+        : 0;
 
     return Scaffold(
       backgroundColor: AppColors.surface,
@@ -83,15 +91,13 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
           children: [
             Text(
               product.name,
-              style: AppTypography.titleCard(
-                color: AppColors.deepText,
-              ).copyWith(fontWeight: FontWeight.w700, fontSize: 16),
+              style: AppTypography.titleCard(color: AppColors.deepText)
+                  .copyWith(fontWeight: FontWeight.w700, fontSize: 16),
             ),
             Text(
-              'Patil Farm, Sedam Belt',
-              style: AppTypography.labelSm(
-                color: AppColors.mutedText,
-              ).copyWith(fontSize: 11),
+              product.farmOrigin,
+              style: AppTypography.labelSm(color: AppColors.mutedText)
+                  .copyWith(fontSize: 11),
             ),
           ],
         ),
@@ -145,7 +151,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                         fit: StackFit.expand,
                         children: [
                           Image.network(
-                            _galleryImages[_selectedPhotoIndex],
+                            galleryImages[activePhotoIndex],
                             fit: BoxFit.cover,
                           ),
                           // Floating Morning Harvest Verification Pill
@@ -178,12 +184,13 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                                       const SizedBox(width: 6),
                                       Text(
                                         'Morning Harvest • 6:30 AM Today',
-                                        style: AppTypography.labelSm(
-                                          color: Colors.white,
-                                        ).copyWith(
-                                          fontSize: 11,
-                                          fontWeight: FontWeight.w600,
-                                        ),
+                                        style:
+                                            AppTypography.labelSm(
+                                              color: Colors.white,
+                                            ).copyWith(
+                                              fontSize: 11,
+                                              fontWeight: FontWeight.w600,
+                                            ),
                                       ),
                                     ],
                                   ),
@@ -208,7 +215,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                                       ),
                                       const SizedBox(width: 4),
                                       Text(
-                                        'Sedam Road Cluster (14 km)',
+                                        product.farmOrigin,
                                         style: AppTypography.labelSm(
                                           color: AppColors.deepText,
                                         ).copyWith(fontSize: 10),
@@ -233,7 +240,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: Text(
-                                '${_selectedPhotoIndex + 1} / ${_galleryImages.length}',
+                                '${activePhotoIndex + 1} / ${galleryImages.length}',
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 11,
@@ -249,13 +256,16 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
-                        children: List.generate(_galleryImages.length, (idx) {
-                          final isSelected = _selectedPhotoIndex == idx;
+                        children: List.generate(galleryImages.length, (idx) {
+                          final isSelected = activePhotoIndex == idx;
                           return Expanded(
                             child: GestureDetector(
-                              onTap: () => setState(() => _selectedPhotoIndex = idx),
+                              onTap: () =>
+                                  setState(() => _selectedPhotoIndex = idx),
                               child: Container(
-                                margin: const EdgeInsets.symmetric(horizontal: 4),
+                                margin: const EdgeInsets.symmetric(
+                                  horizontal: 4,
+                                ),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(8),
                                   border: Border.all(
@@ -269,7 +279,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                                 child: AspectRatio(
                                   aspectRatio: 1.0,
                                   child: Image.network(
-                                    _galleryImages[idx],
+                                    galleryImages[idx],
                                     fit: BoxFit.cover,
                                   ),
                                 ),
@@ -325,9 +335,13 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                               const SizedBox(width: 4),
                               Text(
                                 '100% Traceable',
-                                style: AppTypography.labelSm(
-                                  color: AppColors.primaryContainer,
-                                ).copyWith(fontSize: 11, fontWeight: FontWeight.w700),
+                                style:
+                                    AppTypography.labelSm(
+                                      color: AppColors.primaryContainer,
+                                    ).copyWith(
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.w700,
+                                    ),
                               ),
                             ],
                           ),
@@ -344,9 +358,12 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                           ),
                           child: Text(
                             'Zero Wax Coating',
-                            style: AppTypography.labelSm(
-                              color: AppColors.deepText,
-                            ).copyWith(fontSize: 11, fontWeight: FontWeight.w700),
+                            style:
+                                AppTypography.labelSm(color: AppColors.deepText)
+                                    .copyWith(
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.w700,
+                                    ),
                           ),
                         ),
                       ],
@@ -360,7 +377,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'Naturally tangy, field-ripened, and harvested pesticide-free at sunrise.',
+                      product.description,
                       style: AppTypography.bodySm(color: AppColors.mutedText),
                     ),
                     const SizedBox(height: 10),
@@ -414,43 +431,51 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                           children: [
                             Text(
                               CurrencyFormatter.format(effectivePrice),
-                              style: AppTypography.headlineLgMobile(
-                                color: AppColors.primaryContainer,
-                              ).copyWith(fontSize: 26, fontWeight: FontWeight.w800),
+                              style:
+                                  AppTypography.headlineLgMobile(
+                                    color: AppColors.primaryContainer,
+                                  ).copyWith(
+                                    fontSize: 26,
+                                    fontWeight: FontWeight.w800,
+                                  ),
                             ),
-                            const SizedBox(width: 8),
-                            Text(
-                              CurrencyFormatter.format(originalPrice),
-                              style: AppTypography.bodyMd(
-                                color: AppColors.mutedText,
-                              ).copyWith(
-                                decoration: TextDecoration.lineThrough,
+                            if (originalPrice != null &&
+                                originalPrice > effectivePrice) ...[
+                              const SizedBox(width: 8),
+                              Text(
+                                CurrencyFormatter.format(originalPrice),
+                                style:
+                                    AppTypography.bodyMd(
+                                      color: AppColors.mutedText,
+                                    ).copyWith(
+                                      decoration: TextDecoration.lineThrough,
+                                    ),
                               ),
-                            ),
-                            const SizedBox(width: 8),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 6,
-                                vertical: 2,
+                              const SizedBox(width: 8),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 6,
+                                  vertical: 2,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: AppColors.secondaryContainer,
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                                child: Text(
+                                  '${(((originalPrice - effectivePrice) / originalPrice) * 100).round()}% OFF',
+                                  style: AppTypography.labelSm(
+                                    color: AppColors.deepText,
+                                  ).copyWith(fontWeight: FontWeight.w700),
+                                ),
                               ),
-                              decoration: BoxDecoration(
-                                color: AppColors.secondaryContainer,
-                                borderRadius: BorderRadius.circular(4),
-                              ),
-                              child: Text(
-                                '20% OFF',
-                                style: AppTypography.labelSm(
-                                  color: AppColors.deepText,
-                                ).copyWith(fontWeight: FontWeight.w700),
-                              ),
-                            ),
+                            ],
                           ],
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Text(
-                              currentVariant['unitPrice'] as String,
+                              selectedPack?.label ?? product.defaultPackSize,
                               style: AppTypography.labelSm(
                                 color: AppColors.deepText,
                               ).copyWith(fontWeight: FontWeight.w700),
@@ -470,7 +495,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
               ),
             ),
 
-            // 3. Variant Selector (3 Pack Sizes)
+            // 3. Variant Selector (Pack Sizes)
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 12, 16, 6),
               child: Column(
@@ -495,15 +520,18 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                   ),
                   const SizedBox(height: 10),
                   Row(
-                    children: List.generate(_packVariants.length, (idx) {
-                      final item = _packVariants[idx];
-                      final isSelected = _selectedPackIndex == idx;
+                    children: List.generate(packOptions.length, (idx) {
+                      final item = packOptions[idx];
+                      final isSelected = selectedPackIndex == idx;
+                      final hasSavings =
+                          item.originalPrice != null &&
+                          item.originalPrice! > item.price;
                       return Expanded(
                         child: GestureDetector(
                           onTap: () => setState(() => _selectedPackIndex = idx),
                           child: Container(
                             margin: EdgeInsets.only(
-                              right: idx < _packVariants.length - 1 ? 8 : 0,
+                              right: idx < packOptions.length - 1 ? 8 : 0,
                             ),
                             padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
@@ -514,7 +542,9 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                               border: Border.all(
                                 color: isSelected
                                     ? AppColors.primaryContainer
-                                    : AppColors.borderSubtle.withValues(alpha: 0.6),
+                                    : AppColors.borderSubtle.withValues(
+                                        alpha: 0.6,
+                                      ),
                                 width: isSelected ? 1.5 : 1.0,
                               ),
                             ),
@@ -525,11 +555,15 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
-                                      item['label'] as String,
-                                      style: AppTypography.labelLg(
-                                        color: AppColors.deepText,
-                                      ).copyWith(fontWeight: FontWeight.w700),
+                                    Expanded(
+                                      child: Text(
+                                        item.label,
+                                        style: AppTypography.labelLg(
+                                          color: AppColors.deepText,
+                                        ).copyWith(fontWeight: FontWeight.w700),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
                                     ),
                                     if (isSelected)
                                       const Icon(
@@ -541,17 +575,23 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                                 ),
                                 const SizedBox(height: 4),
                                 Text(
-                                  '₹${item['price']}',
+                                  CurrencyFormatter.format(item.price),
                                   style: AppTypography.titleCard(
                                     color: AppColors.primaryContainer,
                                   ).copyWith(fontWeight: FontWeight.w700),
                                 ),
                                 const SizedBox(height: 2),
                                 Text(
-                                  item['tag'] as String,
+                                  hasSavings
+                                      ? 'Save ${CurrencyFormatter.format(item.originalPrice! - item.price)}'
+                                      : (item.isDefault
+                                            ? 'Popular Choice'
+                                            : 'Fresh Harvest'),
                                   style: AppTypography.labelSm(
                                     color: AppColors.mutedText,
                                   ).copyWith(fontSize: 10),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                               ],
                             ),
@@ -618,9 +658,13 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                                 ),
                                 child: Text(
                                   'Today by 3:00 PM',
-                                  style: AppTypography.labelSm(
-                                    color: AppColors.primaryContainer,
-                                  ).copyWith(fontSize: 10, fontWeight: FontWeight.w700),
+                                  style:
+                                      AppTypography.labelSm(
+                                        color: AppColors.primaryContainer,
+                                      ).copyWith(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.w700,
+                                      ),
                                 ),
                               ),
                               const SizedBox(height: 4),
@@ -708,7 +752,9 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                         ),
                         Text(
                           'Batch #HO-8241',
-                          style: AppTypography.labelSm(color: AppColors.mutedText),
+                          style: AppTypography.labelSm(
+                            color: AppColors.mutedText,
+                          ),
                         ),
                       ],
                     ),
@@ -758,9 +804,13 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                                 ),
                                 Text(
                                   '14 km from Kalaburagi Depot',
-                                  style: AppTypography.labelSm(
-                                    color: AppColors.secondary,
-                                  ).copyWith(fontSize: 11, fontWeight: FontWeight.w600),
+                                  style:
+                                      AppTypography.labelSm(
+                                        color: AppColors.secondary,
+                                      ).copyWith(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w600,
+                                      ),
                                 ),
                               ],
                             ),
@@ -783,12 +833,19 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                               children: [
                                 Text(
                                   'Soil Composition',
-                                  style: AppTypography.labelSm(color: AppColors.mutedText),
+                                  style: AppTypography.labelSm(
+                                    color: AppColors.mutedText,
+                                  ),
                                 ),
                                 Text(
                                   'Deep Black Cotton',
-                                  style: AppTypography.labelLg(color: AppColors.deepText)
-                                      .copyWith(fontWeight: FontWeight.w700, fontSize: 12),
+                                  style:
+                                      AppTypography.labelLg(
+                                        color: AppColors.deepText,
+                                      ).copyWith(
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 12,
+                                      ),
                                 ),
                               ],
                             ),
@@ -807,12 +864,19 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                               children: [
                                 Text(
                                   'Irrigation',
-                                  style: AppTypography.labelSm(color: AppColors.mutedText),
+                                  style: AppTypography.labelSm(
+                                    color: AppColors.mutedText,
+                                  ),
                                 ),
                                 Text(
                                   'Sweet Open Well',
-                                  style: AppTypography.labelLg(color: AppColors.deepText)
-                                      .copyWith(fontWeight: FontWeight.w700, fontSize: 12),
+                                  style:
+                                      AppTypography.labelLg(
+                                        color: AppColors.deepText,
+                                      ).copyWith(
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 12,
+                                      ),
                                 ),
                               ],
                             ),
@@ -843,30 +907,33 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
         child: SafeArea(
           child: Row(
             children: [
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    CurrencyFormatter.format(effectivePrice),
-                    style: AppTypography.headlineLgMobile(
-                      color: AppColors.primaryContainer,
-                    ).copyWith(fontWeight: FontWeight.w800, fontSize: 22),
-                  ),
-                  Text(
-                    '${currentVariant['label']} • Incl. taxes',
-                    style: AppTypography.labelSm(color: AppColors.mutedText),
-                  ),
-                ],
+              Expanded(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      CurrencyFormatter.format(effectivePrice),
+                      style: AppTypography.headlineLgMobile(
+                        color: AppColors.primaryContainer,
+                      ).copyWith(fontWeight: FontWeight.w800, fontSize: 22),
+                    ),
+                    Text(
+                      '${selectedPack?.label ?? product.defaultPackSize} • Incl. taxes',
+                      style: AppTypography.labelSm(color: AppColors.mutedText),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
               ),
-              const Spacer(),
+              const SizedBox(width: 8),
               if (qty == 0)
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primaryContainer,
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 28,
+                      horizontal: 20,
                       vertical: 14,
                     ),
                     shape: RoundedRectangleBorder(
@@ -875,7 +942,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                     elevation: 0,
                   ),
                   onPressed: () {
-                    cartNotifier.addItem(product);
+                    cartNotifier.addItem(product, pack: selectedPack);
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text('Added ${product.name} to basket'),
@@ -885,14 +952,14 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                     );
                   },
                   child: Row(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       const Icon(Icons.shopping_bag_outlined, size: 18),
                       const SizedBox(width: 8),
                       Text(
                         'Add to Basket',
-                        style: AppTypography.labelLg(
-                          color: Colors.white,
-                        ).copyWith(fontWeight: FontWeight.w700),
+                        style: AppTypography.labelLg(color: Colors.white)
+                            .copyWith(fontWeight: FontWeight.w700),
                       ),
                     ],
                   ),
@@ -902,8 +969,12 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                   children: [
                     QuantityStepper(
                       quantity: qty,
-                      onIncrement: () => cartNotifier.addItem(product),
-                      onDecrement: () => cartNotifier.removeItem(product.id),
+                      onIncrement: () =>
+                          cartNotifier.addItem(product, pack: selectedPack),
+                      onDecrement: () => cartNotifier.decrementItem(
+                        product.id,
+                        pack: selectedPack,
+                      ),
                     ),
                     const SizedBox(width: 10),
                     ElevatedButton(
@@ -947,16 +1018,13 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
           const SizedBox(height: 2),
           Text(
             title,
-            style: AppTypography.labelSm(color: AppColors.deepText).copyWith(
-              fontSize: 10,
-              fontWeight: FontWeight.w700,
-            ),
+            style: AppTypography.labelSm(color: AppColors.deepText)
+                .copyWith(fontSize: 10, fontWeight: FontWeight.w700),
           ),
           Text(
             sub,
-            style: AppTypography.labelSm(color: AppColors.mutedText).copyWith(
-              fontSize: 9,
-            ),
+            style: AppTypography.labelSm(color: AppColors.mutedText)
+                .copyWith(fontSize: 9),
           ),
         ],
       ),

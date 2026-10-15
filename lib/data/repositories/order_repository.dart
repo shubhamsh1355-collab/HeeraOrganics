@@ -9,20 +9,39 @@ import '../models/order.dart';
 class OrderNotifier extends Notifier<List<Order>> {
   @override
   List<Order> build() {
+    final item1 = CartItem(
+      product: MockData.products[0],
+      selectedPack: MockData.products[0].effectivePackOptions.first,
+      quantity: 2,
+    );
+    final item2 = CartItem(
+      product: MockData.products[4],
+      selectedPack: MockData.products[4].effectivePackOptions.first,
+      quantity: 1,
+    );
+
+    final subtotal =
+        item1.totalPrice + item2.totalPrice; // 2 * 28 + 1 * 220 = 276
+    const packagingFee = 15;
+    const deliveryFee = 0; // Free delivery (promotional morning harvest)
+    const discount = 0;
+    const tip = 0;
+    final total = subtotal + packagingFee + deliveryFee + tip - discount; // 291
+
     return [
       Order(
         id: 'HO-ORD-8921',
         createdAt: DateTime.now().subtract(const Duration(days: 1)),
         status: OrderStatus.delivered,
-        items: [
-          CartItem(product: MockData.products[0], quantity: 2),
-          CartItem(product: MockData.products[4], quantity: 1),
-        ],
+        items: [item1, item2],
         address: MockData.addresses[0],
         slot: MockData.deliverySlots[1],
-        subtotal: 150,
-        deliveryFee: 0,
-        total: 150,
+        subtotal: subtotal,
+        packagingFee: packagingFee,
+        deliveryFee: deliveryFee,
+        discount: discount,
+        tip: tip,
+        total: total,
         paymentMethod: 'UPI (Google Pay)',
       ),
     ];
@@ -33,6 +52,7 @@ class OrderNotifier extends Notifier<List<Order>> {
     required DeliveryAddress address,
     required DeliverySlot slot,
     required num subtotal,
+    required num packagingFee,
     required num deliveryFee,
     required num discount,
     required num tip,
@@ -47,6 +67,7 @@ class OrderNotifier extends Notifier<List<Order>> {
       address: address,
       slot: slot,
       subtotal: subtotal,
+      packagingFee: packagingFee,
       deliveryFee: deliveryFee,
       discount: discount,
       tip: tip,

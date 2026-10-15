@@ -26,34 +26,28 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       'tag': 'Freshness • Responsible Sourcing • Farm-to-Home',
       'tagIcon': 'verified',
       'title': 'Good Food Begins at the Farm.',
-      'subtitle':
-          'From our regional partner fields to your family kitchen in Kalaburagi. Fresh groceries, cold-pressed staples, and artisanal dairy delivered with care.',
+      'subtitle': 'From our regional partner fields to your family kitchen in Kalaburagi. Fresh groceries, cold-pressed staples, and artisanal dairy delivered with care.',
       'primaryCta': 'Shop Fresh Now',
       'secondaryCta': 'Our Story',
-      'imageUrl':
-          'https://lh3.googleusercontent.com/aida-public/AB6AXuA3vYZcOU0xI0orINMWV1771Inn88K3RdYkRBDRGPPelDfWz02YAODFOUsBRp4urU5tu_MsVTjGQoT3BmhpCcagtYEqJqAWjtr0yMyXCnod3lRehBF4upT_R-F9icVWOtpqXGrN8Kc28qnwsTZXv1r-01bUTDoZ6UXhBKMMW_OAb9AQBTp6WCnTPhjKZPoExY8ADbT5sYVXo5WKr7VcL8S1IF1dTvlGI0BV8mEdiaQLchDMwLTygK9t',
+      'imageUrl': 'https://lh3.googleusercontent.com/aida-public/AB6AXuA3vYZcOU0xI0orINMWV1771Inn88K3RdYkRBDRGPPelDfWz02YAODFOUsBRp4urU5tu_MsVTjGQoT3BmhpCcagtYEqJqAWjtr0yMyXCnod3lRehBF4upT_R-F9icVWOtpqXGrN8Kc28qnwsTZXv1r-01bUTDoZ6UXhBKMMW_OAb9AQBTp6WCnTPhjKZPoExY8ADbT5sYVXo5WKr7VcL8S1IF1dTvlGI0BV8mEdiaQLchDMwLTygK9t',
     },
     {
       'tag': '100% Pesticide Free • Chemical-Free Soil',
       'tagIcon': 'spa',
       'title': 'Naturally Grown, Honestly Delivered.',
-      'subtitle':
-          'Cultivated with pure regenerative farming traditions. Certified pure, lab-tested harvests brought directly to Kalaburagi homes.',
+      'subtitle': 'Cultivated with pure regenerative farming traditions. Certified pure, lab-tested harvests brought directly to Kalaburagi homes.',
       'primaryCta': 'Explore Produce',
       'secondaryCta': 'Meet Farmers',
-      'imageUrl':
-          'https://lh3.googleusercontent.com/aida-public/AB6AXuC31BHKCdeoNeMIWo3Z-vidqf0-ugs5NtTj8WK-TCUNfg5VhcohHIeMmTrmBOwMatqjgm-6rKeRTHj6DQbUfO97DOZGBcLr-3AZEaPd6IrlrE5rgNSoejZcr0JO0EoAGGJjmU4Q2jWF4kjvJV6IfEqG01UhR4eS7_FLCtwwZAaxbGkX3b-l8CSizv4CRQXi5DXRebWBlBeUej-kUI1okiUYxYf8jeuL2-se72O3HeFHsf9NtjyJ6hnY',
+      'imageUrl': 'https://lh3.googleusercontent.com/aida-public/AB6AXuC31BHKCdeoNeMIWo3Z-vidqf0-ugs5NtTj8WK-TCUNfg5VhcohHIeMmTrmBOwMatqjgm-6rKeRTHj6DQbUfO97DOZGBcLr-3AZEaPd6IrlrE5rgNSoejZcr0JO0EoAGGJjmU4Q2jWF4kjvJV6IfEqG01UhR4eS7_FLCtwwZAaxbGkX3b-l8CSizv4CRQXi5DXRebWBlBeUej-kUI1okiUYxYf8jeuL2-se72O3HeFHsf9NtjyJ6hnY',
     },
     {
       'tag': 'Harvested at Dawn • Doorstep by 7 AM',
       'tagIcon': 'local_shipping',
       'title': 'Fresh Morning Harvest to Your Doorstep.',
-      'subtitle':
-          'Enjoy Desi Gir cow milk, farm paneer, unpolished pulses, and sun-ripened orchard fruits before your morning tea is brewed.',
+      'subtitle': 'Enjoy Desi Gir cow milk, farm paneer, unpolished pulses, and sun-ripened orchard fruits before your morning tea is brewed.',
       'primaryCta': 'Order Essentials',
       'secondaryCta': 'Daily Plans',
-      'imageUrl':
-          'https://lh3.googleusercontent.com/aida-public/AB6AXuDhKYAxPZe6j03IEdWza5VaAnIzNuSXwG5W0EUWNncMPHyHVyLM7qvPcgAydfrYu0Rhh7NssTrACR062APR22M5vPzE9i6sEmoU4I_j4GTIRAuMIl9pVe3ZKsKwcgFtXR0LNUNFbECb10P420QEzbzz6j56Md2ET-n26iVfHbIk4nNWfdT0h6Kbzd6pUm3jlJpzCTSfyU_SPgaT_D-5-AZoaDmXVapaLieueNWP5pmCHB5Jiq3bobeR',
+      'imageUrl': 'https://lh3.googleusercontent.com/aida-public/AB6AXuDhKYAxPZe6j03IEdWza5VaAnIzNuSXwG5W0EUWNncMPHyHVyLM7qvPcgAydfrYu0Rhh7NssTrACR062APR22M5vPzE9i6sEmoU4I_j4GTIRAuMIl9pVe3ZKsKwcgFtXR0LNUNFbECb10P420QEzbzz6j56Md2ET-n26iVfHbIk4nNWfdT0h6Kbzd6pUm3jlJpzCTSfyU_SPgaT_D-5-AZoaDmXVapaLieueNWP5pmCHB5Jiq3bobeR',
     },
   ];
 
@@ -101,11 +95,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 child: Image.network(
                   MockData.logoUrl,
                   fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) => const Icon(
-                    Icons.spa,
-                    color: AppColors.primary,
-                    size: 22,
-                  ),
+                  errorBuilder: (context, error, stackTrace) =>
+                      const Icon(Icons.spa, color: AppColors.primary, size: 22),
                 ),
               ),
             ),
@@ -116,12 +107,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 children: [
                   Text(
                     'Heera Organics',
-                    style: AppTypography.titleCard(
-                      color: AppColors.deepText,
-                    ).copyWith(
-                      fontSize: 17,
-                      fontWeight: FontWeight.w700,
-                    ),
+                    style: AppTypography.titleCard(color: AppColors.deepText)
+                        .copyWith(fontSize: 17, fontWeight: FontWeight.w700),
                   ),
                   InkWell(
                     onTap: () => context.push('/addresses'),
@@ -137,12 +124,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         Flexible(
                           child: Text(
                             profileState.selectedAddress.locality,
-                            style: AppTypography.labelMd(
-                              color: AppColors.deepText,
-                            ).copyWith(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                            ),
+                            style:
+                                AppTypography.labelMd(color: AppColors.deepText)
+                                    .copyWith(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600,
+                                    ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -283,28 +270,32 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       label: 'Fresh Dairy',
                       bgColor: const Color(0xFFE0F2FE),
                       iconColor: const Color(0xFF0284C7),
-                      onTap: () => context.push('/products?categoryId=cat_dairy'),
+                      onTap: () =>
+                          context.push('/products?categoryId=cat_dairy'),
                     ),
                     _buildQuickChip(
                       icon: Icons.local_florist,
                       label: 'Fruits',
                       bgColor: const Color(0xFFFEF3C7),
                       iconColor: const Color(0xFFD97706),
-                      onTap: () => context.push('/products?categoryId=cat_fruits'),
+                      onTap: () =>
+                          context.push('/products?categoryId=cat_fruits'),
                     ),
                     _buildQuickChip(
                       icon: Icons.grass,
                       label: 'Staples',
                       bgColor: const Color(0xFFFEF9C3),
                       iconColor: const Color(0xFF854D0E),
-                      onTap: () => context.push('/products?categoryId=cat_staples'),
+                      onTap: () =>
+                          context.push('/products?categoryId=cat_staples'),
                     ),
                     _buildQuickChip(
                       icon: Icons.storefront,
                       label: 'Essentials',
                       bgColor: const Color(0xFFF1F5F9),
                       iconColor: const Color(0xFF475569),
-                      onTap: () => context.push('/products?categoryId=cat_essentials'),
+                      onTap: () =>
+                          context.push('/products?categoryId=cat_essentials'),
                     ),
                     _buildQuickChip(
                       icon: Icons.local_offer,
@@ -339,7 +330,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     PageView.builder(
                       controller: _heroController,
                       itemCount: _heroSlides.length,
-                      onPageChanged: (idx) => setState(() => _activeHeroIndex = idx),
+                      onPageChanged: (idx) =>
+                          setState(() => _activeHeroIndex = idx),
                       itemBuilder: (context, index) {
                         final slide = _heroSlides[index];
                         return Stack(
@@ -381,13 +373,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                       Expanded(
                                         child: Text(
                                           slide['tag']!.toUpperCase(),
-                                          style: AppTypography.labelSm(
-                                            color: AppColors.secondaryFixed,
-                                          ).copyWith(
-                                            fontSize: 10,
-                                            letterSpacing: 0.8,
-                                            fontWeight: FontWeight.w700,
-                                          ),
+                                          style:
+                                              AppTypography.labelSm(
+                                                color: AppColors.secondaryFixed,
+                                              ).copyWith(
+                                                fontSize: 10,
+                                                letterSpacing: 0.8,
+                                                fontWeight: FontWeight.w700,
+                                              ),
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                         ),
@@ -397,19 +390,21 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                   const SizedBox(height: 6),
                                   Text(
                                     slide['title']!,
-                                    style: AppTypography.headlineLgMobile(
-                                      color: Colors.white,
-                                    ).copyWith(
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.w700,
-                                      height: 1.2,
-                                    ),
+                                    style:
+                                        AppTypography.headlineLgMobile(
+                                          color: Colors.white,
+                                        ).copyWith(
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.w700,
+                                          height: 1.2,
+                                        ),
                                   ),
                                   const SizedBox(height: 6),
                                   Text(
                                     slide['subtitle']!,
                                     style: AppTypography.bodySm(
-                                      color: AppColors.surfaceVariant.withValues(alpha: 0.9),
+                                      color: AppColors.surfaceVariant
+                                          .withValues(alpha: 0.9),
                                     ).copyWith(height: 1.3),
                                     maxLines: 3,
                                     overflow: TextOverflow.ellipsis,
@@ -419,10 +414,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                     children: [
                                       ElevatedButton(
                                         style: ElevatedButton.styleFrom(
-                                          backgroundColor: AppColors.primaryContainer,
+                                          backgroundColor:
+                                              AppColors.primaryContainer,
                                           foregroundColor: Colors.white,
                                           shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(10),
+                                            borderRadius: BorderRadius.circular(
+                                              10,
+                                            ),
                                           ),
                                           padding: const EdgeInsets.symmetric(
                                             horizontal: 14,
@@ -430,29 +428,40 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                           ),
                                           elevation: 0,
                                         ),
-                                        onPressed: () => context.push('/products'),
+                                        onPressed: () =>
+                                            context.push('/products'),
                                         child: Row(
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
                                             Text(
                                               slide['primaryCta']!,
-                                              style: AppTypography.labelMd(
-                                                color: Colors.white,
-                                              ).copyWith(fontWeight: FontWeight.w700),
+                                              style:
+                                                  AppTypography.labelMd(
+                                                    color: Colors.white,
+                                                  ).copyWith(
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
                                             ),
                                             const SizedBox(width: 4),
-                                            const Icon(Icons.arrow_forward, size: 14),
+                                            const Icon(
+                                              Icons.arrow_forward,
+                                              size: 14,
+                                            ),
                                           ],
                                         ),
                                       ),
                                       const SizedBox(width: 8),
                                       OutlinedButton(
                                         style: OutlinedButton.styleFrom(
-                                          backgroundColor: AppColors.surface.withValues(alpha: 0.9),
-                                          foregroundColor: AppColors.primaryContainer,
+                                          backgroundColor: AppColors.surface
+                                              .withValues(alpha: 0.9),
+                                          foregroundColor:
+                                              AppColors.primaryContainer,
                                           side: BorderSide.none,
                                           shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(10),
+                                            borderRadius: BorderRadius.circular(
+                                              10,
+                                            ),
                                           ),
                                           padding: const EdgeInsets.symmetric(
                                             horizontal: 12,
@@ -462,9 +471,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                         onPressed: () => context.push('/faqs'),
                                         child: Text(
                                           slide['secondaryCta']!,
-                                          style: AppTypography.labelMd(
-                                            color: AppColors.primaryContainer,
-                                          ).copyWith(fontWeight: FontWeight.w600),
+                                          style:
+                                              AppTypography.labelMd(
+                                                color:
+                                                    AppColors.primaryContainer,
+                                              ).copyWith(
+                                                fontWeight: FontWeight.w600,
+                                              ),
                                         ),
                                       ),
                                     ],
@@ -508,7 +521,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 onTap: () {
                                   if (_activeHeroIndex > 0) {
                                     _heroController.previousPage(
-                                      duration: const Duration(milliseconds: 300),
+                                      duration: const Duration(
+                                        milliseconds: 300,
+                                      ),
                                       curve: Curves.easeInOut,
                                     );
                                   }
@@ -530,9 +545,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                               const SizedBox(width: 6),
                               InkWell(
                                 onTap: () {
-                                  if (_activeHeroIndex < _heroSlides.length - 1) {
+                                  if (_activeHeroIndex <
+                                      _heroSlides.length - 1) {
                                     _heroController.nextPage(
-                                      duration: const Duration(milliseconds: 300),
+                                      duration: const Duration(
+                                        milliseconds: 300,
+                                      ),
                                       curve: Curves.easeInOut,
                                     );
                                   }
@@ -801,7 +819,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             Text(
                               'Desi A2 Milk & slow-cooked Bilona Ghee made daily.',
                               style: AppTypography.bodySm(
-                                color: AppColors.deepText.withValues(alpha: 0.8),
+                                color: AppColors.deepText.withValues(
+                                  alpha: 0.8,
+                                ),
                               ).copyWith(fontSize: 11),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
@@ -809,7 +829,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           ],
                         ),
                         InkWell(
-                          onTap: () => context.push('/products?categoryId=cat_dairy'),
+                          onTap: () =>
+                              context.push('/products?categoryId=cat_dairy'),
                           child: Container(
                             padding: const EdgeInsets.symmetric(
                               horizontal: 10,
@@ -855,7 +876,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     children: [
                       Text(
                         'Trending Now',
-                        style: AppTypography.headlineSm(color: AppColors.deepText),
+                        style: AppTypography.headlineSm(
+                          color: AppColors.deepText,
+                        ),
                       ),
                       const SizedBox(width: 6),
                       Container(
@@ -912,9 +935,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         children: [
                           Text(
                             'OUR HERITAGE',
-                            style: AppTypography.labelSm(
-                              color: AppColors.primaryContainer,
-                            ).copyWith(letterSpacing: 1.0, fontWeight: FontWeight.w700),
+                            style:
+                                AppTypography.labelSm(
+                                  color: AppColors.primaryContainer,
+                                ).copyWith(
+                                  letterSpacing: 1.0,
+                                  fontWeight: FontWeight.w700,
+                                ),
                           ),
                           const SizedBox(height: 4),
                           Text(
@@ -978,11 +1005,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     children: [
                       Text(
                         'Fresh Dairy & Essentials',
-                        style: AppTypography.headlineSm(color: AppColors.deepText),
+                        style: AppTypography.headlineSm(
+                          color: AppColors.deepText,
+                        ),
                       ),
                       Text(
                         'Zero preservatives • Shipped cold',
-                        style: AppTypography.labelSm(color: AppColors.mutedText),
+                        style: AppTypography.labelSm(
+                          color: AppColors.mutedText,
+                        ),
                       ),
                     ],
                   ),
@@ -1031,16 +1062,19 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   children: [
                     Text(
                       'BETTER FOR YOU',
-                      style: AppTypography.labelSm(
-                        color: AppColors.primaryContainer,
-                      ).copyWith(letterSpacing: 1.0, fontWeight: FontWeight.w700),
+                      style:
+                          AppTypography.labelSm(
+                            color: AppColors.primaryContainer,
+                          ).copyWith(
+                            letterSpacing: 1.0,
+                            fontWeight: FontWeight.w700,
+                          ),
                     ),
                     const SizedBox(height: 2),
                     Text(
                       'A More Thoughtful Way to Shop',
-                      style: AppTypography.headlineSm(
-                        color: AppColors.deepText,
-                      ).copyWith(fontWeight: FontWeight.w700),
+                      style: AppTypography.headlineSm(color: AppColors.deepText)
+                          .copyWith(fontWeight: FontWeight.w700),
                     ),
                     const SizedBox(height: 12),
                     // Comparison 1
@@ -1056,7 +1090,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             child: Container(
                               padding: const EdgeInsets.all(8),
                               decoration: BoxDecoration(
-                                color: AppColors.softGreen.withValues(alpha: 0.25),
+                                color: AppColors.softGreen.withValues(
+                                  alpha: 0.25,
+                                ),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: Column(
@@ -1160,9 +1196,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             const SizedBox(height: 6),
             Text(
               label,
-              style: AppTypography.labelSm(
-                color: AppColors.deepText,
-              ).copyWith(fontSize: 11, fontWeight: FontWeight.w600),
+              style: AppTypography.labelSm(color: AppColors.deepText)
+                  .copyWith(fontSize: 11, fontWeight: FontWeight.w600),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.center,
@@ -1209,10 +1244,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   borderRadius: BorderRadius.circular(8),
                   child: AspectRatio(
                     aspectRatio: 1.05,
-                    child: Image.network(
-                      product.imageUrl,
-                      fit: BoxFit.cover,
-                    ),
+                    child: Image.network(product.imageUrl, fit: BoxFit.cover),
                   ),
                 ),
                 if (product.badgeText != null)
@@ -1241,15 +1273,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             const SizedBox(height: 6),
             Text(
               product.defaultPackSize,
-              style: AppTypography.labelSm(
-                color: AppColors.mutedText,
-              ).copyWith(fontSize: 10),
+              style: AppTypography.labelSm(color: AppColors.mutedText)
+                  .copyWith(fontSize: 10),
             ),
             Text(
               product.name,
-              style: AppTypography.titleCard(
-                color: AppColors.deepText,
-              ).copyWith(fontSize: 13, fontWeight: FontWeight.w700),
+              style: AppTypography.titleCard(color: AppColors.deepText)
+                  .copyWith(fontSize: 13, fontWeight: FontWeight.w700),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),

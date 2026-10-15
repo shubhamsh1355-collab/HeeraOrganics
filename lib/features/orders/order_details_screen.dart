@@ -214,6 +214,13 @@ class OrderDetailsScreen extends ConsumerWidget {
                     'Item Subtotal',
                     CurrencyFormatter.format(order.subtotal),
                   ),
+                  if (order.packagingFee > 0) ...[
+                    const SizedBox(height: 6),
+                    _buildRow(
+                      'Eco-Friendly Packaging',
+                      CurrencyFormatter.format(order.packagingFee),
+                    ),
+                  ],
                   const SizedBox(height: 6),
                   _buildRow(
                     'Delivery Partner Fee',
@@ -221,6 +228,13 @@ class OrderDetailsScreen extends ConsumerWidget {
                         ? 'FREE'
                         : CurrencyFormatter.format(order.deliveryFee),
                   ),
+                  if (order.tip > 0) ...[
+                    const SizedBox(height: 6),
+                    _buildRow(
+                      'Delivery Partner Tip',
+                      CurrencyFormatter.format(order.tip),
+                    ),
+                  ],
                   if (order.discount > 0) ...[
                     const SizedBox(height: 6),
                     _buildRow(
