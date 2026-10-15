@@ -8,6 +8,7 @@ import '../../core/theme/app_typography.dart';
 import '../../core/utils/currency_formatter.dart';
 import '../../core/widgets/category_chip.dart';
 import '../../core/widgets/product_card.dart';
+import '../../core/widgets/quantity_stepper.dart';
 import '../../data/mock/mock_data.dart';
 import '../../data/models/product.dart';
 import '../../data/repositories/cart_repository.dart';
@@ -47,23 +48,29 @@ class _ProductListingScreenState extends ConsumerState<ProductListingScreen> {
             children: [
               Text('Sort Produce By', style: AppTypography.titleCard()),
               const SizedBox(height: 12),
-              ...[
-                'Popularity',
-                'Price: Low to High',
-                'Price: High to Low',
-                'Fresh Harvest First',
-              ].map((option) {
-                return RadioListTile<String>(
-                  title: Text(option, style: AppTypography.bodyMd()),
-                  value: option,
-                  groupValue: _selectedSort,
-                  activeColor: AppColors.primaryContainer,
-                  onChanged: (val) {
-                    setState(() => _selectedSort = val!);
-                    Navigator.pop(context);
-                  },
-                );
-              }),
+              RadioGroup<String>(
+                groupValue: _selectedSort,
+                onChanged: (val) {
+                  setState(() => _selectedSort = val!);
+                  Navigator.pop(context);
+                },
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children:
+                      [
+                        'Popularity',
+                        'Price: Low to High',
+                        'Price: High to Low',
+                        'Fresh Harvest First',
+                      ].map((option) {
+                        return RadioListTile<String>(
+                          title: Text(option, style: AppTypography.bodyMd()),
+                          value: option,
+                          activeColor: AppColors.primaryContainer,
+                        );
+                      }).toList(),
+                ),
+              ),
             ],
           ),
         );
@@ -284,21 +291,30 @@ class _ProductListingScreenState extends ConsumerState<ProductListingScreen> {
                         itemCount: products.length,
                         itemBuilder: (context, index) {
                           final product = products[index];
+                          final targetPack = product.defaultPackOption;
                           return ProductCard(
                             id: product.id,
                             name: product.name,
-                            packSize: product.defaultPackSize,
-                            price: product.price,
-                            originalPrice: product.originalPrice,
+                            packSize: targetPack.label,
+                            price: targetPack.price,
+                            originalPrice:
+                                targetPack.originalPrice ??
+                                product.originalPrice,
                             imageUrl: product.imageUrl,
                             badgeText: product.badgeText,
-                            quantity: cartState.getQuantity(product.id),
+                            quantity: cartState.getItemQuantity(
+                              product.id,
+                              pack: targetPack,
+                            ),
                             isFavorite: profileState.wishlistProductIds
                                 .contains(product.id),
                             onTap: () => context.push('/product/${product.id}'),
-                            onIncrement: () => cartNotifier.addItem(product),
-                            onDecrement: () =>
-                                cartNotifier.decrementItem(product.id),
+                            onIncrement: () =>
+                                cartNotifier.addItem(product, pack: targetPack),
+                            onDecrement: () => cartNotifier.decrementItem(
+                              product.id,
+                              pack: targetPack,
+                            ),
                             onToggleFavorite: () =>
                                 profileNotifier.toggleWishlist(product.id),
                           );
@@ -314,7 +330,11 @@ class _ProductListingScreenState extends ConsumerState<ProductListingScreen> {
                         itemCount: products.length,
                         itemBuilder: (context, index) {
                           final product = products[index];
-                          final qty = cartState.getQuantity(product.id);
+                          final targetPack = product.defaultPackOption;
+                          final qty = cartState.getItemQuantity(
+                            product.id,
+                            pack: targetPack,
+                          );
                           return Container(
                             margin: const EdgeInsets.only(bottom: 12),
                             padding: const EdgeInsets.all(12),
@@ -344,7 +364,7 @@ class _ProductListingScreenState extends ConsumerState<ProductListingScreen> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        product.defaultPackSize,
+                                        targetPack.label,
                                         style: AppTypography.labelSm(
                                           color: AppColors.mutedText,
                                         ),
@@ -357,7 +377,9 @@ class _ProductListingScreenState extends ConsumerState<ProductListingScreen> {
                                       ),
                                       const SizedBox(height: 4),
                                       Text(
-                                        CurrencyFormatter.format(product.price),
+                                        CurrencyFormatter.format(
+                                          targetPack.price,
+                                        ),
                                         style: AppTypography.price(
                                           fontSize: 16,
                                         ),
@@ -365,21 +387,17 @@ class _ProductListingScreenState extends ConsumerState<ProductListingScreen> {
                                     ],
                                   ),
                                 ),
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: AppColors.primaryContainer,
-                                    foregroundColor: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: AppRadii.radiusMd,
-                                    ),
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 14,
-                                      vertical: 8,
-                                    ),
+                                QuantityStepper(
+                                  quantity: qty,
+                                  onIncrement: () => cartNotifier.addItem(
+                                    product,
+                                    pack: targetPack,
                                   ),
-                                  onPressed: () =>
-                                      cartNotifier.addItem(product),
-                                  child: Text(qty > 0 ? '$qty in Cart' : 'ADD'),
+                                  onDecrement: () => cartNotifier.decrementItem(
+                                    product.id,
+                                    pack: targetPack,
+                                  ),
+                                  compact: true,
                                 ),
                               ],
                             ),

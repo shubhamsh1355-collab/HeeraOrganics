@@ -104,13 +104,11 @@ class CartNotifier extends Notifier<CartState> {
   }
 
   void addItem(Product product, {PackOption? pack}) {
-    final effectivePack =
-        pack ??
-        (product.packOptions.isNotEmpty ? product.packOptions.first : null);
+    final effectivePack = pack ?? product.defaultPackOption;
     final existingIndex = state.items.indexWhere(
       (item) =>
           item.product.id == product.id &&
-          item.selectedPack?.id == effectivePack?.id,
+          item.selectedPack?.id == effectivePack.id,
     );
 
     if (existingIndex >= 0) {

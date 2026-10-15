@@ -199,17 +199,19 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                 borderRadius: AppRadii.radiusLg,
                 border: Border.all(color: AppColors.borderSubtle),
               ),
-              child: Column(
-                children: _paymentMethods.map((method) {
-                  return RadioListTile<String>(
-                    title: Text(method, style: AppTypography.bodyMd()),
-                    value: method,
-                    groupValue: _selectedPaymentMethod,
-                    activeColor: AppColors.primaryContainer,
-                    onChanged: (val) =>
-                        setState(() => _selectedPaymentMethod = val!),
-                  );
-                }).toList(),
+              child: RadioGroup<String>(
+                groupValue: _selectedPaymentMethod,
+                onChanged: (val) =>
+                    setState(() => _selectedPaymentMethod = val!),
+                child: Column(
+                  children: _paymentMethods.map((method) {
+                    return RadioListTile<String>(
+                      title: Text(method, style: AppTypography.bodyMd()),
+                      value: method,
+                      activeColor: AppColors.primaryContainer,
+                    );
+                  }).toList(),
+                ),
               ),
             ),
             const SizedBox(height: 20),

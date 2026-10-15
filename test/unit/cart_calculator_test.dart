@@ -101,6 +101,47 @@ void main() {
       expect(updatedCart.items.first.selectedPack?.id, pack1L.id);
     });
 
+    test('Multi-pack consistency: changing quantity of one pack affects only that pack and does not alter other pack sizes', () {
+      final container = ProviderContainer();
+      addTearDown(container.dispose);
+      final notifier = container.read(cartProvider.notifier);
+      final tomato = MockData.products.firstWhere((p) => p.id == 'prod_tomato');
+
+      final defaultPack = tomato.defaultPackOption;
+      final secondPack = tomato.effectivePackOptions.firstWhere(
+        (p) => p.id != defaultPack.id,
+      );
+
+      // Add 2 of default pack (500g) and 1 of second pack (1kg)
+      notifier.addItem(tomato, pack: defaultPack);
+      notifier.addItem(tomato, pack: defaultPack);
+      notifier.addItem(tomato, pack: secondPack);
+
+      var cart = container.read(cartProvider);
+      expect(cart.getItemQuantity(tomato.id, pack: defaultPack), 2);
+      expect(cart.getItemQuantity(tomato.id, pack: secondPack), 1);
+      expect(cart.getQuantity(tomato.id), 3);
+
+      // Decrement default pack by 1
+      notifier.decrementItem(tomato.id, pack: defaultPack);
+      cart = container.read(cartProvider);
+
+      // Verify default pack reduced to 1, while second pack remains strictly at 1
+      expect(cart.getItemQuantity(tomato.id, pack: defaultPack), 1);
+      expect(cart.getItemQuantity(tomato.id, pack: secondPack), 1);
+      expect(cart.items.length, 2);
+
+      // Decrement default pack to 0
+      notifier.decrementItem(tomato.id, pack: defaultPack);
+      cart = container.read(cartProvider);
+
+      // Default pack removed, second pack completely preserved
+      expect(cart.getItemQuantity(tomato.id, pack: defaultPack), 0);
+      expect(cart.getItemQuantity(tomato.id, pack: secondPack), 1);
+      expect(cart.items.length, 1);
+      expect(cart.items.first.selectedPack?.id, secondPack.id);
+    });
+
     test('Shared cart-total calculation for subtotal, packaging fee, delivery fee, tip, coupon and grand total', () {
       final container = ProviderContainer();
       addTearDown(container.dispose);

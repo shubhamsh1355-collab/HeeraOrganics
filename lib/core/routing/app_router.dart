@@ -145,7 +145,7 @@ final GoRouter appRouter = GoRouter(
       path: '/order/:id',
       parentNavigatorKey: _rootNavigatorKey,
       builder: (context, state) {
-        final id = state.pathParameters['id'] ?? 'HO-ORD-8921';
+        final id = state.pathParameters['id'] ?? '';
         return OrderDetailsScreen(orderId: id);
       },
     ),

@@ -68,4 +68,12 @@ class Product {
       ),
     ];
   }
+
+  PackOption get defaultPackOption {
+    final options = effectivePackOptions;
+    return options.firstWhere(
+      (p) => p.isDefault || p.label == defaultPackSize,
+      orElse: () => options.first,
+    );
+  }
 }
