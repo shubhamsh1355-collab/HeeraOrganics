@@ -16,15 +16,15 @@ void main() {
     test('adding items calculates subtotal and standard delivery fee', () {
       final container = ProviderContainer();
       addTearDown(container.dispose);
-      final tomato = MockData.products.first; // ₹36
+      final tomato = MockData.products.first;
 
       container.read(cartProvider.notifier).addItem(tomato);
       final cart = container.read(cartProvider);
 
       expect(cart.totalItemCount, 1);
-      expect(cart.subtotal, 36);
+      expect(cart.subtotal, tomato.price);
       expect(cart.deliveryFee, 35); // below ₹299 threshold
-      expect(cart.grandTotal, 71); // 36 + 35
+      expect(cart.grandTotal, tomato.price + 35);
     });
 
     test('delivery fee is waived when subtotal reaches freeDeliveryThreshold (₹299)', () {
@@ -32,14 +32,14 @@ void main() {
       addTearDown(container.dispose);
       final ghee = MockData.products.firstWhere(
         (p) => p.id == 'prod_ghee',
-      ); // ₹650
+      );
 
       container.read(cartProvider.notifier).addItem(ghee);
       final cart = container.read(cartProvider);
 
-      expect(cart.subtotal, 650);
+      expect(cart.subtotal, ghee.price);
       expect(cart.deliveryFee, 0);
-      expect(cart.grandTotal, 650);
+      expect(cart.grandTotal, ghee.price);
     });
 
     test('coupon code FIRSTORGANIC applies ₹50 discount', () {
@@ -47,14 +47,14 @@ void main() {
       addTearDown(container.dispose);
       final ghee = MockData.products.firstWhere(
         (p) => p.id == 'prod_ghee',
-      ); // ₹650
+      );
 
       container.read(cartProvider.notifier).addItem(ghee);
       container.read(cartProvider.notifier).applyCoupon('FIRSTORGANIC');
       final cart = container.read(cartProvider);
 
       expect(cart.discount, 50);
-      expect(cart.grandTotal, 600); // 650 - 50
+      expect(cart.grandTotal, ghee.price - 50);
     });
   });
 }

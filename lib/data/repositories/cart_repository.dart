@@ -101,6 +101,8 @@ class CartNotifier extends Notifier<CartState> {
     );
   }
 
+  void deleteItem(String productId) => removeItem(productId);
+
   void clearCart() {
     state = const CartState();
   }

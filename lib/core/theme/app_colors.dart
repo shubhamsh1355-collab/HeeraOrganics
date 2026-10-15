@@ -40,6 +40,7 @@ abstract class AppColors {
   static const Color secondaryContainer = Color(
     0xFFEDE0A5,
   ); // Harvest yellow promo tags
+  static const Color secondaryFixed = Color(0xFFF0E3A8);
   static const Color harvestYellow = Color(0xFFEEE1A6); // Promo tag alternate
   static const Color onSecondaryContainer = Color(0xFF6C6333);
 

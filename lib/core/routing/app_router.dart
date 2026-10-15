@@ -116,6 +116,14 @@ final GoRouter appRouter = GoRouter(
       },
     ),
     GoRoute(
+      path: '/products/:id',
+      parentNavigatorKey: _rootNavigatorKey,
+      builder: (context, state) {
+        final id = state.pathParameters['id'] ?? 'prod_tomato';
+        return ProductDetailsScreen(productId: id);
+      },
+    ),
+    GoRoute(
       path: '/cart',
       parentNavigatorKey: _rootNavigatorKey,
       builder: (context, state) => const CartScreen(),
@@ -173,6 +181,11 @@ final GoRouter appRouter = GoRouter(
     ),
     GoRoute(
       path: '/farm-assistant',
+      parentNavigatorKey: _rootNavigatorKey,
+      builder: (context, state) => const FarmAssistantScreen(),
+    ),
+    GoRoute(
+      path: '/support/chat',
       parentNavigatorKey: _rootNavigatorKey,
       builder: (context, state) => const FarmAssistantScreen(),
     ),
