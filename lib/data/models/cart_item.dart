@@ -15,6 +15,8 @@ class CartItem {
 
   num get totalPrice => unitPrice * quantity;
 
+  String get packLabel => selectedPack?.label ?? product.defaultPackSize;
+
   CartItem copyWith({
     Product? product,
     PackOption? selectedPack,

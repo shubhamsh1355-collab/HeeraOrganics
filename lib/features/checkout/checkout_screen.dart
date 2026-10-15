@@ -8,7 +8,6 @@ import '../../core/theme/app_typography.dart';
 import '../../core/utils/currency_formatter.dart';
 import '../../core/widgets/app_button.dart';
 import '../../data/mock/mock_data.dart';
-import '../../data/models/delivery_slot.dart';
 import '../../data/repositories/cart_repository.dart';
 import '../../data/repositories/order_repository.dart';
 import '../../data/repositories/profile_repository.dart';
@@ -23,7 +22,6 @@ class CheckoutScreen extends ConsumerStatefulWidget {
 class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
   String _selectedPaymentMethod = 'UPI (Google Pay / PhonePe)';
   bool _isPlacingOrder = false;
-  final DeliverySlot _slot = MockData.deliverySlots[1];
 
   final List<String> _paymentMethods = [
     'UPI (Google Pay / PhonePe)',
@@ -42,6 +40,8 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
       return;
     }
 
+    final slot = cartState.selectedDeliverySlot ?? MockData.deliverySlots.first;
+
     setState(() => _isPlacingOrder = true);
 
     Future.delayed(const Duration(milliseconds: 700), () {
@@ -50,9 +50,10 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
           .createOrder(
             items: cartState.items,
             address: profileState.selectedAddress,
-            slot: _slot,
+            slot: slot,
             subtotal: cartState.subtotal,
             deliveryFee: cartState.deliveryFee,
+            packagingFee: cartState.packagingFee,
             discount: cartState.discount,
             tip: cartState.tip,
             total: cartState.grandTotal,
@@ -72,6 +73,8 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
   Widget build(BuildContext context) {
     final cartState = ref.watch(cartProvider);
     final profileState = ref.watch(profileProvider);
+    final selectedSlot =
+        cartState.selectedDeliverySlot ?? MockData.deliverySlots.first;
 
     return Scaffold(
       backgroundColor: AppColors.surface,
@@ -168,7 +171,10 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(_slot.fullLabel, style: AppTypography.titleCard()),
+                        Text(
+                          selectedSlot.fullLabel,
+                          style: AppTypography.titleCard(),
+                        ),
                         Text(
                           'Harvested at 5:00 AM from Sedam Cluster',
                           style: AppTypography.bodySm(),
@@ -193,17 +199,19 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                 borderRadius: AppRadii.radiusLg,
                 border: Border.all(color: AppColors.borderSubtle),
               ),
-              child: Column(
-                children: _paymentMethods.map((method) {
-                  return RadioListTile<String>(
-                    title: Text(method, style: AppTypography.bodyMd()),
-                    value: method,
-                    groupValue: _selectedPaymentMethod,
-                    activeColor: AppColors.primaryContainer,
-                    onChanged: (val) =>
-                        setState(() => _selectedPaymentMethod = val!),
-                  );
-                }).toList(),
+              child: RadioGroup<String>(
+                groupValue: _selectedPaymentMethod,
+                onChanged: (val) =>
+                    setState(() => _selectedPaymentMethod = val!),
+                child: Column(
+                  children: _paymentMethods.map((method) {
+                    return RadioListTile<String>(
+                      title: Text(method, style: AppTypography.bodyMd()),
+                      value: method,
+                      activeColor: AppColors.primaryContainer,
+                    );
+                  }).toList(),
+                ),
               ),
             ),
             const SizedBox(height: 20),
@@ -233,6 +241,24 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                       ),
                     ],
                   ),
+                  if (cartState.packagingFee > 0) ...[
+                    const SizedBox(height: 6),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Eco-Friendly Packaging',
+                          style: AppTypography.bodyMd(
+                            color: AppColors.mutedText,
+                          ),
+                        ),
+                        Text(
+                          CurrencyFormatter.format(cartState.packagingFee),
+                          style: AppTypography.bodyMd(),
+                        ),
+                      ],
+                    ),
+                  ],
                   const SizedBox(height: 6),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -253,6 +279,24 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                       ),
                     ],
                   ),
+                  if (cartState.tip > 0) ...[
+                    const SizedBox(height: 6),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Delivery Partner Tip',
+                          style: AppTypography.bodyMd(
+                            color: AppColors.mutedText,
+                          ),
+                        ),
+                        Text(
+                          CurrencyFormatter.format(cartState.tip),
+                          style: AppTypography.bodyMd(),
+                        ),
+                      ],
+                    ),
+                  ],
                   if (cartState.discount > 0) ...[
                     const SizedBox(height: 6),
                     Row(

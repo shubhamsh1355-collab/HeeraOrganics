@@ -12,6 +12,13 @@ class PackOption {
     this.originalPrice,
     this.isDefault = false,
   });
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is PackOption && runtimeType == other.runtimeType && id == other.id;
+
+  @override
+  int get hashCode => id.hashCode;
 }
 
 class Product {
@@ -48,4 +55,25 @@ class Product {
     this.isOrganicCertified = true,
     this.inStock = true,
   });
+
+  List<PackOption> get effectivePackOptions {
+    if (packOptions.isNotEmpty) return packOptions;
+    return [
+      PackOption(
+        id: '${id}_default',
+        label: defaultPackSize,
+        price: price,
+        originalPrice: originalPrice,
+        isDefault: true,
+      ),
+    ];
+  }
+
+  PackOption get defaultPackOption {
+    final options = effectivePackOptions;
+    return options.firstWhere(
+      (p) => p.isDefault || p.label == defaultPackSize,
+      orElse: () => options.first,
+    );
+  }
 }

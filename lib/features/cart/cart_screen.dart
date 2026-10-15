@@ -19,11 +19,7 @@ class CartScreen extends ConsumerStatefulWidget {
 }
 
 class _CartScreenState extends ConsumerState<CartScreen> {
-  int _selectedSlotIndex = 0;
-  int _selectedTip = 20;
-  bool _couponApplied = true;
-  final TextEditingController _couponController =
-      TextEditingController(text: 'HEERAFARM');
+  final TextEditingController _couponController = TextEditingController();
 
   @override
   void dispose() {
@@ -46,8 +42,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
         body: AppEmptyView(
           icon: Icons.shopping_bag_outlined,
           title: 'Your Basket is Empty',
-          message:
-              'Fill your pantry with freshly harvested vegetables, cold-pressed oils, and A2 Gir cow milk.',
+          message: 'Fill your pantry with freshly harvested vegetables, cold-pressed oils, and A2 Gir cow milk.',
           actionText: 'Explore Produce',
           onActionPressed: () => context.go('/home'),
         ),
@@ -55,11 +50,13 @@ class _CartScreenState extends ConsumerState<CartScreen> {
     }
 
     final subtotal = cartState.subtotal;
-    final packagingFee = 15;
-    final deliveryFee = subtotal >= 330 ? 0 : 15;
-    final couponDiscount = _couponApplied ? 20 : 0;
-    final total = (subtotal + packagingFee + deliveryFee + _selectedTip - couponDiscount)
-        .clamp(0, 999999);
+    final packagingFee = cartState.packagingFee;
+    final deliveryFee = cartState.deliveryFee;
+    final couponDiscount = cartState.couponDiscount;
+    final selectedTip = cartState.tip;
+    final total = cartState.grandTotal;
+    final selectedSlot =
+        cartState.selectedDeliverySlot ?? MockData.deliverySlots.first;
 
     final progressRatio = (subtotal / 330.0).clamp(0.0, 1.0);
     final neededForFree = (330 - subtotal).clamp(0, 330);
@@ -74,16 +71,14 @@ class _CartScreenState extends ConsumerState<CartScreen> {
           children: [
             Text(
               'Your Basket',
-              style: AppTypography.headlineSm(
-                color: AppColors.deepText,
-              ).copyWith(fontWeight: FontWeight.w700),
+              style: AppTypography.headlineSm(color: AppColors.deepText)
+                  .copyWith(fontWeight: FontWeight.w700),
             ),
             const SizedBox(width: 6),
             Text(
               '(${cartState.totalItemCount} items)',
-              style: AppTypography.labelSm(
-                color: AppColors.mutedText,
-              ).copyWith(fontSize: 12),
+              style: AppTypography.labelSm(color: AppColors.mutedText)
+                  .copyWith(fontSize: 12),
             ),
           ],
         ),
@@ -97,9 +92,8 @@ class _CartScreenState extends ConsumerState<CartScreen> {
             ),
             label: Text(
               'Clear',
-              style: AppTypography.labelSm(
-                color: AppColors.errorAlert,
-              ).copyWith(fontWeight: FontWeight.w600),
+              style: AppTypography.labelSm(color: AppColors.errorAlert)
+                  .copyWith(fontWeight: FontWeight.w600),
             ),
           ),
           const SizedBox(width: 6),
@@ -113,7 +107,10 @@ class _CartScreenState extends ConsumerState<CartScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 14,
+                  vertical: 10,
+                ),
                 decoration: BoxDecoration(
                   color: AppColors.surfaceContainerLow,
                   borderRadius: BorderRadius.circular(12),
@@ -144,9 +141,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                             ).copyWith(fontWeight: FontWeight.w700),
                           ),
                           Text(
-                            _selectedSlotIndex == 0
-                                ? 'Slot: Today, 3:00 PM – 5:00 PM'
-                                : 'Slot: Tomorrow, 6:30 AM – 8:30 AM',
+                            'Slot: ${selectedSlot.title}',
                             style: AppTypography.labelSm(
                               color: AppColors.mutedText,
                             ).copyWith(fontSize: 11),
@@ -219,13 +214,18 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     'Morning Harvest Free Delivery',
-                                    style: AppTypography.titleCard(
-                                      color: AppColors.deepText,
-                                    ).copyWith(fontWeight: FontWeight.w700, fontSize: 13),
+                                    style:
+                                        AppTypography.titleCard(
+                                          color: AppColors.deepText,
+                                        ).copyWith(
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 13,
+                                        ),
                                   ),
                                   Text(
                                     '₹$subtotal / ₹330',
@@ -246,9 +246,13 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                               else
                                 Text(
                                   'Free direct farm dispatch unlocked!',
-                                  style: AppTypography.bodySm(
-                                    color: AppColors.primaryContainer,
-                                  ).copyWith(fontSize: 11, fontWeight: FontWeight.w700),
+                                  style:
+                                      AppTypography.bodySm(
+                                        color: AppColors.primaryContainer,
+                                      ).copyWith(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w700,
+                                      ),
                                 ),
                             ],
                           ),
@@ -270,7 +274,10 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                     ),
                     const SizedBox(height: 10),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 6,
+                      ),
                       decoration: BoxDecoration(
                         color: AppColors.surfaceContainerLow,
                         borderRadius: BorderRadius.circular(8),
@@ -316,9 +323,8 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                 children: [
                   Text(
                     'Fresh Harvest Items',
-                    style: AppTypography.titleCard(
-                      color: AppColors.deepText,
-                    ).copyWith(fontWeight: FontWeight.w700),
+                    style: AppTypography.titleCard(color: AppColors.deepText)
+                        .copyWith(fontWeight: FontWeight.w700),
                   ),
                   Text(
                     'Freshness Guaranteed 100%',
@@ -354,10 +360,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                           child: SizedBox(
                             width: 72,
                             height: 72,
-                            child: Image.network(
-                              p.imageUrl,
-                              fit: BoxFit.cover,
-                            ),
+                            child: Image.network(p.imageUrl, fit: BoxFit.cover),
                           ),
                         ),
                         const SizedBox(width: 12),
@@ -366,20 +369,28 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Expanded(
                                     child: Text(
                                       p.name,
-                                      style: AppTypography.titleCard(
-                                        color: AppColors.deepText,
-                                      ).copyWith(fontWeight: FontWeight.w700, fontSize: 13),
+                                      style:
+                                          AppTypography.titleCard(
+                                            color: AppColors.deepText,
+                                          ).copyWith(
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 13,
+                                          ),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
                                   InkWell(
-                                    onTap: () => cartNotifier.deleteItem(p.id),
+                                    onTap: () => cartNotifier.deleteItem(
+                                      p.id,
+                                      pack: cartItem.selectedPack,
+                                    ),
                                     child: const Icon(
                                       Icons.close,
                                       size: 16,
@@ -389,7 +400,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                                 ],
                               ),
                               Text(
-                                p.defaultPackSize,
+                                cartItem.packLabel,
                                 style: AppTypography.labelSm(
                                   color: AppColors.mutedText,
                                 ).copyWith(fontSize: 11),
@@ -406,25 +417,43 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                                 ),
                                 child: Text(
                                   p.farmOrigin,
-                                  style: AppTypography.labelSm(
-                                    color: AppColors.primaryContainer,
-                                  ).copyWith(fontSize: 9, fontWeight: FontWeight.w600),
+                                  style:
+                                      AppTypography.labelSm(
+                                        color: AppColors.primaryContainer,
+                                      ).copyWith(
+                                        fontSize: 9,
+                                        fontWeight: FontWeight.w600,
+                                      ),
                                 ),
                               ),
                               const SizedBox(height: 6),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    CurrencyFormatter.format(p.price),
-                                    style: AppTypography.headlineSm(
-                                      color: AppColors.primaryContainer,
-                                    ).copyWith(fontWeight: FontWeight.w700, fontSize: 15),
+                                    CurrencyFormatter.format(
+                                      cartItem.unitPrice,
+                                    ),
+                                    style:
+                                        AppTypography.headlineSm(
+                                          color: AppColors.primaryContainer,
+                                        ).copyWith(
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 15,
+                                        ),
                                   ),
                                   QuantityStepper(
                                     quantity: cartItem.quantity,
-                                    onIncrement: () => cartNotifier.addItem(p),
-                                    onDecrement: () => cartNotifier.removeItem(p.id),
+                                    onIncrement: () => cartNotifier.addItem(
+                                      p,
+                                      pack: cartItem.selectedPack,
+                                    ),
+                                    onDecrement: () =>
+                                        cartNotifier.decrementItem(
+                                          p.id,
+                                          pack: cartItem.selectedPack,
+                                        ),
                                   ),
                                 ],
                               ),
@@ -455,7 +484,9 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                       ),
                       Text(
                         'Frequently paired with fresh vegetables',
-                        style: AppTypography.labelSm(color: AppColors.mutedText),
+                        style: AppTypography.labelSm(
+                          color: AppColors.mutedText,
+                        ),
                       ),
                     ],
                   ),
@@ -479,8 +510,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                     name: 'Tender Coriander',
                     pack: 'Bunch • 100 g',
                     price: 18,
-                    imageUrl:
-                        'https://lh3.googleusercontent.com/aida-public/AB6AXuD660gpbLZQ2-LZXsjoPAIRKqn7AabpJmZs4erDgWmhe29CVN1RqWs7OIXlgWkqyid-g5zTnZnETYyA62N-Nc_JfMuJVpQbxAA5fMfp7Ui5VQMWdeqnSpyhX5iPKt4pwMWXWWkEozF6W8-NnV5KYiNbifIN3lCvhfOvjFpBYux6uk8l214y2CjS-ek9mVKG9AShYRp4SJfH5nhCNlseyyXGmAaLkav6ljjDSq7lYxbJ0rQInYVBqRpF',
+                    imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuD660gpbLZQ2-LZXsjoPAIRKqn7AabpJmZs4erDgWmhe29CVN1RqWs7OIXlgWkqyid-g5zTnZnETYyA62N-Nc_JfMuJVpQbxAA5fMfp7Ui5VQMWdeqnSpyhX5iPKt4pwMWXWWkEozF6W8-NnV5KYiNbifIN3lCvhfOvjFpBYux6uk8l214y2CjS-ek9mVKG9AShYRp4SJfH5nhCNlseyyXGmAaLkav6ljjDSq7lYxbJ0rQInYVBqRpF',
                     onAdd: () {
                       final prod = MockData.products.firstWhere(
                         (p) => p.id == 'prod_coriander',
@@ -493,8 +523,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                     name: 'Green Chillies',
                     pack: 'Organic • 100 g',
                     price: 15,
-                    imageUrl:
-                        'https://lh3.googleusercontent.com/aida-public/AB6AXuDjCX-ub-zp8vapz2unHfoNTxIj3aLQF45CbXF4r564Qd6zmDUMG8rLwQIBn75yhtXW30ctIQvecTWd5fLb_zm90f0syXVQsXzKo4yNhVGkw9tK5pasIlJpYfJIGGa1wUxOrYpHeh4tpmmc3qAUEMeWHglsdMm6H_umI1B1tBRLbY6EKR8Zopf0HsWkwWPwOPXM2ob2YCjiSd3hfip1vc7ctPv25izWxAjYzvTnyxpypMRYRE5Z1AwY',
+                    imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDjCX-ub-zp8vapz2unHfoNTxIj3aLQF45CbXF4r564Qd6zmDUMG8rLwQIBn75yhtXW30ctIQvecTWd5fLb_zm90f0syXVQsXzKo4yNhVGkw9tK5pasIlJpYfJIGGa1wUxOrYpHeh4tpmmc3qAUEMeWHglsdMm6H_umI1B1tBRLbY6EKR8Zopf0HsWkwWPwOPXM2ob2YCjiSd3hfip1vc7ctPv25izWxAjYzvTnyxpypMRYRE5Z1AwY',
                     onAdd: () {
                       final prod = MockData.products.firstWhere(
                         (p) => p.id == 'prod_chilli',
@@ -507,8 +536,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                     name: 'Country Ginger',
                     pack: 'Aromatic • 100 g',
                     price: 20,
-                    imageUrl:
-                        'https://lh3.googleusercontent.com/aida-public/AB6AXuAiXOiX-zaiC6wtDKaOTw6F6Tkuknl_pDYoExsgM773X8bmzvU5ac4lLYAoaZbLbGgPVBw_POxNToYQc3_V8o8DGe52CFJNO8UOGyLaz0UxKBCUvUrTPjvqKajaBZz_8B6UpfmZ0Lth_by51ThLNrt2VDdbc5CAylsVEfc_jMn4ifFfGmdaHehUWM2Jy7dUrbvXaR41pq6rgM6TTANvQ6_1SZvBTnBqs0D2VuxjNo378d-m1Ajtytys',
+                    imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAiXOiX-zaiC6wtDKaOTw6F6Tkuknl_pDYoExsgM773X8bmzvU5ac4lLYAoaZbLbGgPVBw_POxNToYQc3_V8o8DGe52CFJNO8UOGyLaz0UxKBCUvUrTPjvqKajaBZz_8B6UpfmZ0Lth_by51ThLNrt2VDdbc5CAylsVEfc_jMn4ifFfGmdaHehUWM2Jy7dUrbvXaR41pq6rgM6TTANvQ6_1SZvBTnBqs0D2VuxjNo378d-m1Ajtytys',
                     onAdd: () {
                       final prod = MockData.products.firstWhere(
                         (p) => p.id == 'prod_ginger',
@@ -556,109 +584,74 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                       ],
                     ),
                     const SizedBox(height: 10),
-                    // Slot 1
-                    GestureDetector(
-                      onTap: () => setState(() => _selectedSlotIndex = 0),
-                      child: Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: _selectedSlotIndex == 0
-                              ? AppColors.softGreen
-                              : AppColors.surfaceContainerLow,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Row(
-                          children: [
-                            Icon(
-                              _selectedSlotIndex == 0
-                                  ? Icons.radio_button_checked
-                                  : Icons.radio_button_unchecked,
-                              size: 18,
-                              color: _selectedSlotIndex == 0
-                                  ? AppColors.primaryContainer
-                                  : AppColors.mutedText,
+                    ...MockData.deliverySlots.map((slot) {
+                      final isSelected = selectedSlot.id == slot.id;
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: GestureDetector(
+                          onTap: () => cartNotifier.setDeliverySlot(slot),
+                          child: Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: isSelected
+                                  ? AppColors.softGreen
+                                  : AppColors.surfaceContainerLow,
+                              borderRadius: BorderRadius.circular(10),
                             ),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Today, 3:00 PM – 5:00 PM',
-                                    style: AppTypography.labelMd(
-                                      color: AppColors.deepText,
-                                    ).copyWith(fontWeight: FontWeight.w700),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  isSelected
+                                      ? Icons.radio_button_checked
+                                      : Icons.radio_button_unchecked,
+                                  size: 18,
+                                  color: isSelected
+                                      ? AppColors.primaryContainer
+                                      : AppColors.mutedText,
+                                ),
+                                const SizedBox(width: 10),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        slot.title,
+                                        style: AppTypography.labelMd(
+                                          color: AppColors.deepText,
+                                        ).copyWith(fontWeight: FontWeight.w700),
+                                      ),
+                                      Text(
+                                        slot.subtitle,
+                                        style: AppTypography.labelSm(
+                                          color: isSelected
+                                              ? AppColors.primaryContainer
+                                              : AppColors.mutedText,
+                                        ).copyWith(fontSize: 11),
+                                      ),
+                                    ],
                                   ),
+                                ),
+                                if (slot.isFree)
                                   Text(
-                                    'Sunrise Batch • Reaching in ~2 hrs',
+                                    'FREE',
                                     style: AppTypography.labelSm(
                                       color: AppColors.primaryContainer,
-                                    ).copyWith(fontSize: 11),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    // Slot 2
-                    GestureDetector(
-                      onTap: () => setState(() => _selectedSlotIndex = 1),
-                      child: Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: _selectedSlotIndex == 1
-                              ? AppColors.softGreen
-                              : AppColors.surfaceContainerLow,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Row(
-                          children: [
-                            Icon(
-                              _selectedSlotIndex == 1
-                                  ? Icons.radio_button_checked
-                                  : Icons.radio_button_unchecked,
-                              size: 18,
-                              color: _selectedSlotIndex == 1
-                                  ? AppColors.primaryContainer
-                                  : AppColors.mutedText,
-                            ),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Tomorrow, 6:30 AM – 8:30 AM',
-                                    style: AppTypography.labelMd(
-                                      color: AppColors.deepText,
                                     ).copyWith(fontWeight: FontWeight.w700),
                                   ),
-                                  Text(
-                                    'Dawn Harvest • Straight from farm gate',
-                                    style: AppTypography.labelSm(
-                                      color: AppColors.mutedText,
-                                    ).copyWith(fontSize: 11),
-                                  ),
-                                ],
-                              ),
+                              ],
                             ),
-                            Text(
-                              'FREE',
-                              style: AppTypography.labelSm(
-                                color: AppColors.primaryContainer,
-                              ).copyWith(fontWeight: FontWeight.w700),
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
-                    ),
+                      );
+                    }),
                     const SizedBox(height: 10),
                     // Instructions
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 4,
+                      ),
                       decoration: BoxDecoration(
                         color: AppColors.surfaceContainerLow,
                         borderRadius: BorderRadius.circular(8),
@@ -674,8 +667,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                           Expanded(
                             child: TextField(
                               decoration: InputDecoration(
-                                hintText:
-                                    'Instructions: e.g. Ring bell & leave in basket',
+                                hintText: 'Instructions: e.g. Ring bell & leave in basket',
                                 hintStyle: AppTypography.bodySm(
                                   color: AppColors.mutedText,
                                 ).copyWith(fontSize: 11),
@@ -738,7 +730,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                       ],
                     ),
                     const SizedBox(height: 10),
-                    if (_couponApplied)
+                    if (cartState.appliedCoupon != null)
                       Container(
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
@@ -758,13 +750,13 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'HEERAFARM Applied',
+                                    '${cartState.appliedCoupon} Applied',
                                     style: AppTypography.labelMd(
                                       color: AppColors.primaryContainer,
                                     ).copyWith(fontWeight: FontWeight.w700),
                                   ),
                                   Text(
-                                    '₹20 saved on organic staples & dairy',
+                                    '₹$couponDiscount saved on organic staples & dairy',
                                     style: AppTypography.labelSm(
                                       color: AppColors.deepText,
                                     ).copyWith(fontSize: 11),
@@ -773,7 +765,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                               ),
                             ),
                             InkWell(
-                              onTap: () => setState(() => _couponApplied = false),
+                              onTap: () => cartNotifier.removeCoupon(),
                               child: Text(
                                 'Remove',
                                 style: AppTypography.labelSm(
@@ -789,16 +781,20 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                         children: [
                           Expanded(
                             child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 10),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                              ),
                               decoration: BoxDecoration(
                                 color: AppColors.surfaceContainerLow,
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: TextField(
                                 controller: _couponController,
-                                textCapitalization: TextCapitalization.characters,
+                                textCapitalization:
+                                    TextCapitalization.characters,
                                 decoration: const InputDecoration(
-                                  hintText: 'Enter coupon code',
+                                  hintText:
+                                      'Enter coupon code (e.g. HEERAFARM)',
                                   border: InputBorder.none,
                                   isDense: true,
                                 ),
@@ -819,7 +815,28 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                               ),
                               elevation: 0,
                             ),
-                            onPressed: () => setState(() => _couponApplied = true),
+                            onPressed: () {
+                              final code = _couponController.text.trim();
+                              if (code.isEmpty) return;
+                              final applied = cartNotifier.applyCoupon(code);
+                              if (applied) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('Coupon $code applied!'),
+                                    backgroundColor: AppColors.primaryContainer,
+                                  ),
+                                );
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      'Invalid coupon code. Try HEERAFARM or FIRSTORGANIC.',
+                                    ),
+                                    backgroundColor: AppColors.errorAlert,
+                                  ),
+                                );
+                              }
+                            },
                             child: const Text('Apply'),
                           ),
                         ],
@@ -852,7 +869,9 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                         ),
                         Text(
                           '100% to driver',
-                          style: AppTypography.labelSm(color: AppColors.mutedText),
+                          style: AppTypography.labelSm(
+                            color: AppColors.mutedText,
+                          ),
                         ),
                       ],
                     ),
@@ -865,10 +884,10 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                     const SizedBox(height: 10),
                     Row(
                       children: [10, 20, 30].map((tip) {
-                        final isSelected = _selectedTip == tip;
+                        final isSelected = selectedTip == tip;
                         return Expanded(
                           child: GestureDetector(
-                            onTap: () => setState(() => _selectedTip = tip),
+                            onTap: () => cartNotifier.setTip(tip),
                             child: Container(
                               margin: const EdgeInsets.only(right: 8),
                               padding: const EdgeInsets.symmetric(vertical: 8),
@@ -946,17 +965,24 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                       ],
                     ),
                     const SizedBox(height: 10),
-                    _buildBillRow('Item Subtotal (${cartState.totalItemCount} items)', '₹$subtotal'),
-                    _buildBillRow('Eco-Friendly Brown Bag Packaging', '₹$packagingFee'),
+                    _buildBillRow(
+                      'Item Subtotal (${cartState.totalItemCount} items)',
+                      '₹$subtotal',
+                    ),
+                    _buildBillRow(
+                      'Eco-Friendly Brown Bag Packaging',
+                      '₹$packagingFee',
+                    ),
                     _buildBillRow(
                       'Delivery Fee (Kalaburagi Zone)',
                       deliveryFee == 0 ? 'FREE' : '₹$deliveryFee',
                     ),
-                    _buildBillRow('Delivery Partner Tip', '₹$_selectedTip'),
-                    if (_couponApplied)
+                    if (selectedTip > 0)
+                      _buildBillRow('Delivery Partner Tip', '₹$selectedTip'),
+                    if (cartState.appliedCoupon != null)
                       _buildBillRow(
-                        'Coupon HEERAFARM',
-                        '- ₹20',
+                        'Coupon ${cartState.appliedCoupon}',
+                        '- ₹$couponDiscount',
                         color: AppColors.primaryContainer,
                         isBold: true,
                       ),
@@ -1055,17 +1081,15 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                       const SizedBox(width: 6),
                       Text(
                         '₹${total + 29}',
-                        style: AppTypography.labelSm(
-                          color: AppColors.mutedText,
-                        ).copyWith(decoration: TextDecoration.lineThrough),
+                        style: AppTypography.labelSm(color: AppColors.mutedText)
+                            .copyWith(decoration: TextDecoration.lineThrough),
                       ),
                     ],
                   ),
                   Text(
                     'Home: Sedam Road',
-                    style: AppTypography.labelSm(
-                      color: AppColors.deepText,
-                    ).copyWith(fontWeight: FontWeight.w600),
+                    style: AppTypography.labelSm(color: AppColors.deepText)
+                        .copyWith(fontWeight: FontWeight.w600),
                   ),
                 ],
               ),
@@ -1087,9 +1111,8 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                   children: [
                     Text(
                       'Proceed to Pay',
-                      style: AppTypography.labelLg(
-                        color: Colors.white,
-                      ).copyWith(fontWeight: FontWeight.w700),
+                      style: AppTypography.labelLg(color: Colors.white)
+                          .copyWith(fontWeight: FontWeight.w700),
                     ),
                     const SizedBox(width: 4),
                     const Icon(Icons.arrow_forward, size: 16),
@@ -1140,17 +1163,15 @@ class _CartScreenState extends ConsumerState<CartScreen> {
           const SizedBox(height: 4),
           Text(
             name,
-            style: AppTypography.titleCard(
-              color: AppColors.deepText,
-            ).copyWith(fontWeight: FontWeight.w700, fontSize: 11),
+            style: AppTypography.titleCard(color: AppColors.deepText)
+                .copyWith(fontWeight: FontWeight.w700, fontSize: 11),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
           Text(
             pack,
-            style: AppTypography.labelSm(color: AppColors.mutedText).copyWith(
-              fontSize: 9,
-            ),
+            style: AppTypography.labelSm(color: AppColors.mutedText)
+                .copyWith(fontSize: 9),
           ),
           const Spacer(),
           Row(
@@ -1166,7 +1187,10 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                 onTap: onAdd,
                 borderRadius: BorderRadius.circular(6),
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 3,
+                  ),
                   decoration: BoxDecoration(
                     color: AppColors.surfaceContainerLow,
                     borderRadius: BorderRadius.circular(6),
@@ -1209,18 +1233,16 @@ class _CartScreenState extends ConsumerState<CartScreen> {
         children: [
           Text(
             label,
-            style: AppTypography.bodySm(
-              color: color ?? AppColors.mutedText,
-            ).copyWith(fontSize: 11),
+            style: AppTypography.bodySm(color: color ?? AppColors.mutedText)
+                .copyWith(fontSize: 11),
           ),
           Text(
             value,
-            style: AppTypography.bodySm(
-              color: color ?? AppColors.deepText,
-            ).copyWith(
-              fontSize: 11,
-              fontWeight: isBold ? FontWeight.w700 : FontWeight.w500,
-            ),
+            style: AppTypography.bodySm(color: color ?? AppColors.deepText)
+                .copyWith(
+                  fontSize: 11,
+                  fontWeight: isBold ? FontWeight.w700 : FontWeight.w500,
+                ),
           ),
         ],
       ),

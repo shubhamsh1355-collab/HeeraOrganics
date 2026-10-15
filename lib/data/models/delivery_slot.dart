@@ -14,4 +14,10 @@ class DeliverySlot {
   });
 
   String get fullLabel => '$dateLabel, $timeWindow';
+
+  String get title => dateLabel;
+
+  String get subtitle => timeWindow;
+
+  bool get isFree => isMorningHarvest;
 }

@@ -224,22 +224,30 @@ class _SearchDiscoveryScreenState extends ConsumerState<SearchDiscoveryScreen> {
                     itemCount: 4,
                     itemBuilder: (context, index) {
                       final product = MockData.products[index];
+                      final targetPack = product.defaultPackOption;
                       return ProductCard(
                         id: product.id,
                         name: product.name,
-                        packSize: product.defaultPackSize,
-                        price: product.price,
-                        originalPrice: product.originalPrice,
+                        packSize: targetPack.label,
+                        price: targetPack.price,
+                        originalPrice:
+                            targetPack.originalPrice ?? product.originalPrice,
                         imageUrl: product.imageUrl,
                         badgeText: product.badgeText,
-                        quantity: cartState.getQuantity(product.id),
+                        quantity: cartState.getItemQuantity(
+                          product.id,
+                          pack: targetPack,
+                        ),
                         isFavorite: profileState.wishlistProductIds.contains(
                           product.id,
                         ),
                         onTap: () => context.push('/product/${product.id}'),
-                        onIncrement: () => cartNotifier.addItem(product),
-                        onDecrement: () =>
-                            cartNotifier.decrementItem(product.id),
+                        onIncrement: () =>
+                            cartNotifier.addItem(product, pack: targetPack),
+                        onDecrement: () => cartNotifier.decrementItem(
+                          product.id,
+                          pack: targetPack,
+                        ),
                         onToggleFavorite: () =>
                             profileNotifier.toggleWishlist(product.id),
                       );
@@ -270,21 +278,28 @@ class _SearchDiscoveryScreenState extends ConsumerState<SearchDiscoveryScreen> {
               itemCount: searchResults.length,
               itemBuilder: (context, index) {
                 final product = searchResults[index];
+                final targetPack = product.defaultPackOption;
                 return ProductCard(
                   id: product.id,
                   name: product.name,
-                  packSize: product.defaultPackSize,
-                  price: product.price,
-                  originalPrice: product.originalPrice,
+                  packSize: targetPack.label,
+                  price: targetPack.price,
+                  originalPrice:
+                      targetPack.originalPrice ?? product.originalPrice,
                   imageUrl: product.imageUrl,
                   badgeText: product.badgeText,
-                  quantity: cartState.getQuantity(product.id),
+                  quantity: cartState.getItemQuantity(
+                    product.id,
+                    pack: targetPack,
+                  ),
                   isFavorite: profileState.wishlistProductIds.contains(
                     product.id,
                   ),
                   onTap: () => context.push('/product/${product.id}'),
-                  onIncrement: () => cartNotifier.addItem(product),
-                  onDecrement: () => cartNotifier.decrementItem(product.id),
+                  onIncrement: () =>
+                      cartNotifier.addItem(product, pack: targetPack),
+                  onDecrement: () =>
+                      cartNotifier.decrementItem(product.id, pack: targetPack),
                   onToggleFavorite: () =>
                       profileNotifier.toggleWishlist(product.id),
                 );

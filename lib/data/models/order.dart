@@ -20,6 +20,7 @@ class Order {
   final DeliveryAddress address;
   final DeliverySlot slot;
   final num subtotal;
+  final num packagingFee;
   final num deliveryFee;
   final num discount;
   final num tip;
@@ -35,6 +36,7 @@ class Order {
     required this.address,
     required this.slot,
     required this.subtotal,
+    this.packagingFee = 0,
     this.deliveryFee = 0,
     this.discount = 0,
     this.tip = 0,

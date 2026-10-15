@@ -7,6 +7,7 @@ import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_radii.dart';
 import '../../core/theme/app_typography.dart';
 import '../../core/utils/currency_formatter.dart';
+import '../../core/widgets/app_empty_view.dart';
 import '../../data/repositories/cart_repository.dart';
 import '../../data/repositories/order_repository.dart';
 
@@ -18,14 +19,23 @@ class OrderDetailsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final orders = ref.watch(orderProvider);
-    final order =
-        orders.where((o) => o.id == orderId).firstOrNull ?? orders.firstOrNull;
+    final order = orders.where((o) => o.id == orderId).firstOrNull;
     final cartNotifier = ref.read(cartProvider.notifier);
 
     if (order == null) {
       return Scaffold(
-        appBar: AppBar(title: const Text('Order Details')),
-        body: const Center(child: Text('Order not found')),
+        backgroundColor: AppColors.surface,
+        appBar: AppBar(
+          title: Text('Order Not Found', style: AppTypography.headlineSm()),
+        ),
+        body: AppEmptyView(
+          icon: Icons.receipt_long_outlined,
+          title: 'Order Not Found',
+          message:
+              'The requested order "$orderId" could not be found or does not exist.',
+          actionText: 'View All Orders',
+          onActionPressed: () => context.go('/orders'),
+        ),
       );
     }
 
@@ -161,11 +171,24 @@ class OrderDetailsScreen extends ConsumerWidget {
                       children: [
                         ClipRRect(
                           borderRadius: AppRadii.radiusMd,
-                          child: Image.network(
-                            item.product.imageUrl,
+                          child: SizedBox(
                             width: 50,
                             height: 50,
-                            fit: BoxFit.cover,
+                            child: Image.network(
+                              item.product.imageUrl,
+                              width: 50,
+                              height: 50,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) =>
+                                  Container(
+                                    color: AppColors.surfaceContainerLow,
+                                    child: const Icon(
+                                      Icons.eco,
+                                      size: 24,
+                                      color: AppColors.primaryContainer,
+                                    ),
+                                  ),
+                            ),
                           ),
                         ),
                         const SizedBox(width: 12),
@@ -214,6 +237,13 @@ class OrderDetailsScreen extends ConsumerWidget {
                     'Item Subtotal',
                     CurrencyFormatter.format(order.subtotal),
                   ),
+                  if (order.packagingFee > 0) ...[
+                    const SizedBox(height: 6),
+                    _buildRow(
+                      'Eco-Friendly Packaging',
+                      CurrencyFormatter.format(order.packagingFee),
+                    ),
+                  ],
                   const SizedBox(height: 6),
                   _buildRow(
                     'Delivery Partner Fee',
@@ -221,6 +251,13 @@ class OrderDetailsScreen extends ConsumerWidget {
                         ? 'FREE'
                         : CurrencyFormatter.format(order.deliveryFee),
                   ),
+                  if (order.tip > 0) ...[
+                    const SizedBox(height: 6),
+                    _buildRow(
+                      'Delivery Partner Tip',
+                      CurrencyFormatter.format(order.tip),
+                    ),
+                  ],
                   if (order.discount > 0) ...[
                     const SizedBox(height: 6),
                     _buildRow(

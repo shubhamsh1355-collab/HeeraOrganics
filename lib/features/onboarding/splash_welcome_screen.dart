@@ -92,10 +92,10 @@ class SplashWelcomeScreen extends StatelessWidget {
                             fit: BoxFit.cover,
                             errorBuilder: (context, error, stackTrace) =>
                                 const Icon(
-                              Icons.spa,
-                              color: AppColors.primary,
-                              size: 40,
-                            ),
+                                  Icons.spa,
+                                  color: AppColors.primary,
+                                  size: 40,
+                                ),
                           ),
                         ),
                       ),
@@ -149,13 +149,13 @@ class SplashWelcomeScreen extends StatelessWidget {
                           const SizedBox(width: 6),
                           Text(
                             'FARM-TO-FAMILY • FRESH DAIRY • KALABURAGI',
-                            style: AppTypography.labelSm(
-                              color: AppColors.deepText,
-                            ).copyWith(
-                              fontSize: 10,
-                              letterSpacing: 0.5,
-                              fontWeight: FontWeight.w700,
-                            ),
+                            style:
+                                AppTypography.labelSm(color: AppColors.deepText)
+                                    .copyWith(
+                                      fontSize: 10,
+                                      letterSpacing: 0.5,
+                                      fontWeight: FontWeight.w700,
+                                    ),
                           ),
                         ],
                       ),
@@ -177,7 +177,9 @@ class SplashWelcomeScreen extends StatelessWidget {
                               borderRadius: BorderRadius.circular(32),
                               boxShadow: [
                                 BoxShadow(
-                                  color: AppColors.primary.withValues(alpha: 0.08),
+                                  color: AppColors.primary.withValues(
+                                    alpha: 0.08,
+                                  ),
                                   blurRadius: 18,
                                   offset: const Offset(0, 6),
                                 ),
@@ -197,17 +199,21 @@ class SplashWelcomeScreen extends StatelessWidget {
                                     width: double.infinity,
                                     height: double.infinity,
                                     fit: BoxFit.cover,
-                                    errorBuilder: (context, error, stackTrace) =>
-                                        Container(
-                                      color: AppColors.surfaceContainerLow,
-                                      child: const Center(
-                                        child: Icon(
-                                          Icons.eco,
-                                          size: 64,
-                                          color: AppColors.primaryContainer,
+                                    errorBuilder:
+                                        (
+                                          context,
+                                          error,
+                                          stackTrace,
+                                        ) => Container(
+                                          color: AppColors.surfaceContainerLow,
+                                          child: const Center(
+                                            child: Icon(
+                                              Icons.eco,
+                                              size: 64,
+                                              color: AppColors.primaryContainer,
+                                            ),
+                                          ),
                                         ),
-                                      ),
-                                    ),
                                   ),
                                 ),
 
@@ -221,7 +227,9 @@ class SplashWelcomeScreen extends StatelessWidget {
                                         end: Alignment.bottomCenter,
                                         colors: [
                                           Colors.transparent,
-                                          AppColors.primary.withValues(alpha: 0.40),
+                                          AppColors.primary.withValues(
+                                            alpha: 0.40,
+                                          ),
                                         ],
                                       ),
                                     ),
@@ -245,14 +253,17 @@ class SplashWelcomeScreen extends StatelessWidget {
                                       borderRadius: AppRadii.radiusMd,
                                       boxShadow: [
                                         BoxShadow(
-                                          color: Colors.black.withValues(alpha: 0.04),
+                                          color: Colors.black.withValues(
+                                            alpha: 0.04,
+                                          ),
                                           blurRadius: 6,
                                           offset: const Offset(0, 2),
                                         ),
                                       ],
                                     ),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Row(
                                           children: [
@@ -260,7 +271,8 @@ class SplashWelcomeScreen extends StatelessWidget {
                                               width: 8,
                                               height: 8,
                                               decoration: const BoxDecoration(
-                                                color: AppColors.primaryContainer,
+                                                color:
+                                                    AppColors.primaryContainer,
                                                 shape: BoxShape.circle,
                                               ),
                                             ),
@@ -311,7 +323,9 @@ class SplashWelcomeScreen extends StatelessWidget {
                                   shape: BoxShape.circle,
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.black.withValues(alpha: 0.08),
+                                      color: Colors.black.withValues(
+                                        alpha: 0.08,
+                                      ),
                                       blurRadius: 6,
                                       offset: const Offset(0, 2),
                                     ),
@@ -340,7 +354,9 @@ class SplashWelcomeScreen extends StatelessWidget {
                                   shape: BoxShape.circle,
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.black.withValues(alpha: 0.08),
+                                      color: Colors.black.withValues(
+                                        alpha: 0.08,
+                                      ),
                                       blurRadius: 6,
                                       offset: const Offset(0, 2),
                                     ),
@@ -365,7 +381,10 @@ class SplashWelcomeScreen extends StatelessWidget {
                       spacing: 8,
                       runSpacing: 8,
                       children: [
-                        _buildValueBadge(Icons.verified, '100% Honest Sourcing'),
+                        _buildValueBadge(
+                          Icons.verified,
+                          '100% Honest Sourcing',
+                        ),
                         _buildValueBadge(Icons.ac_unit, 'Cold-Chained Dairy'),
                         _buildValueBadge(Icons.location_on, 'Locally Sourced'),
                       ],
@@ -429,8 +448,9 @@ class SplashWelcomeScreen extends StatelessWidget {
                           ),
                           label: Text(
                             'Check Delivery Area',
-                            style: AppTypography.labelMd(color: AppColors.primary)
-                                .copyWith(decoration: TextDecoration.underline),
+                            style: AppTypography.labelMd(
+                              color: AppColors.primary,
+                            ).copyWith(decoration: TextDecoration.underline),
                           ),
                         ),
                         const Padding(
