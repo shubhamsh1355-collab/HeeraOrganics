@@ -1,0 +1,539 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"><meta content="mobile_stack" name="shell-type"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400..700&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "error-container": "#ffdad6", "secondary": "#685f30", "on-tertiary-fixed": "#102000", "primary": "#093521", "outline": "#717972", "soft-green": "#DBF5D1", "primary-fixed-dim": "#a4d1b4", "border-subtle": "#E5DDCF", "primary-container": "#234c36", "inverse-primary": "#a4d1b4", "deep-text": "#243126", "tertiary": "#1d3400", "muted-text": "#706F63", "surface-container": "#f5ede1", "on-secondary-fixed-variant": "#4f471a", "on-tertiary": "#ffffff", "surface-container-highest": "#e9e1d6", "secondary-container": "#ede0a5", "error": "#ba1a1a", "inverse-surface": "#343028", "inverse-on-surface": "#f8f0e4", "error-alert": "#B42318", "tertiary-fixed-dim": "#b1d18a", "white-surface": "#FFFFFF", "surface-container-low": "#fbf3e7", "on-tertiary-container": "#9cbb76", "surface": "#fff8f1", "on-tertiary-fixed-variant": "#354e16", "on-background": "#1e1b14", "on-primary-fixed-variant": "#264f38", "on-primary-fixed": "#002111", "surface-tint": "#3e674f", "on-secondary": "#ffffff", "surface-bright": "#fff8f1", "secondary-fixed": "#f0e3a8", "on-surface": "#1e1b14", "surface-container-high": "#efe7db", "outline-variant": "#c1c8c1", "on-error-container": "#93000a", "background": "#fff8f1", "on-error": "#ffffff", "surface-container-lowest": "#ffffff", "surface-dim": "#e1d9cd", "surface-variant": "#e9e1d6", "tertiary-container": "#324b13", "on-primary-container": "#8fbc9f", "secondary-fixed-dim": "#d3c78e", "primary-fixed": "#bfedcf", "on-secondary-fixed": "#211c00", "on-secondary-container": "#6c6333", "on-primary": "#ffffff", "tertiary-fixed": "#cdeda3", "on-surface-variant": "#414943" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-sm": "0.5rem", "space-md": "0.75rem", "margin": "1rem", "margin-tablet": "1.5rem", "space-xl": "1.5rem", "space-xxl": "2rem", "margin-desktop": "2.5rem", "space-xs": "0.25rem", "gutter-desktop": "1.5rem", "gutter": "1rem", "space-lg": "1rem" }, "fontFamily": { "label-sm": ["\"Source Serif 4\""], "headline-md": ["Literata"], "title-card": ["Literata"], "display-hero": ["Literata"], "label-lg": ["\"Source Serif 4\""], "headline-lg-mobile": ["Literata"], "body-md": ["\"Source Serif 4\""], "headline-lg": ["Literata"], "label-md": ["\"Source Serif 4\""], "body-lg": ["\"Source Serif 4\""], "display-hero-mobile": ["Literata"], "headline-sm": ["Literata"], "body-sm": ["\"Source Serif 4\"" ] }, "fontSize": { "label-sm": ["0.6875rem", { "lineHeight": "0.875rem", "fontWeight": "600" }], "headline-md": ["1.25rem", { "lineHeight": "1.75rem", "fontWeight": "600" }], "title-card": ["1rem", { "lineHeight": "1.375rem", "fontWeight": "600" }], "display-hero": ["2.5rem", { "lineHeight": "3rem", "fontWeight": "700" }], "label-lg": ["0.875rem", { "lineHeight": "1.25rem", "fontWeight": "600" }], "headline-lg-mobile": ["1.5rem", { "lineHeight": "2rem", "fontWeight": "600" }], "body-md": ["0.9375rem", { "lineHeight": "1.5rem", "fontWeight": "400" }], "headline-lg": ["2rem", { "lineHeight": "2.5rem", "fontWeight": "700" }], "label-md": ["0.75rem", { "lineHeight": "1rem", "fontWeight": "600" }], "body-lg": ["1.125rem", { "lineHeight": "1.75rem", "fontWeight": "400" }], "display-hero-mobile": ["1.875rem", { "lineHeight": "2.25rem", "fontWeight": "700" }], "headline-sm": ["1.125rem", { "lineHeight": "1.5rem", "fontWeight": "600" }], "body-sm": ["0.8125rem", { "lineHeight": "1.25rem", "fontWeight": "400" }] } } } }</script><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head><body class="bg-surface font-body-md text-body-md text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(36,49,38,0.04)] pt-safe"><div class="h-16 px-gutter flex items-center justify-between"><div class="flex items-center gap-space-sm"><button aria-label="Go back" class="w-11 h-11 flex items-center justify-center rounded-full text-primary hover:bg-surface-container active:scale-95 transition-all" onclick="history.back()" type="button"><span class="material-symbols-outlined text-[24px]">arrow_back</span></button><h1 class="font-headline-sm text-headline-sm text-primary tracking-tight">Wish List</h1></div><div class="flex items-center"><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-2 ring-primary-container/20" src="https://lh3.googleusercontent.com/aida/AEtjO1VRU1NQ84lDxXeiay8II1Z6kNBdZUu9NYUc0L75bHS3WMQeVrUo9yYPmwN3X45z7gjy_JWmXrbsTNsOJrFAaLIADzHPAGuf7HQFDQKWTgzgUjj0MwXgkUc8TX6DJt5Z66U48yt8N784BAO0oKe3wIl16Mz_ky3M43_aaFwCSRl9JnSye2SCw0dt-82eyxzrM47zPkJdgS2eG9sYkeKVAVY2y-RQghgXujWT3IeMR7Cs5THb8uH8WyVyLaNNzcshW3t3oDmF0KtBNQ"></div></div></header><main class="flex flex-col relative w-full pt-16 bg-surface min-h-screen"><div class="flex flex-col w-full pb-32">
+<!-- Top Ambient Banner: Delivery Slot Context -->
+<div class="px-margin pt-space-md pb-space-xs">
+<div class="bg-surface-container rounded-xl p-space-md flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-8 h-8 rounded-full bg-soft-green flex items-center justify-center text-primary-container shrink-0">
+<span class="material-symbols-outlined text-[18px]">wb_twilight</span>
+</div>
+<div class="min-w-0">
+<p class="font-label-md text-label-md text-deep-text truncate">Next Sunrise Harvest Route</p>
+<p class="font-body-sm text-body-sm text-muted-text truncate">Sedam Road • 6:30 AM Tomorrow</p>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-primary-container bg-soft-green px-space-sm py-0.5 rounded-full uppercase tracking-wider shrink-0">Slots Open</span>
+</div>
+</div>
+<!-- Header Headline & Quick Actions -->
+<section class="px-margin pt-space-md pb-space-sm">
+<div class="flex items-baseline justify-between">
+<div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-primary tracking-tight">Saved Harvests</h2>
+<p class="font-body-sm text-body-sm text-muted-text mt-0.5" id="savedCountLabel">6 artisanal items saved to your pantry list</p>
+</div>
+<button class="font-label-md text-label-md text-muted-text hover:text-error-alert transition-colors px-2 py-1 rounded-lg" id="clearAllBtn">
+        Clear All
+      </button>
+</div>
+<!-- Filter Category Chips -->
+<div class="flex items-center gap-space-sm overflow-x-auto pt-space-md pb-space-xs -mx-margin px-margin no-scrollbar">
+<button class="filter-chip active shrink-0 px-space-md py-1.5 rounded-full bg-soft-green text-primary font-label-md text-label-md transition-all shadow-sm" data-category="all">
+        All (6)
+      </button>
+<button class="filter-chip shrink-0 px-space-md py-1.5 rounded-full bg-white-surface text-muted-text font-label-md text-label-md transition-all shadow-sm" data-category="veggies">
+        Fresh Veggies (3)
+      </button>
+<button class="filter-chip shrink-0 px-space-md py-1.5 rounded-full bg-white-surface text-muted-text font-label-md text-label-md transition-all shadow-sm" data-category="dairy">
+        Dairy &amp; Ghee (2)
+      </button>
+<button class="filter-chip shrink-0 px-space-md py-1.5 rounded-full bg-white-surface text-muted-text font-label-md text-label-md transition-all shadow-sm" data-category="staples">
+        Staples (1)
+      </button>
+</div>
+</section>
+<!-- Notice: Price Drop & Farm Seasonal Alert -->
+<div class="px-margin py-space-xs">
+<div class="bg-secondary-container/40 rounded-xl p-space-md flex items-start gap-space-sm shadow-sm">
+<div class="w-7 h-7 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[16px]">trending_down</span>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="font-title-card text-title-card text-deep-text">Harvest Price Drop</h4>
+<p class="font-body-sm text-body-sm text-deep-text/80 mt-0.5">2 items received lower orchard rates this morning (Nati Tomatoes down by ₹6/kg).</p>
+</div>
+</div>
+</div>
+<!-- Saved Items Grid / List -->
+<section class="px-margin py-space-md flex flex-col gap-space-md" id="wishlistContainer">
+<!-- Item 1: Gir Cow A2 Bilona Ghee -->
+<article class="wishlist-item bg-white-surface rounded-xl p-space-md shadow-sm flex flex-col gap-space-sm relative transition-all" data-category="dairy" data-instock="true" data-price="620">
+<div class="flex gap-space-md">
+<div class="relative w-24 h-24 rounded-lg overflow-hidden bg-surface-container shrink-0">
+<img class="w-full h-full object-cover" data-alt="Traditional pure golden Indian A2 Gir cow ghee glowing inside a vintage transparent glass jar with jute string tied around lid, soft morning sunshine on wooden rustic farm table" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD64sBZVoYRdttrrtRaOM4mdrdRZIK6mx7_uj6TqhwZJBJBUe0aMiA5jcrgPy094VVOCpen2aeC08uvXploPN5Fxpgydbj0_FrOs1wvwDYSEnOQmUy1M4oHga1yv234rUZfvXIWIT6PWRsv41bMkce0QOsVEXt-K_ncUZqOjocZFYyeOJnFOLFOgCfacfVoRYpVA-a-xyvmVPvqKvRRK_UiH3Xh0bD0UYObqfekaHp_XW2ybT9U3YcK">
+<span class="absolute top-1 left-1 bg-soft-green text-primary font-label-sm text-label-sm px-1.5 py-0.5 rounded-full">Sedam Farm</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-start justify-between gap-1">
+<h3 class="font-title-card text-title-card text-deep-text leading-tight">Gir Cow A2 Bilona Ghee</h3>
+<button aria-label="Remove Gir Cow Ghee from saved list" class="remove-btn text-muted-text hover:text-error-alert transition-colors p-1" title="Remove item">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</button>
+</div>
+<p class="font-label-md text-label-md text-muted-text mt-0.5">500ml Glass Jar • Hand-Churned</p>
+<div class="flex items-center gap-1 mt-1 text-secondary font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px] text-secondary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="">4.9 (184 reviews)</span>
+</div>
+<div class="flex items-baseline gap-2 mt-2">
+<span class="font-headline-sm text-headline-sm text-primary">₹620</span>
+<span class="font-label-sm text-label-sm text-primary-container bg-soft-green/60 px-1.5 py-0.2 rounded">In Stock</span>
+</div>
+</div>
+</div>
+<div class="pt-space-xs flex items-center justify-between gap-space-md">
+<p class="font-body-sm text-body-sm text-muted-text flex items-center gap-1 truncate">
+<span class="material-symbols-outlined text-[15px] text-primary">verified</span> Authentic Curd-Churned
+        </p>
+<button class="add-to-basket-btn bg-primary-container text-white-surface px-space-lg py-2 rounded-xl font-label-lg text-label-lg hover:brightness-110 active:scale-95 transition-all flex items-center gap-1 shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">shopping_bag</span>
+          Move to Basket
+        </button>
+</div>
+</article>
+<!-- Item 2: Desi Country Tomatoes (Nati Tomato) -->
+<article class="wishlist-item bg-white-surface rounded-xl p-space-md shadow-sm flex flex-col gap-space-sm relative transition-all" data-category="veggies" data-instock="true" data-price="42">
+<div class="flex gap-space-md">
+<div class="relative w-24 h-24 rounded-lg overflow-hidden bg-surface-container shrink-0">
+<img class="w-full h-full object-cover" data-alt="Cluster of fresh plump heirloom desi country nati tomatoes with dewy green stems resting in an artisanal woven bamboo basket under warm sunbeam" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQpdebisEGzVIsmVhJP871BHmyurUpW0v7QDN-k0nrioDczpeMuQwl45fBvWcsPMaxS6mM_uZW8wMHOhS5Fb75e07YvN17rirqeLupTNDOTxeiuzbzYkTf4kt6fF0DeXZPgyLguVAowC-iTWKIPWm7Cub4fGC5hXzuCkj77dra90_JLHPOFfDp_OZm3Qs-3bPFohCKUTgR__4p0PrJTOI7qCsLJPu7RPGIGx7OsamnuMncrh5wF3zB">
+<span class="absolute top-1 left-1 bg-secondary-container text-on-secondary-container font-label-sm text-label-sm px-1.5 py-0.5 rounded-full">-12% Off</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-start justify-between gap-1">
+<h3 class="font-title-card text-title-card text-deep-text leading-tight">Desi Country Tomatoes (Nati)</h3>
+<button aria-label="Remove Nati Tomatoes" class="remove-btn text-muted-text hover:text-error-alert transition-colors p-1" title="Remove item">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</button>
+</div>
+<p class="font-label-md text-label-md text-muted-text mt-0.5">1 kg • Sunrise Vine-Harvest</p>
+<div class="flex items-center gap-1 mt-1 text-primary-container font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">eco</span>
+<span class="">Naturally Tart &amp; Juicy</span>
+</div>
+<div class="flex items-baseline gap-2 mt-2">
+<span class="font-headline-sm text-headline-sm text-primary">₹42</span>
+<span class="font-body-sm text-body-sm text-muted-text line-through">₹48</span>
+</div>
+</div>
+</div>
+<div class="pt-space-xs flex items-center justify-between gap-space-sm">
+<!-- Compact Inline Stepper -->
+<div class="flex items-center bg-surface-container rounded-lg p-0.5 shadow-inner">
+<button class="stepper-dec w-7 h-7 flex items-center justify-center text-primary font-bold hover:bg-surface rounded transition-all">-</button>
+<span class="stepper-val font-label-md text-label-md text-deep-text px-2 min-w-[24px] text-center">1</span>
+<button class="stepper-inc w-7 h-7 flex items-center justify-center text-primary font-bold hover:bg-surface rounded transition-all">+</button>
+</div>
+<button class="add-to-basket-btn bg-primary-container text-white-surface px-space-lg py-2 rounded-xl font-label-lg text-label-lg hover:brightness-110 active:scale-95 transition-all flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">shopping_bag</span>
+          Move to Basket
+        </button>
+</div>
+</article>
+<!-- Item 3: Organic Palak / Spinach -->
+<article class="wishlist-item bg-white-surface rounded-xl p-space-md shadow-sm flex flex-col gap-space-sm relative transition-all" data-category="veggies" data-instock="true" data-price="24">
+<div class="flex gap-space-md">
+<div class="relative w-24 h-24 rounded-lg overflow-hidden bg-surface-container shrink-0">
+<img class="w-full h-full object-cover" data-alt="Crisp lush tender green organic palak spinach bundle tied with natural twine, dewy water droplets sparkling on rich emerald leaves, neutral cream textured background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCj0ern4USDHVA2bYz5P8UpzWpq1rPgtndlXRjLXWLN-kDtGMD-b85iyOaUi6hwwJwiKyGx0t9mHX_KSGoMgiDWjxJodX8Z84U6pSgJbsaBg2mjzfrJALP4I6boKFQEizf81kPVDyz3M9Ei6VRYjkZiMHvlOL3SIY4cSob5LHANwiHHlF1LIDa_k8M7BLdN8L56uoXZOMyB4u5_Ztdl3wCcgdZGQxILOXVKG8DO41oCgbLOYE1TIQqH">
+<span class="absolute top-1 left-1 bg-soft-green text-primary font-label-sm text-label-sm px-1.5 py-0.5 rounded-full">Harvest 5 AM</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-start justify-between gap-1">
+<h3 class="font-title-card text-title-card text-deep-text leading-tight">Organic Palak (Spinach)</h3>
+<button aria-label="Remove Palak" class="remove-btn text-muted-text hover:text-error-alert transition-colors p-1" title="Remove item">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</button>
+</div>
+<p class="font-label-md text-label-md text-muted-text mt-0.5">250g Bunch • Zero Chemical Wash</p>
+<p class="font-label-sm text-label-sm text-primary mt-1">Chemical-free soil grown</p>
+<div class="flex items-baseline gap-2 mt-2">
+<span class="font-headline-sm text-headline-sm text-primary">₹24</span>
+<span class="font-label-sm text-label-sm text-primary-container bg-soft-green/60 px-1.5 py-0.2 rounded">In Stock</span>
+</div>
+</div>
+</div>
+<div class="pt-space-xs flex items-center justify-between gap-space-md">
+<p class="font-body-sm text-body-sm text-muted-text truncate">Single farm batch from Aland</p>
+<button class="add-to-basket-btn bg-primary-container text-white-surface px-space-lg py-2 rounded-xl font-label-lg text-label-lg hover:brightness-110 active:scale-95 transition-all flex items-center gap-1 shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">shopping_bag</span>
+          Move to Basket
+        </button>
+</div>
+</article>
+<!-- Item 4: Alphonso Mangoes (Out of Season / Seasonal Card) -->
+<article class="wishlist-item bg-surface-container/60 rounded-xl p-space-md shadow-sm flex flex-col gap-space-sm relative transition-all" data-category="veggies" data-instock="false" data-price="0">
+<div class="flex gap-space-md">
+<div class="relative w-24 h-24 rounded-lg overflow-hidden bg-surface-container shrink-0 opacity-80">
+<img class="w-full h-full object-cover grayscale-[30%]" data-alt="Artisanal golden yellow Alphonso mangoes nestled in golden dry hay straw inside traditional handcrafted wooden crate, soft warm orchard sunlight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVFllJzAhU1_Puu8cA88Hu_0En6ZHHYAkuT-Ki04psQz49JD74fTtjik5l1Ljy5ZK617M7Gjxh9WPKq6CsNyUcXQZXkaxqzSPaQmRKhRNfhQWbcyjNmH0GKdF_e3ss34UM0-aBMt4EtwxkL-Q0U_jjkoQUaFHaj9Bp_42DuzaFnlpwFTTdKWWVFyVKu88NuwKhS0-9AVKQCg6RtotNONdUbJa__QECajycLqpFQD572jv811S9wB5b">
+<span class="absolute top-1 left-1 bg-surface-dim text-deep-text font-label-sm text-label-sm px-1.5 py-0.5 rounded-full">Seasonal</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-start justify-between gap-1">
+<h3 class="font-title-card text-title-card text-deep-text leading-tight">Alphonso Mangoes (Dharwad Cluster)</h3>
+<button aria-label="Remove Alphonso Mangoes" class="remove-btn text-muted-text hover:text-error-alert transition-colors p-1" title="Remove item">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</button>
+</div>
+<p class="font-label-md text-label-md text-muted-text mt-0.5">1 Dozen (Box) • Naturally Ripened</p>
+<div class="mt-2 bg-surface-container p-1.5 rounded-lg flex items-center gap-1.5 text-secondary">
+<span class="material-symbols-outlined text-[16px]">calendar_month</span>
+<span class="font-label-sm text-label-sm">Next harvest expected in April</span>
+</div>
+</div>
+</div>
+<div class="pt-space-xs flex items-center justify-between bg-white-surface p-space-sm rounded-xl">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-primary">notifications_active</span>
+<span class="font-label-md text-label-md text-deep-text">Notify when plucked</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" id="mangoNotifyToggle" type="checkbox">
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white-surface after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+</article>
+<!-- Item 5: Stone-Ground Kalaburagi Toor Dal (Low Stock) -->
+<article class="wishlist-item bg-white-surface rounded-xl p-space-md shadow-sm flex flex-col gap-space-sm relative transition-all" data-category="staples" data-instock="true" data-price="185">
+<div class="flex gap-space-md">
+<div class="relative w-24 h-24 rounded-lg overflow-hidden bg-surface-container shrink-0">
+<img class="w-full h-full object-cover" data-alt="Authentic unpolished yellow Kalaburagi toor pigeon peas dal poured out in a warm clay bowl, whole lentils with genuine dusty natural texture, bright daylight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZMqhARb0ZzXe_Ybc_0AoTb8Njv8yHQiL5HkOjRUzQz4Lb__hcpGD98t5Q58aOyd38aWJ_7Vy0JL_LvvjNecQ3iHmUsu85zXzxt-BMfebH4BFRjrcdmWXRa4XBvBu8tQoUJY6Ey62fm5xKirFvuLFOb8nLpEUNoiE2CFDlzkiO6y5GeCeOcG0iNcsLt8QOQvQDn3lTiO29DGhHetXWWHM_2lFkOh9UXYfb37qXElrGLng8cPKuRQwV">
+<span class="absolute top-1 left-1 bg-error-container text-error-alert font-label-sm text-label-sm px-1.5 py-0.5 rounded-full">Only 4 left</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-start justify-between gap-1">
+<h3 class="font-title-card text-title-card text-deep-text leading-tight">Kalaburagi Toor Dal (GI Tagged)</h3>
+<button aria-label="Remove Kalaburagi Toor Dal" class="remove-btn text-muted-text hover:text-error-alert transition-colors p-1" title="Remove item">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</button>
+</div>
+<p class="font-label-md text-label-md text-muted-text mt-0.5">1 kg • Unpolished &amp; Stone-Milled</p>
+<div class="flex items-center gap-1 mt-1 text-secondary font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">local_police</span>
+<span class="">Certified Geographical Indication</span>
+</div>
+<div class="flex items-baseline gap-2 mt-2">
+<span class="font-headline-sm text-headline-sm text-primary">₹185</span>
+<span class="font-label-sm text-label-sm text-error-alert">Hurry, freshly milled batch selling fast</span>
+</div>
+</div>
+</div>
+<div class="pt-space-xs flex items-center justify-between gap-space-md">
+<p class="font-body-sm text-body-sm text-muted-text truncate">Cooks creamy without soda</p>
+<button class="add-to-basket-btn bg-primary-container text-white-surface px-space-lg py-2 rounded-xl font-label-lg text-label-lg hover:brightness-110 active:scale-95 transition-all flex items-center gap-1 shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">shopping_bag</span>
+          Move to Basket
+        </button>
+</div>
+</article>
+<!-- Item 6: Fresh Malai Paneer -->
+<article class="wishlist-item bg-white-surface rounded-xl p-space-md shadow-sm flex flex-col gap-space-sm relative transition-all" data-category="dairy" data-instock="true" data-price="110">
+<div class="flex gap-space-md">
+<div class="relative w-24 h-24 rounded-lg overflow-hidden bg-surface-container shrink-0">
+<img class="w-full h-full object-cover" data-alt="Block of ultra soft creamy white farm fresh cottage cheese malai paneer cut into cubes on vintage dark green slate with fresh mint leaves beside it" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7Y7JcCoE9iTOcjFhObDLRkODaQtpvE_x_gtjdXl7w-Eg7PTAD8GVD5PhnmlFI0lJMcr2bGLOOHYv1YraSBiWsYoFa-zKyL3hlTRCbfR-OXdr2Jlg_ymFbHSAm8zOhBFm6CAw6qv8EtKiTb5iXtW8tThM6HH5RcxzoHycHzfO1UQ3WBabi1voFaBSSon2R0WlFaRXzRePwkTcwGqvcUNG6_jBS4EkRXW9a-dUVcAPAYNgMA_ihfYtK">
+<span class="absolute top-1 left-1 bg-soft-green text-primary font-label-sm text-label-sm px-1.5 py-0.5 rounded-full">Daily 4 AM</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-start justify-between gap-1">
+<h3 class="font-title-card text-title-card text-deep-text leading-tight">Fresh Farm Malai Paneer</h3>
+<button aria-label="Remove Malai Paneer" class="remove-btn text-muted-text hover:text-error-alert transition-colors p-1" title="Remove item">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</button>
+</div>
+<p class="font-label-md text-label-md text-muted-text mt-0.5">200g Vacuum Pack • Zero Preservatives</p>
+<div class="flex items-center gap-1 mt-1 text-primary-container font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">water_drop</span>
+<span class="">Melt-in-mouth texture</span>
+</div>
+<div class="flex items-baseline gap-2 mt-2">
+<span class="font-headline-sm text-headline-sm text-primary">₹110</span>
+<span class="font-label-sm text-label-sm text-primary-container bg-soft-green/60 px-1.5 py-0.2 rounded">In Stock</span>
+</div>
+</div>
+</div>
+<div class="pt-space-xs flex items-center justify-between gap-space-md">
+<p class="font-body-sm text-body-sm text-muted-text truncate">Best consumed within 48h</p>
+<button class="add-to-basket-btn bg-primary-container text-white-surface px-space-lg py-2 rounded-xl font-label-lg text-label-lg hover:brightness-110 active:scale-95 transition-all flex items-center gap-1 shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">shopping_bag</span>
+          Move to Basket
+        </button>
+</div>
+</article>
+</section>
+<!-- Empty State (Hidden initially, shown if all items cleared) -->
+<div class="hidden px-margin py-12 flex-col items-center text-center" id="emptyWishlistState">
+<div class="w-20 h-20 rounded-full bg-surface-container flex items-center justify-center text-primary-container mb-space-md">
+<span class="material-symbols-outlined text-[36px]">park</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-deep-text">Your Pantry Wishlist is Clear</h3>
+<p class="font-body-md text-body-md text-muted-text max-w-xs mt-1">Tap the heart on any farm-fresh harvest or staple to hold it for your next sunrise delivery.</p>
+<button class="mt-space-lg bg-primary-container text-white-surface px-space-xl py-space-sm rounded-xl font-label-lg text-label-lg shadow-sm" onclick="window.location.reload()">
+      Explore Today's Pluckings
+    </button>
+</div>
+<!-- Frequent Farm Reorders Section -->
+<section class="px-margin pt-space-lg pb-space-md">
+<div class="flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-primary text-[20px]">cached</span>
+<h3 class="font-headline-sm text-headline-sm text-primary">Frequent Farm Reorders</h3>
+</div>
+<span class="font-label-sm text-label-sm text-muted-text">Based on your kitchen rhythm</span>
+</div>
+<div class="flex gap-space-md overflow-x-auto -mx-margin px-margin pb-space-xs no-scrollbar">
+<!-- Quick Reorder Card 1 -->
+<div class="min-w-[200px] bg-white-surface rounded-xl p-space-md shadow-sm flex flex-col justify-between shrink-0">
+<div>
+<div class="w-full h-24 rounded-lg bg-surface-container overflow-hidden mb-2">
+<img class="w-full h-full object-cover" data-alt="Traditional terracotta pot with organic raw cold pressed groundnut peanut oil, rustic farm setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-KCn_cM-Vw5KxivVQptZktVwwiXnmwh5sfLUxHqJhC43xiajzOiMZ2NxL52bnil_GyLcH4Bm9QzH5PmVu1sD4xC03gu4tGUuJ2fhK606RGwPJ7lnqs1GJ-5FAl73EfRoKb88uWjN7vUqi2cMmrlJGUXR0tBzv_HP2dKS5IrtXOPsCe8ZHwIUzpka0yMNZlCY_7cAAa6GCEiaJXdfJ4WKLaC5o7VOWF41_tbBMAxWsTh8nuDTdGohu">
+</div>
+<h4 class="font-title-card text-title-card text-deep-text truncate">Wood-Pressed Groundnut Oil</h4>
+<p class="font-label-sm text-label-sm text-muted-text">1 Litre Tin • Marachekku</p>
+</div>
+<div class="mt-space-md flex items-center justify-between">
+<span class="font-headline-sm text-headline-sm text-primary">₹340</span>
+<button class="quick-add-btn w-8 h-8 rounded-full bg-soft-green text-primary flex items-center justify-center hover:bg-primary hover:text-white-surface transition-all active:scale-95 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+</div>
+<!-- Quick Reorder Card 2 -->
+<div class="min-w-[200px] bg-white-surface rounded-xl p-space-md shadow-sm flex flex-col justify-between shrink-0">
+<div>
+<div class="w-full h-24 rounded-lg bg-surface-container overflow-hidden mb-2">
+<img class="w-full h-full object-cover" data-alt="Fresh raw whole country coriander seeds in a rustic brass spice measuring spoon on wooden background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBenFJ8G6SS-1jEdKNtmkeYl2zUIpx63wj4-h0CE9eMvMJ31NF0RKG_7WdGcQsJKcEQIIgm5735ktIjHN4U00foJab339sX7YCtTkx4GUIgPUNitU2VhjG488dxmVB9jDN8RLdJ94xHJ6X2bNbcA3axuXKluSlruKiaKF5UsKjx7GrD11sguE89Il2vzrNLaaury2gZSV-Do3NqoceBHcRgNSZzJfGgwF1HarRLcPsiv9MV2ipptnV">
+</div>
+<h4 class="font-title-card text-title-card text-deep-text truncate">Heirloom Coriander Leaves</h4>
+<p class="font-label-sm text-label-sm text-muted-text">100g bunch • High Aroma</p>
+</div>
+<div class="mt-space-md flex items-center justify-between">
+<span class="font-headline-sm text-headline-sm text-primary">₹18</span>
+<button class="quick-add-btn w-8 h-8 rounded-full bg-soft-green text-primary flex items-center justify-center hover:bg-primary hover:text-white-surface transition-all active:scale-95 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+</div>
+<!-- Quick Reorder Card 3 -->
+<div class="min-w-[200px] bg-white-surface rounded-xl p-space-md shadow-sm flex flex-col justify-between shrink-0">
+<div>
+<div class="w-full h-24 rounded-lg bg-surface-container overflow-hidden mb-2">
+<img class="w-full h-full object-cover" data-alt="Natural brown whole country unrefined jaggery cubes on handcrafted organic paper leaf packaging" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDaimEC99CGqbyf8M-Nn5M9LtxQvnpWRdMrul3h9EV2M7jsuvxompZ2wOw3Vhhuxb5wWvsL__z1TOgXf2NAKF9YdKj3Yhxyl2hWgIHC4ublyW65MprUMzAjafccVRZI7Xv6k_oR0OnzVxKoLV9YJpjDJSEdr37FgnK4WBE0Qb17_5zquME1UqE65lr0eoc_-uDypvN-4VaikafKzWv7Gcte0UkWJcYJJhj6IPIVy7J1Yxy3i05AV3Sp">
+</div>
+<h4 class="font-title-card text-title-card text-deep-text truncate">Natural Kolhapur Jaggery</h4>
+<p class="font-label-sm text-label-sm text-muted-text">1 kg Block • Chemical Free</p>
+</div>
+<div class="mt-space-md flex items-center justify-between">
+<span class="font-headline-sm text-headline-sm text-primary">₹95</span>
+<button class="quick-add-btn w-8 h-8 rounded-full bg-soft-green text-primary flex items-center justify-center hover:bg-primary hover:text-white-surface transition-all active:scale-95 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Farm Assurance Note -->
+<div class="px-margin pt-space-xs pb-space-lg">
+<div class="bg-surface-container/50 rounded-xl p-space-md flex items-center gap-space-md">
+<span class="material-symbols-outlined text-[28px] text-primary shrink-0">yard</span>
+<p class="font-body-sm text-body-sm text-deep-text">
+<strong>The Heera Promise:</strong> We never harvest early or artificially store produce. If nature causes a crop delay, your basket reflects genuine farm availability.
+      </p>
+</div>
+</div>
+<!-- Sticky Bottom Summary / Checkout CTA Bar -->
+<div class="fixed bottom-0 left-0 right-0 z-40 bg-white-surface/95 backdrop-blur-md shadow-[0_-4px_16px_rgba(36,49,38,0.08)] px-margin py-3 pb-safe" id="stickyBottomBar">
+<div class="max-w-md mx-auto flex items-center justify-between gap-space-md">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-muted-text" id="inStockCountLabel">5 In-Stock Harvests</span>
+<div class="flex items-baseline gap-1">
+<span class="font-headline-md text-headline-md text-primary" id="bottomTotalPrice">₹981</span>
+<span class="font-label-sm text-label-sm text-muted-text">total</span>
+</div>
+</div>
+<button class="flex-1 max-w-[240px] bg-primary-container text-white-surface py-3 px-space-md rounded-xl font-label-lg text-label-lg flex items-center justify-center gap-2 hover:brightness-110 active:scale-95 transition-all shadow-md" id="addAllToBasketBtn">
+<span class="material-symbols-outlined text-[20px]">shopping_cart_checkout</span>
+<span class="">Add All to Basket</span>
+</button>
+</div>
+</div>
+<!-- Toast Notification Overlay -->
+<div class="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 bg-primary text-white-surface px-space-lg py-space-sm rounded-full font-label-md text-label-md shadow-xl flex items-center gap-2 opacity-0 pointer-events-none transition-all duration-300" id="toastNotification">
+<span class="material-symbols-outlined text-[18px] text-soft-green">check_circle</span>
+<span id="toastMessage" class="">Harvest added to basket</span>
+</div>
+</div>
+<script>
+  (function() {
+    // Interactive state handling
+    const filterChips = document.querySelectorAll('.filter-chip');
+    const wishlistItems = document.querySelectorAll('.wishlist-item');
+    const toast = document.getElementById('toastNotification');
+    const toastMessage = document.getElementById('toastMessage');
+    const emptyState = document.getElementById('emptyWishlistState');
+    const wishlistContainer = document.getElementById('wishlistContainer');
+    const clearAllBtn = document.getElementById('clearAllBtn');
+    const addAllBtn = document.getElementById('addAllToBasketBtn');
+    const inStockCountLabel = document.getElementById('inStockCountLabel');
+    const bottomTotalPrice = document.getElementById('bottomTotalPrice');
+    const savedCountLabel = document.getElementById('savedCountLabel');
+
+    function showToast(msg) {
+      if (!toast) return;
+      toastMessage.textContent = msg;
+      toast.classList.remove('opacity-0', 'pointer-events-none');
+      toast.classList.add('opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('opacity-100');
+        toast.classList.add('opacity-0', 'pointer-events-none');
+      }, 2400);
+    }
+
+    // Category Filtering
+    filterChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        filterChips.forEach(c => {
+          c.classList.remove('bg-soft-green', 'text-primary');
+          c.classList.add('bg-white-surface', 'text-muted-text');
+        });
+        chip.classList.add('bg-soft-green', 'text-primary');
+        chip.classList.remove('bg-white-surface', 'text-muted-text');
+
+        const cat = chip.dataset.category;
+        wishlistItems.forEach(item => {
+          if (cat === 'all' || item.dataset.category === cat) {
+            item.style.display = 'flex';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Remove buttons
+    document.querySelectorAll('.remove-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const item = e.target.closest('.wishlist-item');
+        if (item) {
+          item.style.opacity = '0';
+          item.style.transform = 'scale(0.95)';
+          setTimeout(() => {
+            item.remove();
+            recalculateTotals();
+            showToast('Harvest removed from saved list');
+          }, 200);
+        }
+      });
+    });
+
+    // Add to basket actions
+    document.querySelectorAll('.add-to-basket-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const card = e.target.closest('.wishlist-item');
+        const title = card ? card.querySelector('h3').innerText : 'Harvest';
+        btn.innerHTML = '<span class="material-symbols-outlined text-[18px]">done</span> In Basket';
+        btn.classList.add('bg-soft-green', 'text-primary');
+        btn.classList.remove('bg-primary-container', 'text-white-surface');
+        showToast(title + ' moved to your basket');
+      });
+    });
+
+    // Stepper controls
+    document.querySelectorAll('.stepper-inc').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const parent = e.target.closest('.flex');
+        const valSpan = parent.querySelector('.stepper-val');
+        let current = parseInt(valSpan.innerText, 10);
+        valSpan.innerText = current + 1;
+        recalculateTotals();
+      });
+    });
+
+    document.querySelectorAll('.stepper-dec').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const parent = e.target.closest('.flex');
+        const valSpan = parent.querySelector('.stepper-val');
+        let current = parseInt(valSpan.innerText, 10);
+        if (current > 1) {
+          valSpan.innerText = current - 1;
+          recalculateTotals();
+        }
+      });
+    });
+
+    // Quick add in reorders
+    document.querySelectorAll('.quick-add-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        btn.innerHTML = '<span class="material-symbols-outlined text-[16px]">check</span>';
+        btn.classList.add('bg-primary', 'text-white-surface');
+        showToast('Frequent harvest added to basket');
+      });
+    });
+
+    // Add all in-stock button
+    if (addAllBtn) {
+      addAllBtn.addEventListener('click', () => {
+        document.querySelectorAll('.add-to-basket-btn').forEach(b => {
+          b.innerHTML = '<span class="material-symbols-outlined text-[18px]">done</span> In Basket';
+          b.classList.add('bg-soft-green', 'text-primary');
+          b.classList.remove('bg-primary-container', 'text-white-surface');
+        });
+        showToast('All in-stock harvests moved to basket!');
+      });
+    }
+
+    // Clear all button
+    if (clearAllBtn) {
+      clearAllBtn.addEventListener('click', () => {
+        wishlistItems.forEach(item => item.remove());
+        recalculateTotals();
+      });
+    }
+
+    function recalculateTotals() {
+      const remainingItems = document.querySelectorAll('.wishlist-item');
+      let inStockCount = 0;
+      let total = 0;
+
+      remainingItems.forEach(item => {
+        const isStock = item.dataset.instock === 'true';
+        const price = parseInt(item.dataset.price || '0', 10);
+        const stepper = item.querySelector('.stepper-val');
+        const qty = stepper ? parseInt(stepper.innerText, 10) : 1;
+
+        if (isStock) {
+          inStockCount += 1;
+          total += (price * qty);
+        }
+      });
+
+      if (savedCountLabel) {
+        savedCountLabel.innerText = remainingItems.length + ' artisanal items saved to your pantry list';
+      }
+      if (inStockCountLabel) {
+        inStockCountLabel.innerText = inStockCount + ' In-Stock Harvests';
+      }
+      if (bottomTotalPrice) {
+        bottomTotalPrice.innerText = '₹' + total;
+      }
+
+      if (remainingItems.length === 0) {
+        if (emptyState) emptyState.classList.remove('hidden');
+        if (emptyState) emptyState.classList.add('flex');
+        const stickyBar = document.getElementById('stickyBottomBar');
+        if (stickyBar) stickyBar.style.display = 'none';
+      }
+    }
+  })();
+</script></main>
+
+</body></html>

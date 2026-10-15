@@ -1,0 +1,32 @@
+HEERA ORGANICS — ANTIGRAVITY PLAIN-TEXT REFERENCE PACK
+
+PURPOSE
+This pack provides Antigravity-readable .txt versions of the project documents, plus the original Stitch screen assets in an extracted folder. Use these to plan and build the Heera Organics customer grocery app.
+
+READ IN THIS ORDER
+1. 01_MASTER_PROJECT_BRIEF.txt
+2. 02_FLUTTER_FRONTEND_BUILD_SPEC.txt
+3. 03_STITCH_DESIGN_SYSTEM.txt
+4. Inspect the screenshots and HTML references under Stitch_References/.
+5. 04_REQUIREMENTS_SRS.txt and 05_SYSTEM_DESIGN_SDD.txt for broader project context.
+6. 06_IMPLEMENTATION_PLAN.txt for the current SDLC sequencing.
+7. 07_ODOO_MIGRATION_PLAN_FUTURE_REFERENCE.txt is background only; do not implement the backend during the frontend phase.
+8. 08_PREVIOUS_UI_SPEC_SUPPLEMENT_ONLY.txt is older supplementary UI context only. It does not override the current Stitch screens or frontend build specification.
+
+SOURCE-OF-TRUTH / PRIORITY RULES
+- Current frontend scope: customer-facing Heera Organics grocery app only; do not build dairy operations/admin/delivery-boy screens in this app.
+- Platform and stack: Flutter + Dart for Android and iOS. This supersedes older technology assumptions in background SRS/SDD content that may mention Next.js, React Native, TypeScript, or PWA for the grocery customer frontend.
+- Visual authority: supplied Stitch screen PNGs and the Stitch design system. The frontend build specification explains how to implement them in Flutter. Do not invent a replacement design.
+- Backend: use mock data/repositories for the frontend phase. Odoo Community with PostgreSQL is the planned business backend later. Do not connect to PostgreSQL directly or invent unverified Odoo endpoints.
+- Preserve the separate dairy app; do not modify its repository.
+- Stitch code.html files are reference artifacts for layout/interaction, not files to ship or embed in a WebView. Rebuild the UI natively in Flutter.
+- The original Stitch design system is supplied as 03_STITCH_DESIGN_SYSTEM.txt. It was copied from the DESIGN.md included in the Stitch export.
+- Keep repository structure, IDE Explorer, test, documentation, and GitHub workflow requirements from the master brief and frontend build spec.
+
+FILES
+- All documents in the root of this pack are plain UTF-8 text (.txt) to make them easy to open in IDEs that reject .md attachments.
+- Stitch_References/ contains extracted screen folders with screen.png and code.html references. Its design token file is named DESIGN.txt to keep it text-based.
+- Screenshot assets are not converted to text; keep them as image references for visual matching.
+
+HOW TO USE
+Extract this ZIP somewhere accessible from your Heera Organics Antigravity workspace. Place the text docs under the project's docs/reference/ folder (or another clearly documented reference folder) and keep Stitch_References/ under design/reference/. Avoid adding unnecessary duplicate copies to the app bundle. Commit only intended project references and assets, and never include secrets.

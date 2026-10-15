@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400..700&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "error-container": "#ffdad6", "secondary": "#685f30", "on-tertiary-fixed": "#102000", "primary": "#093521", "outline": "#717972", "soft-green": "#DBF5D1", "primary-fixed-dim": "#a4d1b4", "border-subtle": "#E5DDCF", "primary-container": "#234c36", "inverse-primary": "#a4d1b4", "deep-text": "#243126", "tertiary": "#1d3400", "muted-text": "#706F63", "surface-container": "#f5ede1", "on-secondary-fixed-variant": "#4f471a", "on-tertiary": "#ffffff", "surface-container-highest": "#e9e1d6", "secondary-container": "#ede0a5", "error": "#ba1a1a", "inverse-surface": "#343028", "inverse-on-surface": "#f8f0e4", "error-alert": "#B42318", "tertiary-fixed-dim": "#b1d18a", "white-surface": "#FFFFFF", "surface-container-low": "#fbf3e7", "on-tertiary-container": "#9cbb76", "surface": "#fff8f1", "on-tertiary-fixed-variant": "#354e16", "on-background": "#1e1b14", "on-primary-fixed-variant": "#264f38", "on-primary-fixed": "#002111", "surface-tint": "#3e674f", "on-secondary": "#ffffff", "surface-bright": "#fff8f1", "secondary-fixed": "#f0e3a8", "on-surface": "#1e1b14", "surface-container-high": "#efe7db", "outline-variant": "#c1c8c1", "on-error-container": "#93000a", "background": "#fff8f1", "on-error": "#ffffff", "surface-container-lowest": "#ffffff", "surface-dim": "#e1d9cd", "surface-variant": "#e9e1d6", "tertiary-container": "#324b13", "on-primary-container": "#8fbc9f", "secondary-fixed-dim": "#d3c78e", "primary-fixed": "#bfedcf", "on-secondary-fixed": "#211c00", "on-secondary-container": "#6c6333", "on-primary": "#ffffff", "tertiary-fixed": "#cdeda3", "on-surface-variant": "#414943" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-sm": "0.5rem", "space-md": "0.75rem", "margin": "1rem", "margin-tablet": "1.5rem", "space-xl": "1.5rem", "space-xxl": "2rem", "margin-desktop": "2.5rem", "space-xs": "0.25rem", "gutter-desktop": "1.5rem", "gutter": "1rem", "space-lg": "1rem" }, "fontFamily": { "label-sm": ["\"Source Serif 4\""], "headline-md": ["Literata"], "title-card": ["Literata"], "display-hero": ["Literata"], "label-lg": ["\"Source Serif 4\""], "headline-lg-mobile": ["Literata"], "body-md": ["\"Source Serif 4\""], "headline-lg": ["Literata"], "label-md": ["\"Source Serif 4\""], "body-lg": ["\"Source Serif 4\""], "display-hero-mobile": ["Literata"], "headline-sm": ["Literata"], "body-sm": ["\"Source Serif 4\"" ] }, "fontSize": { "label-sm": ["0.6875rem", { "lineHeight": "0.875rem", "fontWeight": "600" }], "headline-md": ["1.25rem", { "lineHeight": "1.75rem", "fontWeight": "600" }], "title-card": ["1rem", { "lineHeight": "1.375rem", "fontWeight": "600" }], "display-hero": ["2.5rem", { "lineHeight": "3rem", "fontWeight": "700" }], "label-lg": ["0.875rem", { "lineHeight": "1.25rem", "fontWeight": "600" }], "headline-lg-mobile": ["1.5rem", { "lineHeight": "2rem", "fontWeight": "600" }], "body-md": ["0.9375rem", { "lineHeight": "1.5rem", "fontWeight": "400" }], "headline-lg": ["2rem", { "lineHeight": "2.5rem", "fontWeight": "700" }], "label-md": ["0.75rem", { "lineHeight": "1rem", "fontWeight": "600" }], "body-lg": ["1.125rem", { "lineHeight": "1.75rem", "fontWeight": "400" }], "display-hero-mobile": ["1.875rem", { "lineHeight": "2.25rem", "fontWeight": "700" }], "headline-sm": ["1.125rem", { "lineHeight": "1.5rem", "fontWeight": "600" }], "body-sm": ["0.8125rem", { "lineHeight": "1.25rem", "fontWeight": "400" }] } } } }</script><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-body-md text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(36,49,38,0.04)] pt-safe"><div class="h-16 px-gutter flex items-center justify-between"><div class="flex items-center gap-space-sm"><button aria-label="Go back" class="w-11 h-11 flex items-center justify-center rounded-full text-primary hover:bg-surface-container active:scale-95 transition-all" onclick="history.back()" type="button"><span class="material-symbols-outlined text-[24px]">arrow_back</span></button><h1 class="font-headline-sm text-headline-sm text-primary tracking-tight">Product Quick View &amp; Filter Overlays</h1></div><div class="flex items-center"><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-2 ring-primary-container/20" src="https://lh3.googleusercontent.com/aida/AEtjO1VRU1NQ84lDxXeiay8II1Z6kNBdZUu9NYUc0L75bHS3WMQeVrUo9yYPmwN3X45z7gjy_JWmXrbsTNsOJrFAaLIADzHPAGuf7HQFDQKWTgzgUjj0MwXgkUc8TX6DJt5Z66U48yt8N784BAO0oKe3wIl16Mz_ky3M43_aaFwCSRl9JnSye2SCw0dt-82eyxzrM47zPkJdgS2eG9sYkeKVAVY2y-RQghgXujWT3IeMR7Cs5THb8uH8WyVyLaNNzcshW3t3oDmF0KtBNQ"/></div></div></header><main class="flex flex-col relative w-full pt-16 bg-surface min-h-screen"><div class="flex flex-col w-full relative pb-safe">
+<!-- Mode Switcher Pill Control (Simulator for Reviewing Overlays) -->
+<div class="sticky top-0 z-40 px-gutter pt-space-sm pb-space-sm bg-surface/90 backdrop-blur-md">
+<div class="flex items-center justify-between p-1 bg-surface-container rounded-full shadow-sm">
+<button class="flex-1 py-1.5 px-3 text-center rounded-full font-label-md text-label-md transition-all duration-200 bg-primary text-on-primary shadow-sm flex items-center justify-center gap-1" id="tab-quickview" onclick="switchModalMode('quickview')">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+<span>Quick View</span>
+</button>
+<button class="flex-1 py-1.5 px-3 text-center rounded-full font-label-md text-label-md transition-all duration-200 text-muted-text hover:text-deep-text flex items-center justify-center gap-1" id="tab-filters" onclick="switchModalMode('filters')">
+<span class="material-symbols-outlined text-[16px]">tune</span>
+<span>Filters (3)</span>
+</button>
+<button class="flex-1 py-1.5 px-3 text-center rounded-full font-label-md text-label-md transition-all duration-200 text-muted-text hover:text-deep-text flex items-center justify-center gap-1" id="tab-sort" onclick="switchModalMode('sort')">
+<span class="material-symbols-outlined text-[16px]">swap_vert</span>
+<span>Sort By</span>
+</button>
+</div>
+</div>
+<!-- Background Catalog Page Preview (Tonal Scrim / Frost Effect Behind Overlays) -->
+<div class="px-gutter pt-space-sm select-none opacity-40 pointer-events-none filter blur-[0.6px]">
+<div class="flex items-center justify-between mb-space-sm">
+<div>
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">Morning Harvest</span>
+<h2 class="font-headline-sm text-headline-sm text-deep-text">Fresh Vegetables (Kalaburagi Belt)</h2>
+</div>
+<span class="font-label-md text-label-md text-muted-text">28 items</span>
+</div>
+<!-- Product Grid Preview -->
+<div class="grid grid-cols-2 gap-space-md mb-6">
+<div class="bg-white-surface rounded-xl p-space-sm shadow-sm flex flex-col">
+<div class="w-full aspect-square rounded-lg bg-surface-container-low mb-2 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Plump heirloom desi tomatoes with morning dew clinging to emerald green calyx, rustic terracotta background, soft early morning sunlight." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDo4sCCX8gzPIxJGSAN5hHLSswi4MGUC4VRZVtdKHDLRXy8x0dwmcRCerixY1hyonUztAavcT0xffJyn-IE7ScXOv1lvPotTTwI1vUDga0NoUP4cVBZ7EG14SiqggPvuBxyeYfI3TNbWPbepKQX_houqcx47TjHL5GmX0-C5UpJQPPM2Y_IwbbRBbCsAhKFRBD1wK0u9P9-eCjKch903CO8AU9Up4Ilgw4xTtW9uruRUOqYAqqw0ffF"/>
+</div>
+<span class="font-label-sm text-label-sm text-muted-text">1 kg</span>
+<h3 class="font-title-card text-title-card text-deep-text truncate">Nati Tomatoes</h3>
+<span class="font-headline-sm text-headline-sm text-primary mt-1">₹42</span>
+</div>
+<div class="bg-white-surface rounded-xl p-space-sm shadow-sm flex flex-col">
+<div class="w-full aspect-square rounded-lg bg-surface-container-low mb-2 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Freshly harvested tender country cluster beans in a woven bamboo basket on natural linen, rich tactile organic farm mood." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhXvqHv1VG4KGHJJhGWlyStxL59iBxv2DvGrolkMDbceUxAsB1gSgA2DEXtSEJPPRD417eiKQsk0EpG7lTWq4V4h-91P7xC7-g4Vlz-d_s0OZe8yOc6RjZ7UO_Iyw3xdT8PX4QzW_HU4M1TsSAgmOt9SmSd00T0kd0ClZYxx8qre74dVs2q3_AIhlk0NDyQOPvhlz4D1rlXyx5TNeVsJoT_i5pAmQU4IpRMzvR6TOgwiAdi3sDXwu-"/>
+</div>
+<span class="font-label-sm text-label-sm text-muted-text">500 g</span>
+<h3 class="font-title-card text-title-card text-deep-text truncate">Gawar Phali (Beans)</h3>
+<span class="font-headline-sm text-headline-sm text-primary mt-1">₹28</span>
+</div>
+</div>
+</div>
+<!-- MODAL 1: PRODUCT QUICK VIEW BOTTOM SHEET (Active by Default, Section 8.2) -->
+<div class="relative z-30 mt-[-70px] bg-white-surface rounded-t-[1.5rem] shadow-xl pt-3 pb-8 px-gutter transition-all duration-300" id="modal-quickview">
+<!-- Drag Handle Indicator -->
+<div class="w-12 h-1.5 bg-surface-container-highest rounded-full mx-auto mb-3"></div>
+<!-- Top Action Bar -->
+<div class="flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-1.5 flex-wrap">
+<span class="inline-flex items-center gap-1 bg-soft-green text-primary font-label-sm text-label-sm px-2.5 py-1 rounded-full">
+<span class="material-symbols-outlined text-[13px]" style="font-variation-settings: 'FILL' 1;">water_drop</span>
+          Dew-Harvested 5 AM
+        </span>
+<span class="inline-flex items-center bg-secondary-container text-deep-text font-label-sm text-label-sm px-2.5 py-1 rounded-full">
+          Sedam Cluster
+        </span>
+</div>
+<button aria-label="Close" class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-deep-text active:scale-95 transition-transform" onclick="dismissQuickView()">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Hero Media Spotlight & Thumbnails -->
+<div class="flex flex-col gap-2 mb-space-md">
+<div class="relative w-full h-52 rounded-xl bg-surface-container-low overflow-hidden">
+<img class="w-full h-full object-cover transition-opacity duration-300" data-alt="Close up photograph of vibrant desi nati country tomatoes, rich ruby red skin with natural speckled texture, freshly harvested with green stem, resting on farm wooden surface bathed in warm morning light." id="quickview-main-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZtvFe13TZvR3k9GtAWsA89QLQSU85pHSsOy8dC44ulUSYiZv8GCKY_NBK8xaEPulXL599bhDEZyzPundalH3dza9_Y-IiGRebu6ySzQXIyvvcvgZ-IRJc1I_9evJYZMv-CVh9dSArClWUdxoQUMj3i7Dd0Nsr7L3GhIGciuUUMV_zAfb4CBx3mKFITIxFOvjD6M-gA4plfPNelA_l9T2rER0aEU3xiTTdGy-9iwh3mfvq2APwrJJ3"/>
+<div class="absolute bottom-2.5 left-2.5 bg-deep-text/80 text-white-surface text-label-sm font-label-sm px-2 py-0.5 rounded-full backdrop-blur-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">verified</span>
+          Heritage GI Sedam
+        </div>
+</div>
+<!-- Thumbnail Ribbon -->
+<div class="flex items-center gap-2 overflow-x-auto py-1">
+<button class="thumb-btn flex-shrink-0 w-14 h-14 rounded-lg overflow-hidden bg-surface-container-high ring-2 ring-primary transition-all" onclick="selectThumb(0)">
+<img class="w-full h-full object-cover" data-alt="Sunlit organic tomato vine with ripe desi country tomatoes, agricultural farm background in morning." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFXHRKoHtqv9RJUyvNxeTfwhajwNSgb1sURbJzDf0WYUvIAC8YFYET3KzodSX1bEy08eGW3ftE2h9SI-JHw-maQgTyNNzY8HjpCCstTSJy1Pr1n_UqpduwGWsNQ6O9AF0f5utdDc_zli1N8qJsDdVzLcf7qeOweufu4rBE4zFETIf52MA716LLp36YlazmZZLjTlh-xlzHJ6a0fpZSGw1MWArJCxixnlvAbINtwovIrcMI9q9IHSuX"/>
+</button>
+<button class="thumb-btn flex-shrink-0 w-14 h-14 rounded-lg overflow-hidden bg-surface-container-high ring-0 transition-all opacity-70 hover:opacity-100" onclick="selectThumb(1)">
+<img class="w-full h-full object-cover" data-alt="Heirloom tomatoes neatly placed in woven cane baskets during morning sorting at Sedam organic farm cooperative." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAANPOCm8Fz4KX7MqvFxEBP2Fpw03XpNtrAAtwgoBxTxrgkr7pJ7hUpUIJCem2sthaUXE2inLbS-UPhR7LLTjwrhOusLomKpVP7JlqdB7Hd3WGLREa20C6s2aX4O0eSJ4IUX7kKNd29ApbumTQugkdmPod_eVpZRLmvQ4ZPeLm0jpdkfUFJeuCyCAqDoJXuFuC-aOmA8lDFXvnn2ecdec55Vic00ADirukzlOmUyX7Bf5fUh6Svfe9p"/>
+</button>
+<button class="thumb-btn flex-shrink-0 w-14 h-14 rounded-lg overflow-hidden bg-surface-container-high ring-0 transition-all opacity-70 hover:opacity-100" onclick="selectThumb(2)">
+<img class="w-full h-full object-cover" data-alt="Eco-friendly brown paper bag package filled with freshly inspected organic tomatoes tied with jute twine." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWlXS0dmMa-dzpg9y_SZYF1U3NspfTv6S3cCZxjcF3VEUT6ZPz6vkw4q5lwU9w2MVDsX4OnjGvwO4VXGebDVEDGendOZJlAnbE_TzowxqMvbjEMedBhsOFPFrA8FNj2I4yzl95oF5HOUjzt0yYdlA7LNNSQ-riZFe5T5CpgnENgoBDx900-R5uY9H7EQrXgNG3IbsWUcGKDJRracK3dUbtSOMev7a9T_-zVZK81ZupK-f2sPJQc8WC"/>
+</button>
+<div class="flex-shrink-0 px-2 py-1 text-label-sm font-label-sm text-muted-text">
+          3 farm views
+        </div>
+</div>
+</div>
+<!-- Product Title & Stock Status -->
+<div class="mb-space-md">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-deep-text leading-tight mb-1">
+        Desi Country Tomatoes <span class="font-body-md text-muted-text">(Nati Tomato)</span>
+</h2>
+<div class="flex items-center gap-2 mt-1">
+<div class="flex items-baseline gap-1.5">
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-primary font-bold">₹42</span>
+<span class="font-body-sm text-body-sm text-muted-text line-through">₹48</span>
+<span class="font-label-sm text-label-sm text-primary bg-soft-green px-1.5 py-0.5 rounded">12% OFF</span>
+</div>
+<span class="text-muted-text text-body-sm">•</span>
+<span class="font-body-sm text-body-sm text-muted-text">₹42 / 1 kg</span>
+</div>
+<p class="font-label-sm text-label-sm text-secondary flex items-center gap-1 mt-1.5">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-secondary"></span>
+        In Stock • 14 kg left from 5 AM Sedam dispatch
+      </p>
+</div>
+<!-- Variant / Pack Size Selector (Section 8.1 & 8.2) -->
+<div class="mb-space-md">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-md text-label-md text-deep-text">Select Pack Size</span>
+<span class="font-label-sm text-label-sm text-muted-text">Sedam Cluster Harvest</span>
+</div>
+<div class="grid grid-cols-3 gap-2">
+<!-- Variant 1 -->
+<button class="variant-btn flex flex-col p-2.5 rounded-xl bg-surface-container-low text-left transition-all hover:bg-surface-container active:scale-98" onclick="selectVariant(this, '₹22', 22)">
+<span class="font-label-md text-label-md text-deep-text">500 g</span>
+<span class="font-title-card text-title-card text-primary font-bold mt-0.5">₹22</span>
+<span class="font-label-sm text-label-sm text-muted-text mt-0.5">₹44/kg</span>
+</button>
+<!-- Variant 2 (Selected Default) -->
+<button class="variant-btn flex flex-col p-2.5 rounded-xl bg-soft-green text-left transition-all active:scale-98 shadow-sm" onclick="selectVariant(this, '₹42', 42)">
+<div class="flex items-center justify-between w-full">
+<span class="font-label-md text-label-md text-primary font-bold">1 kg</span>
+<span class="material-symbols-outlined text-primary text-[14px]">check_circle</span>
+</div>
+<span class="font-title-card text-title-card text-primary font-bold mt-0.5">₹42</span>
+<span class="font-label-sm text-label-sm text-primary/80 mt-0.5">Regular pantry</span>
+</button>
+<!-- Variant 3 -->
+<button class="variant-btn flex flex-col p-2.5 rounded-xl bg-surface-container-low text-left transition-all hover:bg-surface-container active:scale-98" onclick="selectVariant(this, '₹80', 80)">
+<div class="flex items-center justify-between w-full">
+<span class="font-label-md text-label-md text-deep-text">2 kg</span>
+<span class="font-label-sm text-label-sm text-secondary bg-secondary-container px-1 rounded">Save ₹4</span>
+</div>
+<span class="font-title-card text-title-card text-primary font-bold mt-0.5">₹80</span>
+<span class="font-label-sm text-label-sm text-muted-text mt-0.5">Family Bag</span>
+</button>
+</div>
+</div>
+<!-- Provenance & Key Attributes Strip -->
+<div class="grid grid-cols-3 gap-2 p-3 bg-surface-container-low rounded-xl mb-space-lg">
+<div class="flex flex-col items-center text-center">
+<span class="material-symbols-outlined text-primary text-[20px] mb-1">eco</span>
+<span class="font-label-sm text-label-sm text-deep-text font-semibold">Residue Free</span>
+<span class="font-body-sm text-[0.6875rem] text-muted-text leading-tight mt-0.5">Zero chemical spray</span>
+</div>
+<div class="flex flex-col items-center text-center">
+<span class="material-symbols-outlined text-primary text-[20px] mb-1">local_florist</span>
+<span class="font-label-sm text-label-sm text-deep-text font-semibold">Naturally Tart</span>
+<span class="font-body-sm text-[0.6875rem] text-muted-text leading-tight mt-0.5">High natural pectin</span>
+</div>
+<div class="flex flex-col items-center text-center">
+<span class="material-symbols-outlined text-primary text-[20px] mb-1">local_shipping</span>
+<span class="font-label-sm text-label-sm text-deep-text font-semibold">Van Dispatch</span>
+<span class="font-body-sm text-[0.6875rem] text-muted-text leading-tight mt-0.5">By 6:30 AM Slot</span>
+</div>
+</div>
+<!-- Stepper & Sticky Add Action Drawer (Section 8.2) -->
+<div class="flex items-center gap-space-md pt-space-xs">
+<!-- Quantity Stepper -->
+<div class="flex items-center bg-surface-container-high rounded-xl p-1 shadow-inner h-12">
+<button aria-label="Decrease quantity" class="w-10 h-10 rounded-lg bg-white-surface flex items-center justify-center text-primary active:scale-90 transition-transform" onclick="updateQty(-1)">
+<span class="material-symbols-outlined text-[18px]">remove</span>
+</button>
+<span class="font-label-lg text-label-lg text-deep-text w-8 text-center font-bold" id="qty-counter">1</span>
+<button aria-label="Increase quantity" class="w-10 h-10 rounded-lg bg-white-surface flex items-center justify-center text-primary active:scale-90 transition-transform" onclick="updateQty(1)">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+<!-- Add to Basket CTA -->
+<button class="flex-1 h-12 bg-primary text-on-primary font-label-lg text-label-lg rounded-xl flex items-center justify-center gap-2 active:brightness-90 transition-all shadow-md" id="add-to-basket-btn" onclick="triggerAddedAnim()">
+<span class="material-symbols-outlined text-[20px]">shopping_bag</span>
+<span id="cta-label">Add to Basket • ₹42</span>
+</button>
+</div>
+<!-- Secondary Traceability Link -->
+<div class="text-center mt-3">
+<a class="inline-flex items-center gap-1 font-label-md text-label-md text-primary hover:underline" href="javascript:void(0)">
+        View Full Details &amp; Farm Traceability
+        <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- MODAL 2: FILTER DRAWER (Section 6.4) -->
+<div class="hidden relative z-30 mt-[-70px] bg-white-surface rounded-t-[1.5rem] shadow-xl pt-3 pb-8 px-gutter transition-all duration-300" id="modal-filters">
+<!-- Drag Handle -->
+<div class="w-12 h-1.5 bg-surface-container-highest rounded-full mx-auto mb-3"></div>
+<!-- Header -->
+<div class="flex items-center justify-between pb-space-sm mb-space-md bg-surface-container-lowest">
+<div>
+<h2 class="font-headline-md text-headline-md text-deep-text">Filter Produce</h2>
+<span class="font-label-sm text-label-sm text-muted-text">14 items match active criteria</span>
+</div>
+<button class="font-label-md text-label-md text-secondary hover:underline" onclick="resetFilters()">
+        Reset All
+      </button>
+</div>
+<!-- Filter Group 1: Category -->
+<div class="mb-space-md">
+<span class="font-label-md text-label-md text-deep-text block mb-2">Produce Category</span>
+<div class="flex flex-wrap gap-2">
+<button class="chip-filter px-3.5 py-1.5 rounded-full font-label-md text-label-md bg-soft-green text-primary flex items-center gap-1" onclick="toggleChip(this)">
+<span class="material-symbols-outlined text-[15px]" style="font-variation-settings: 'FILL' 1;">check</span>
+          Fresh Vegetables
+        </button>
+<button class="chip-filter px-3.5 py-1.5 rounded-full font-label-md text-label-md bg-surface-container-low text-muted-text" onclick="toggleChip(this)">
+          Leafy Greens
+        </button>
+<button class="chip-filter px-3.5 py-1.5 rounded-full font-label-md text-label-md bg-surface-container-low text-muted-text" onclick="toggleChip(this)">
+          Roots &amp; Tubers
+        </button>
+<button class="chip-filter px-3.5 py-1.5 rounded-full font-label-md text-label-md bg-surface-container-low text-muted-text" onclick="toggleChip(this)">
+          Fresh Herbs
+        </button>
+</div>
+</div>
+<!-- Filter Group 2: Sourcing & Harvest Timing -->
+<div class="mb-space-md">
+<span class="font-label-md text-label-md text-deep-text block mb-2">Harvest &amp; Origin</span>
+<div class="grid grid-cols-2 gap-2">
+<label class="flex items-center gap-2.5 p-2.5 rounded-xl bg-surface-container-low cursor-pointer">
+<input checked="" class="w-4 h-4 accent-primary rounded" type="checkbox"/>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-deep-text">Harvested Today</span>
+<span class="font-label-sm text-label-sm text-muted-text">Dispatched 5 AM</span>
+</div>
+</label>
+<label class="flex items-center gap-2.5 p-2.5 rounded-xl bg-surface-container-low cursor-pointer">
+<input checked="" class="w-4 h-4 accent-primary rounded" type="checkbox"/>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-deep-text">Sedam Cluster</span>
+<span class="font-label-sm text-label-sm text-muted-text">Black soil belt</span>
+</div>
+</label>
+<label class="flex items-center gap-2.5 p-2.5 rounded-xl bg-surface-container-low cursor-pointer">
+<input class="w-4 h-4 accent-primary rounded" type="checkbox"/>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-deep-text">GI Tagged</span>
+<span class="font-label-sm text-label-sm text-muted-text">Certified origin</span>
+</div>
+</label>
+<label class="flex items-center gap-2.5 p-2.5 rounded-xl bg-surface-container-low cursor-pointer">
+<input class="w-4 h-4 accent-primary rounded" type="checkbox"/>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-deep-text">Desi Heritage Seed</span>
+<span class="font-label-sm text-label-sm text-muted-text">Non-hybrid</span>
+</div>
+</label>
+</div>
+</div>
+<!-- Filter Group 3: Price Ceiling -->
+<div class="mb-space-lg">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-md text-label-md text-deep-text">Price Range</span>
+<span class="font-label-sm text-label-sm text-primary font-bold">Under ₹150 / kg</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="flex-1 py-2 px-3 rounded-lg bg-surface-container-low font-label-md text-label-md text-muted-text text-center">Under ₹50</button>
+<button class="flex-1 py-2 px-3 rounded-lg bg-soft-green font-label-md text-label-md text-primary font-bold text-center">₹50 – ₹150</button>
+<button class="flex-1 py-2 px-3 rounded-lg bg-surface-container-low font-label-md text-label-md text-muted-text text-center">₹150+</button>
+</div>
+</div>
+<!-- Filter Action Buttons -->
+<div class="flex items-center gap-3 pt-2">
+<button class="h-12 px-5 rounded-xl bg-surface-container text-deep-text font-label-lg text-label-lg active:scale-95 transition-transform" onclick="switchModalMode('quickview')">
+        Back
+      </button>
+<button class="flex-1 h-12 rounded-xl bg-primary text-on-primary font-label-lg text-label-lg flex items-center justify-center gap-2 shadow-md active:scale-98 transition-transform" onclick="switchModalMode('quickview')">
+<span>Apply Filters (14 Items)</span>
+<span class="material-symbols-outlined text-[18px]">check</span>
+</button>
+</div>
+</div>
+<!-- MODAL 3: SORT OPTIONS DRAWER (Section 6.5) -->
+<div class="hidden relative z-30 mt-[-70px] bg-white-surface rounded-t-[1.5rem] shadow-xl pt-3 pb-8 px-gutter transition-all duration-300" id="modal-sort">
+<!-- Drag Handle -->
+<div class="w-12 h-1.5 bg-surface-container-highest rounded-full mx-auto mb-3"></div>
+<!-- Header -->
+<div class="flex items-center justify-between pb-space-sm mb-space-md">
+<div>
+<h2 class="font-headline-md text-headline-md text-deep-text">Sort Produce</h2>
+<span class="font-label-sm text-label-sm text-muted-text">Freshness-first ranking</span>
+</div>
+<button aria-label="Close" class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-deep-text" onclick="switchModalMode('quickview')">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Sort Options Radio List -->
+<div class="space-y-2 mb-space-lg">
+<!-- Option 1: Selected Default -->
+<label class="sort-option-row flex items-center justify-between p-3.5 rounded-xl bg-soft-green cursor-pointer transition-colors" onclick="selectSortOption(this)">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-[20px]" style="font-variation-settings: 'FILL' 1;">recommend</span>
+<div>
+<span class="font-label-lg text-label-lg text-primary block">Recommended &amp; Curated</span>
+<span class="font-body-sm text-body-sm text-deep-text/70">Top seasonal picks from Sedam farmers</span>
+</div>
+</div>
+<div class="w-5 h-5 rounded-full bg-primary flex items-center justify-center text-white-surface">
+<span class="material-symbols-outlined text-[14px]">check</span>
+</div>
+</label>
+<!-- Option 2 -->
+<label class="sort-option-row flex items-center justify-between p-3.5 rounded-xl bg-surface-container-low cursor-pointer transition-colors hover:bg-surface-container" onclick="selectSortOption(this)">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-muted-text text-[20px]">nest_clock_farsight_analog</span>
+<div>
+<span class="font-label-lg text-label-lg text-deep-text block">Harvest Freshness (Earliest Picked)</span>
+<span class="font-body-sm text-body-sm text-muted-text">Sorted by hour harvested today</span>
+</div>
+</div>
+<div class="w-5 h-5 rounded-full border-2 border-outline-variant"></div>
+</label>
+<!-- Option 3 -->
+<label class="sort-option-row flex items-center justify-between p-3.5 rounded-xl bg-surface-container-low cursor-pointer transition-colors hover:bg-surface-container" onclick="selectSortOption(this)">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-muted-text text-[20px]">arrow_downward</span>
+<div>
+<span class="font-label-lg text-label-lg text-deep-text block">Price: Low to High</span>
+<span class="font-body-sm text-body-sm text-muted-text">Budget daily staples first</span>
+</div>
+</div>
+<div class="w-5 h-5 rounded-full border-2 border-outline-variant"></div>
+</label>
+<!-- Option 4 -->
+<label class="sort-option-row flex items-center justify-between p-3.5 rounded-xl bg-surface-container-low cursor-pointer transition-colors hover:bg-surface-container" onclick="selectSortOption(this)">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-muted-text text-[20px]">grade</span>
+<div>
+<span class="font-label-lg text-label-lg text-deep-text block">Customer Favorites &amp; Rating</span>
+<span class="font-body-sm text-body-sm text-muted-text">4.8+ stars with highest re-orders</span>
+</div>
+</div>
+<div class="w-5 h-5 rounded-full border-2 border-outline-variant"></div>
+</label>
+</div>
+<!-- Apply Sort Button -->
+<button class="w-full h-12 rounded-xl bg-primary text-on-primary font-label-lg text-label-lg flex items-center justify-center gap-2 shadow-md active:scale-98 transition-transform" onclick="switchModalMode('quickview')">
+<span>Confirm Sort Order</span>
+<span class="material-symbols-outlined text-[18px]">done</span>
+</button>
+</div>
+</div>
+<script>
+  let currentQuantity = 1;
+  let activeUnitPrice = 42;
+
+  function switchModalMode(mode) {
+    const qvModal = document.getElementById('modal-quickview');
+    const flModal = document.getElementById('modal-filters');
+    const stModal = document.getElementById('modal-sort');
+
+    const tabQv = document.getElementById('tab-quickview');
+    const tabFl = document.getElementById('tab-filters');
+    const tabSt = document.getElementById('tab-sort');
+
+    // Hide all modals
+    qvModal.classList.add('hidden');
+    flModal.classList.add('hidden');
+    stModal.classList.add('hidden');
+
+    // Reset tab styles
+    [tabQv, tabFl, tabSt].forEach(tab => {
+      tab.className = "flex-1 py-1.5 px-3 text-center rounded-full font-label-md text-label-md transition-all duration-200 text-muted-text hover:text-deep-text flex items-center justify-center gap-1";
+    });
+
+    const activeTabClasses = "flex-1 py-1.5 px-3 text-center rounded-full font-label-md text-label-md transition-all duration-200 bg-primary text-on-primary shadow-sm flex items-center justify-center gap-1";
+
+    if (mode === 'quickview') {
+      qvModal.classList.remove('hidden');
+      tabQv.className = activeTabClasses;
+    } else if (mode === 'filters') {
+      flModal.classList.remove('hidden');
+      tabFl.className = activeTabClasses;
+    } else if (mode === 'sort') {
+      stModal.classList.remove('hidden');
+      tabSt.className = activeTabClasses;
+    }
+  }
+
+  function updateQty(delta) {
+    currentQuantity = Math.max(1, currentQuantity + delta);
+    document.getElementById('qty-counter').innerText = currentQuantity;
+    updateBasketCTA();
+  }
+
+  function selectVariant(buttonEl, priceStr, priceNum) {
+    activeUnitPrice = priceNum;
+    const allVariants = document.querySelectorAll('.variant-btn');
+    allVariants.forEach(btn => {
+      btn.className = "variant-btn flex flex-col p-2.5 rounded-xl bg-surface-container-low text-left transition-all hover:bg-surface-container active:scale-98";
+      const checkIcon = btn.querySelector('.material-symbols-outlined');
+      if (checkIcon && checkIcon.innerText === 'check_circle') {
+        checkIcon.remove();
+      }
+    });
+
+    buttonEl.className = "variant-btn flex flex-col p-2.5 rounded-xl bg-soft-green text-left transition-all active:scale-98 shadow-sm";
+    updateBasketCTA();
+  }
+
+  function updateBasketCTA() {
+    const total = currentQuantity * activeUnitPrice;
+    const ctaLabel = document.getElementById('cta-label');
+    if (ctaLabel) {
+      ctaLabel.innerText = `Add to Basket • ₹${total}`;
+    }
+  }
+
+  function selectThumb(index) {
+    const thumbs = document.querySelectorAll('.thumb-btn');
+    thumbs.forEach((t, i) => {
+      if (i === index) {
+        t.className = "thumb-btn flex-shrink-0 w-14 h-14 rounded-lg overflow-hidden bg-surface-container-high ring-2 ring-primary transition-all opacity-100";
+      } else {
+        t.className = "thumb-btn flex-shrink-0 w-14 h-14 rounded-lg overflow-hidden bg-surface-container-high ring-0 transition-all opacity-70 hover:opacity-100";
+      }
+    });
+  }
+
+  function toggleChip(chip) {
+    const hasCheck = chip.querySelector('.material-symbols-outlined');
+    if (hasCheck) {
+      chip.className = "chip-filter px-3.5 py-1.5 rounded-full font-label-md text-label-md bg-surface-container-low text-muted-text";
+      hasCheck.remove();
+    } else {
+      chip.className = "chip-filter px-3.5 py-1.5 rounded-full font-label-md text-label-md bg-soft-green text-primary flex items-center gap-1";
+      const icon = document.createElement('span');
+      icon.className = "material-symbols-outlined text-[15px]";
+      icon.style.fontVariationSettings = "'FILL' 1";
+      icon.innerText = "check";
+      chip.prepend(icon);
+    }
+  }
+
+  function resetFilters() {
+    const checkboxes = document.querySelectorAll('#modal-filters input[type="checkbox"]');
+    checkboxes.forEach(cb => cb.checked = false);
+  }
+
+  function selectSortOption(labelEl) {
+    const rows = document.querySelectorAll('.sort-option-row');
+    rows.forEach(r => {
+      r.className = "sort-option-row flex items-center justify-between p-3.5 rounded-xl bg-surface-container-low cursor-pointer transition-colors hover:bg-surface-container";
+      const icon = r.querySelector('.material-symbols-outlined');
+      if (icon) icon.className = "material-symbols-outlined text-muted-text text-[20px]";
+      const radioCircle = r.lastElementChild;
+      radioCircle.className = "w-5 h-5 rounded-full border-2 border-outline-variant";
+      radioCircle.innerHTML = "";
+    });
+
+    labelEl.className = "sort-option-row flex items-center justify-between p-3.5 rounded-xl bg-soft-green cursor-pointer transition-colors";
+    const activeIcon = labelEl.querySelector('.material-symbols-outlined');
+    if (activeIcon) activeIcon.className = "material-symbols-outlined text-primary text-[20px]";
+    const radioCircle = labelEl.lastElementChild;
+    radioCircle.className = "w-5 h-5 rounded-full bg-primary flex items-center justify-center text-white-surface";
+    radioCircle.innerHTML = '<span class="material-symbols-outlined text-[14px]">check</span>';
+  }
+
+  function triggerAddedAnim() {
+    const btn = document.getElementById('add-to-basket-btn');
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<span class="material-symbols-outlined text-[20px]">check_circle</span><span>Added to Basket!</span>';
+    btn.classList.add('bg-secondary');
+    setTimeout(() => {
+      btn.innerHTML = originalText;
+      btn.classList.remove('bg-secondary');
+    }, 1400);
+  }
+
+  function dismissQuickView() {
+    switchModalMode('filters');
+  }
+</script></main>
+</body></html>

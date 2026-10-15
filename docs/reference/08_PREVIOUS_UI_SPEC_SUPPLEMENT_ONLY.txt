@@ -1,0 +1,1101 @@
+# Heera Organics — Stitch Design Specification
+
+> **Project:** Heera Organics — Quick Grocery App  
+> **Tagline:** Naturally Grown, Honestly Delivered  
+> **Product type:** Mobile-first B2C grocery and dairy shopping experience  
+> **Primary market:** Local delivery, beginning with serviceable areas in and around Kalaburagi  
+> **Backend:** Odoo (product catalogue, inventory, pricing, customer data, carts/orders, delivery configuration and other supported business operations)  
+> **Design source:** Follow the attached handwritten reference image, `componnts,pages.png`, as the required page/component checklist. This file expands that sketch into a complete app plan.
+
+---
+
+## 1. Instructions for Stitch
+
+Design a polished, production-minded, mobile-first grocery shopping app for **Heera Organics**. It should feel like a modern quick-commerce app combined with the warmth, natural materials and trust of a farm-to-family organic grocery brand.
+
+Prioritize these outcomes:
+
+1. Customers can confirm delivery availability and reach the product catalogue in very few steps.
+2. Customers can browse categories, discover products, search, filter, sort and add items to the cart with minimal effort.
+3. Freshness, sourcing and brand trust are visible without interrupting the shopping flow.
+4. The experience is clear and fast on small mobile screens, with responsive tablet/desktop layouts where applicable.
+5. Product details, stock, prices, cart totals, promotions and orders are designed to be connected to Odoo. Do not invent a working backend or show fake dynamic data as real.
+
+### Design and prototype rules
+
+- Create all screens and reusable components listed in this specification, not just the home screen.
+- Use realistic grocery product imagery and the brand palette below.
+- Keep the app visually consistent across onboarding, shopping, checkout, orders and profile screens.
+- Include loading, empty, error, success and unavailable states where specified.
+- Use realistic sample data only to demonstrate layout. Clearly treat sample prices, promotions, ratings, delivery estimates and inventory as replaceable demo data.
+- Do not hard-code an unsupported “10-minute delivery” promise, discount, free gift, organic certification, rating or customer count. These must be verified or configured before launch.
+- Use concise, natural English. Product category labels and common shopping actions should be obvious at a glance.
+- The attached sketch is a checklist of required screens and components. Incorporate its ideas into one coherent app rather than creating unrelated mini-designs.
+
+---
+
+## 2. Brand and Visual System
+
+### 2.1 Brand personality
+
+The interface should express:
+
+- Honest and trustworthy
+- Natural, fresh and caring
+- Family-oriented
+- Community-minded and supportive of responsible local farming
+- Convenient and contemporary, not rustic or cluttered
+
+The overall result should be **premium, warm, organic, clean and easy to shop**. Do not make the interface look like a luxury fashion store or a generic supermarket template.
+
+### 2.2 Colour palette
+
+Use these supplied brand colours as the foundation:
+
+| Token | Hex | Intended use |
+|---|---|---|
+| `cream` | `#FAF2E6` | Main page background, warm empty spaces, soft cards |
+| `harvest-yellow` | `#EEE1A6` | Secondary banners, badges, highlights and seasonal promos |
+| `soft-green` | `#DBF5D1` | Benefit cards, soft section backgrounds and selected states |
+| `lime-green` | `#D9FAAF` | Small accents, chips and playful highlights; use sparingly |
+| `forest-green` | `#234C36` | Primary actions, active navigation, strong headings and icons |
+| `deep-text` | `#243126` | Primary body text on light backgrounds |
+| `muted-text` | `#706F63` | Supporting text and metadata |
+| `white` | `#FFFFFF` | Product cards, sheets, inputs and contrast areas |
+| `border` | `#E5DDCF` | Soft dividers, input borders and card outlines |
+| `error` | `#B42318` | Validation errors and failed actions |
+
+Use the supplied palette prominently. Forest green and deep text are supporting contrast colours; ensure text and interactive controls remain readable over pale backgrounds. Do not place light green text on cream or yellow backgrounds when contrast is too low.
+
+### 2.3 Typography
+
+Use the specified fonts:
+
+- **Headings:** `Fraunces_eb41fe`, weight 700 for main page/hero titles and weight 600 for section headings and card titles.
+- **Body text:** `Times New Roman`, weight 400, with sensible line-height and size for mobile readability.
+- **Fallbacks:** `Fraunces`, `Georgia`, serif for headings; `Times New Roman`, serif for body text.
+
+The typography should feel distinctive and editorial while still making a grocery app easy to scan. Product prices, quantity controls, navigation labels and form labels must remain especially legible. Use consistent sizes; avoid excessive italic styles or very long lines.
+
+### 2.4 Shape, spacing and surfaces
+
+- Use a spacing scale based on 4, 8, 12, 16, 20, 24 and 32 px.
+- Use medium rounded corners for cards and inputs (approximately 12–16 px); pill shapes are suitable for filter chips and quick links.
+- Prefer white or cream surfaces with soft borders. Avoid excessive shadows and heavy glassmorphism.
+- Use natural product photography with neutral backdrops and warm daylight.
+- Keep product images consistent in framing, crop, scale and aspect ratio within each list.
+- Use icons with one consistent outline style. Pair icons with text for important actions.
+- Reserve lime green for small accents rather than large blocks of text.
+
+### 2.5 Imagery direction
+
+Use authentic-looking images of fresh vegetables, fruits, grains, pulses, milk, paneer, curd, harvest baskets, farms and grocery deliveries. Prefer real Heera Organics farm, product and packaging photography once available. Do not imply that a stock farm photo shows Heera Organics' own farm. Avoid over-saturated colours, plastic-looking produce, inconsistent image lighting and generic health/medical imagery.
+
+---
+
+## 3. Information Architecture and Navigation
+
+### 3.1 Primary bottom navigation
+
+Use a fixed bottom navigation bar on the main app screens, with five destinations:
+
+1. **Home** — house icon
+2. **Categories** — grid icon
+3. **Search** — search icon; make this a prominent, easy-to-find destination
+4. **Orders** — receipt/package icon
+5. **Profile** — user icon
+
+Requirements:
+
+- Highlight the active item with forest green and a clear selected state.
+- Keep labels visible on mobile for clarity.
+- Respect device safe areas and do not cover checkout buttons or content.
+- Hide the bottom navigation on focused flows where it would distract or conflict with the task, such as OTP entry, payment processing and certain full-screen overlays.
+- Cart access should be visible in the home/shop header and in relevant product sections. Show a cart badge only when the cart has items.
+
+### 3.2 Header pattern
+
+Main shopping screens should use a compact header containing:
+
+- Heera Organics wordmark/logo
+- Delivery location and address shortcut
+- Cart icon with item count when applicable
+- Search field or search shortcut, depending on the screen
+
+On the home page, show delivery location first, then a prominent search field reading **“Search groceries, fruits, dairy…”**. Keep the header compact so product discovery appears quickly.
+
+### 3.3 Quick-links bar
+
+Under the header or search area, include a horizontally scrollable quick-links row. Potential links:
+
+- Shop All
+- Vegetables
+- Fruits
+- Dairy
+- Grains & Pulses
+- Daily Essentials
+- Offers
+
+The links should route to real collections or pages. Highlight a selected link with a soft-green or lime-green chip. Do not let the quick-links bar become a second full navigation menu; it is a shortcut row.
+
+### 3.4 Page and overlay inventory
+
+Create the following screens and interaction states:
+
+**First launch and access**
+1. Splash / Welcome Screen
+2. Location Detection and Location Selection
+3. Serviceability / Area Not Served state
+4. Phone Number Login
+5. OTP Verification
+
+**Primary shopping**
+6. Home Page
+7. Product Categories Page
+8. Category Browsing Page
+9. Product Listing Page
+10. Search Screen and Search Results
+11. Single Product Detail Page
+12. Product Quick View Bottom Sheet
+13. Filter Bottom Sheet / Overlay
+14. Sort-by Bottom Sheet / Menu
+15. Cart
+16. Checkout
+17. Order Placed / Confirmation
+
+**Customer account and after-sales**
+18. Profile Overview
+19. Edit User Profile
+20. Saved Addresses / Location Management
+21. Your Orders
+22. Order Details and Status / Tracking
+23. Help and Support
+24. FAQ Screen
+25. Refer and Earn
+26. Wishlist / Saved Products
+
+**System states and reusable views**
+27. Skeleton Loader states
+28. Empty states
+29. Error / retry states
+30. No results / no products available states
+31. Network unavailable state
+32. Permission denied / location fallback state
+
+Where two items are naturally part of the same screen, use tabs, modal sheets or subviews rather than creating unnecessary duplicate page designs. Still show the relevant state in the Stitch prototype.
+
+---
+
+## 4. First-Launch Experience
+
+The first-launch flow must be minimal, helpful and conversion-focused. Users should be able to reach the catalogue within approximately 2–3 clear steps whenever possible.
+
+### 4.1 Splash / Welcome Screen
+
+**Purpose:** Establish the brand quickly while the app initializes.
+
+**Layout:**
+- Heera Organics logo/wordmark centered
+- Tagline: **“Naturally Grown, Honestly Delivered”**
+- Small illustration or crop of fresh produce
+- Simple loading indicator only if needed
+- Use the cream background with restrained green accents
+
+**Motion:** A short fade-in for the logo and a subtle produce/leaf motion. Keep the experience brief and skippable by the app's normal startup transition; do not make users wait through a long branded animation.
+
+### 4.2 Location Detection and Selection
+
+**Heading:** “Fresh groceries, delivered where you are.”
+
+**Supporting text:** “Set your delivery location to check availability and see products for your area.”
+
+**Actions:**
+- Primary: **Use My Location**
+- Secondary: **Enter Pincode Manually**
+- Optional address search if supported
+
+**Behaviour:**
+- Explain why location is needed before asking for device permission.
+- Request GPS permission only after the user taps the location action.
+- If permission is denied, allow manual pincode/address entry.
+- Check delivery coverage using configured delivery zones/serviceability data.
+- Confirm and validate the exact delivery point before checkout. Do not rely on approximate GPS alone for final delivery instructions.
+- Show the detected address with an edit/change action.
+- Only display a delivery ETA if it is returned by a reliable backend/configuration. Do not hard-code “10 minutes”.
+
+**Serviceability states:**
+- Service available: confirm the location and continue.
+- Service unavailable: say delivery is not available there yet, allow changing the address and offer an optional notify-me flow if implemented.
+- Location unavailable: show manual entry without blocking the user.
+- Location permission denied: provide a clear retry/settings hint without repeatedly prompting.
+
+### 4.3 Phone Number / OTP Login
+
+**Heading:** “Log in to Heera Organics”
+
+**Description:** “Enter your mobile number to continue.”
+
+- Use an India phone number input with `+91` displayed clearly.
+- Provide a single primary CTA: **Continue** / **Get OTP**.
+- OTP entry should use separated visual boxes while behaving as one accessible input.
+- Support paste and OS/browser autofill where available.
+- Show resend countdown and clear validation/error messages.
+- Keep legal/consent text readable.
+- Do not ask for a full profile, health survey or unnecessary information during initial login.
+
+**Access principle:** Let users enter the catalogue quickly. If the backend/product policy allows browsing without a login, provide **Browse as Guest**; require verified contact details only at the appropriate point, such as checkout. If phone verification is required before the catalogue, keep the flow to location plus one-screen phone/OTP verification, without additional profile setup.
+
+### 4.4 First-order incentive
+
+If a new-customer promotion exists in Odoo or the configured promotions system, show a small welcome card on Home, for example:
+
+- “Welcome to Heera Organics”
+- “Your first-order offer is ready”
+- CTA: **Explore Offer**
+
+The actual offer, validity, eligibility and terms must come from configured promotion data. Examples such as free delivery, ₹100 off or a welcome gift are examples only; do not display them as real until approved and configured.
+
+---
+
+## 5. Home Page — Screen Specification
+
+The home screen is the most important screen. Make it feel lively and premium without delaying shopping. Use the attached sketch's components in the order below, adapting spacing and section priority to the screen size.
+
+### 5.1 Home screen section order
+
+1. Delivery location header and cart shortcut
+2. Search bar
+3. Quick-links bar
+4. Animated hero section / featured hero carousel
+5. Value proposition cards
+6. Category grid
+7. Featured promotional cards
+8. Live/popular/trending section
+9. Bestsellers horizontal product card slider
+10. Shop by lifestyle or dietary preference
+11. Shop by concern / curated collection
+12. Promotional banner carousel
+13. Featured products horizontal product list/slider
+14. Farm-to-family story
+15. Fresh dairy and daily essentials slider
+16. “Heera Organics vs. Traditional Grocery Shopping” comparison section
+17. Customer testimonials carousel
+18. FAQ preview
+19. Final shopping CTA
+
+Allow sections such as offers or collections to be rearranged or hidden when no valid content is available. Avoid showing several consecutive promotional banners that look repetitive.
+
+### 5.2 Animated Hero Section
+
+**Headline:** “Good Food Begins at the Farm.”
+
+**Supporting text:** “From our farms to your family, discover fresh groceries, everyday essentials and dairy products sourced with care and delivered to your doorstep.”
+
+**Primary CTA:** Shop Fresh Now  
+**Secondary CTA:** Discover Our Story
+
+**Trust line:** Freshness • Responsible Sourcing • Farm-to-Home Care
+
+**Visual composition:**
+- A large, rounded, image-led hero card using fresh vegetables, fruit, grains or farm imagery.
+- Text area with clear hierarchy, enough negative space and high contrast.
+- One primary CTA and one secondary CTA. Do not add multiple competing buttons.
+- Optional floating product cut-outs, small leaf motifs or subtle organic shapes; keep decoration behind content, never over text or controls.
+- At narrow widths, stack the text and image or use a carefully cropped image with readable text. Never shrink the main headline to an unreadable size.
+
+**Preferred animation sequence:**
+1. Hero card fades/slides in gently on first render.
+2. Headline enters with a short staggered fade-up.
+3. Supporting copy fades in shortly after the heading.
+4. CTA buttons appear with a subtle upward motion.
+5. Produce imagery has a very gentle scale/parallax movement or slow floating motion.
+6. If there are multiple hero slides, transition between them with a soft crossfade or short horizontal slide.
+
+**Timing and interaction rules:**
+- Keep each entrance animation roughly 250–600 ms; avoid long sequences that delay access to shopping.
+- Use smooth, restrained easing; the hero should feel natural, not like a gaming interface.
+- If rotating slides automatically, use a calm interval (approximately 5–7 seconds), stop or pause on user interaction, and include visible pagination/previous/next controls.
+- Do not autoplay sound or video.
+- Respect reduced-motion preferences; switch to static imagery and simple fades when requested.
+- Avoid large layout shifts during loading; use a fixed aspect ratio and a matching skeleton placeholder.
+- The hero CTA must remain available while animations run.
+
+**Possible slide messages:**
+- “Good Food Begins at the Farm.” — farm-fresh produce
+- “Naturally Grown, Honestly Delivered.” — source and quality story
+- “Freshness for Your Everyday Table.” — dairy and daily essentials
+
+Only use slides for products/services genuinely offered. Hero images and text should be editable campaign content where the backend/admin setup supports it.
+
+### 5.3 Value Proposition Cards
+
+**Section heading:** “The Heera Organics Difference”
+
+Display four compact cards, preferably a 2×2 grid on small screens and a four-card row on wider screens:
+
+1. **From Farm to Family** — “We connect customers with products from our farms and trusted growing partners.”
+2. **Naturally Grown** — “We work with farms that follow natural and responsible growing practices.”
+3. **Quality You Can Trust** — “We emphasize careful handling, quality checks and sourcing transparency.”
+4. **Convenient Home Delivery** — “Shop online and get delivery in eligible areas.”
+
+Use an icon or small illustration, a short title and no more than two lines of supporting text. Cards can have subtle hover/tap feedback. Keep claims accurate and avoid promising a certification that has not been supplied.
+
+### 5.4 Category Grid
+
+**Heading:** “Shop by Category” / “Fresh Choices for Every Day”
+
+Initial categories:
+- Fresh Vegetables
+- Fresh Fruits
+- Dairy & Milk Products
+- Grains & Pulses
+- Organic Staples
+- Daily Essentials
+
+**Requirements:**
+- Use square or 4:3 product/category images with consistent framing.
+- Show category label clearly under or over the image.
+- Make the complete card tappable.
+- Show a light pressed state and a subtle desktop hover state.
+- Category names and images must map to actual Odoo/product category identifiers or configured app collections.
+- Adapt to screen width: typically two or three columns on mobile and more columns on tablet/desktop.
+
+### 5.5 Featured Promotional Cards
+
+**Heading:** “Fresh Picks, Special Offers”
+
+Show 2–4 image-led cards, such as:
+- Seasonal Fresh Picks
+- Everyday Essentials
+- Dairy Favourites
+- Weekly Grocery Shopping
+
+Each card includes a short headline, one-line description and relevant CTA (for example, **Shop Seasonal Picks**, **Shop Dairy** or **Shop Essentials**).
+
+Cards should have clearly differentiated imagery but use the same border radius, typography and spacing. Promotional content, discount terms and validity must be configurable. Hide expired campaigns.
+
+### 5.6 Live, Popular and Trending Section
+
+**Heading options:** “Trending Now”, “Popular This Week” or “Frequently Bought”
+
+- Use one label appropriate to the data that is actually available.
+- Show a horizontal product slider with product image, name, pack/unit, current price and Add to Cart action.
+- “Trending” or popularity claims should be based on real catalogue/sales/engagement data. If this is not available initially, label the section “Popular Picks” only after the business curates it.
+- Never display fake live view counts, fake stock urgency or fake “selling fast” messages.
+
+### 5.7 Horizontal Product Card List / Slider
+
+Reuse a single product-card component for Bestsellers, Featured Products, Dairy, Trending and other curated collections.
+
+**Product card anatomy:**
+- Product image with consistent crop
+- Optional verified badge such as New or Bestseller
+- Product name
+- Pack size/unit (for example, 500 g, 1 L or per piece)
+- Price and optional original price only when a valid discount exists
+- Availability or out-of-stock state
+- Quantity control or Add button
+- Optional rating only where genuine reviews exist
+
+**Slider behaviour:**
+- Horizontal touch swipe on phones.
+- Previous/next arrows and optional pagination on larger layouts.
+- The next card can peek into view on mobile to imply horizontal scrolling.
+- Add-to-cart updates the shared cart state and badge immediately, then reconciles with the backend response.
+- Prevent multiple accidental duplicate requests while an add action is loading.
+- Show a lightweight confirmation, not an intrusive modal, when an item is added.
+- If a product becomes unavailable, communicate that state and disable its add button.
+- Maintain consistent card dimensions within a slider.
+
+### 5.8 Shop by Lifestyle / Dietary Preference
+
+**Heading:** “Shop Your Way”
+
+Potential collections, if supported by the live product catalogue:
+- High-Protein Choices
+- Everyday Nutrition
+- Vegan-Friendly Products
+- Dairy Favourites
+- Cooking Essentials
+
+Use visual chips, small collection cards or a horizontal row. Selecting an item opens the corresponding curated collection or applies the relevant product tag filter.
+
+Do not infer or promise medical outcomes, weight gain, disease management or other health results. Labels must be based on verified product ingredients and appropriate internal review. “Vegan” must exclude animal-derived ingredients according to the business's product data; dairy must not be labelled vegan.
+
+### 5.9 Shop by Concern / Curated Collections
+
+**Heading options:** “Explore by Preference” or “Find What Fits Your Kitchen”
+
+Possible filters/collections include vegan, dairy-free, gluten-free or other preferences only when product ingredient and allergen data supports them. Use category/concern cards rather than medical-looking graphics. Never imply a food treats or prevents a medical condition.
+
+### 5.10 Promotional Banner Carousel
+
+Use a wider banner carousel that is visually distinct from the hero and featured promo cards. It may highlight seasonal harvests, active campaigns, product launches or valid discounts.
+
+- Include short copy, a single CTA and a relevant image.
+- Use previous/next controls and clear position dots.
+- Keep text readable across all image crops; add an overlay only if needed.
+- Use configured campaigns and hide expired banners.
+- Do not duplicate the hero carousel content immediately below the hero.
+
+### 5.11 Farm-to-Family Story
+
+**Heading:** “From Our Farm to Your Family.”
+
+**Copy:** “At Heera Organics, we believe that good food begins with good farming. We grow and source wholesome products with care, focusing on freshness, responsible farming practices and transparency throughout the journey from farm to home.”
+
+**CTA:** Learn About Our Farms
+
+Use real farm, harvesting, packing and handling photographs when available. If using temporary imagery, do not falsely present it as a photograph of a Heera Organics farm.
+
+### 5.12 Dairy and Daily Essentials Slider
+
+**Heading:** “Freshness for Your Everyday Table”
+
+Feature available milk, paneer, curd and other dairy/daily essentials. Show actual pack size, storage instructions and delivery/freshness information on the product detail page where relevant. Product availability, price and delivery conditions come from backend data.
+
+### 5.13 Comparison Table — Heera Organics vs. Traditional Grocery Shopping
+
+**Heading:** “A More Thoughtful Way to Shop for Groceries”
+
+Compare the app experience without making unsupported claims about competitors.
+
+Suggested rows:
+- Shopping from home
+- Online product search and filters
+- Current catalogue/availability visibility
+- Available sourcing details
+- Online ordering and checkout
+- Delivery availability by area
+
+On desktop/tablet, use a compact table. On mobile, use a horizontally scrollable comparison table or stacked comparison cards. Use soft brand colours to highlight the Heera Organics column, and do not imply all traditional stores lack the listed benefits. Phrase comparison cells accurately (for example, “Available in the app” and “Varies by retailer”).
+
+### 5.14 Why Choose Heera Organics?
+
+**Heading:** “Quality You Can Feel Good About”
+
+Use four benefit blocks:
+- Responsibly Sourced
+- Freshness with Care
+- Transparent by Nature
+- Convenient Home Delivery
+
+This section should reinforce the brand promise, not repeat the exact value proposition card descriptions. Use concise copy and small icons.
+
+### 5.15 How It Works
+
+**Heading:** “Fresh Food, Made Simple”
+
+1. **Explore** — Browse available groceries and dairy products.
+2. **Order** — Add favourites to your cart and complete checkout securely.
+3. **Delivered** — Receive the order at the selected delivery address.
+
+Use a simple three-step row on larger screens and stacked steps on mobile.
+
+### 5.16 Testimonials Carousel
+
+**Heading:** “Trusted by Our Customers”
+
+Use the following supplied copy as draft content, pending approval and confirmation of permission:
+
+- **Ananya — Kalaburagi:** “I've been getting our weekly veggies from Heera Organics and they have been consistently fresh — nothing wilted or tired.”
+- **Aditya — Kalaburagi:** “The milk and paneer taste clean and fresh. It feels trustworthy, like something straight from the farm.”
+- **Pragati — Kalaburagi:** “Ordering is easy and delivery reaches on time. It honestly makes the week a little less hectic.”
+
+Use a horizontal swipe carousel with previous/next controls where appropriate. Only show real review ratings, verified purchase labels or customer photos when genuinely available and authorised.
+
+### 5.17 FAQ Preview and Final CTA
+
+**FAQ preview heading:** “Have Questions?”
+
+Show three or four common questions with links to the full Help/FAQ page. Include delivery area, freshness, sourcing, returns/replacements and payment methods.
+
+**Final CTA:**
+- Heading: “Bring Farm-Fresh Goodness Home.”
+- Description: “Make everyday grocery shopping simpler with Heera Organics.”
+- Button: **Start Shopping**
+
+In a mobile app, do not add a conventional full-width website footer to every screen. Use the bottom navigation for core app destinations; show legal, social and contact links in the Profile/Help area.
+
+---
+
+## 6. Product Categories and Category Browsing
+
+### 6.1 Product Categories Page
+
+**Purpose:** Show all top-level categories with image tiles and clear labels.
+
+- Category grid with consistent cards.
+- Optional small category description.
+- Search shortcut at the top.
+- Optional category-level banner if configured.
+- Show loading skeletons while category data loads.
+- Tap a category to open its category browsing/listing page.
+
+### 6.2 Category Browsing Page
+
+**Purpose:** Make it easy to browse a category and its subcategories.
+
+- Page title and breadcrumb/back navigation.
+- A compact horizontal subcategory chip row or grid.
+- Optional category side bar on wider layouts.
+- On phones, turn the side bar into a horizontally scrollable subcategory row or a “Browse subcategories” sheet.
+- Product count only when the number is available from the backend.
+- Sort and Filter controls visible without dominating the screen.
+- Preserve selected category/subcategory when users return from a product detail page.
+
+### 6.3 Product Listing Page
+
+**Page header:** Category/collection name, optional short description and result count.
+
+**Toolbar:**
+- Filter
+- Sort by
+- Grid/list layout toggle only if genuinely useful
+- Active filter chips with clear/remove actions
+
+**Product listing:**
+- Responsive two-column grid on typical phone widths; adapt to narrow screens and tablets.
+- Consistent product card layout.
+- Sticky filter/sort row only when it does not consume excessive vertical space.
+- Support pagination or incremental loading as appropriate for the API.
+- Preserve scroll position and applied filters when returning from product details.
+
+**Required states:** Loading skeleton, no products, network error with Retry, product unavailable, and populated listing.
+
+### 6.4 Filter Bottom Sheet / Overlay
+
+Filter options depend on actual catalogue data. Possible filters:
+- Category/subcategory
+- Price range
+- Brand, if relevant
+- Availability / in stock
+- Dietary/product tags only when data is verified
+- Pack size or product attributes where supported
+
+Controls:
+- Apply Filters
+- Clear All
+- Close/dismiss
+- Selected filter chips or counts
+
+Requirements:
+- Preserve the user's selection until Apply or Clear All is chosen.
+- Avoid closing the sheet unexpectedly while making multiple selections.
+- Make the bottom sheet scrollable with a clear header and footer actions.
+- Return filtered results and show active filter chips on the listing page.
+
+### 6.5 Sort-by Overlay / Menu
+
+Suggested options:
+- Recommended
+- Popularity, if supported by real data
+- Price: Low to High
+- Price: High to Low
+- Newest, if product dates are available
+- Customer rating, only when valid ratings exist
+
+Use a radio-list design with one selected option and a Done/Apply action if necessary. Preserve the selection when reopening the menu.
+
+---
+
+## 7. Search Screen
+
+**Purpose:** Make product discovery fast and forgiving.
+
+### Initial state
+- Prominent search field with a clear icon and clear-text button.
+- Placeholder: **“Search groceries, fruits, dairy…”**
+- Recent searches, if stored and the user has not disabled history.
+- Suggested categories and curated searches.
+- Trending queries only if based on real data or manually configured.
+
+### Search-as-you-type state
+- Show relevant product/category suggestions.
+- Debounce requests and display a small loading state.
+- Support spelling-tolerant search if supported by the search service.
+- Keep keyboard focus and provide a clear action.
+
+### Search results state
+- Query heading, result count if available, Filter and Sort controls.
+- Reuse the Product Listing Page's product card and filter components.
+- Show a helpful no-results state with spelling suggestions, browse categories and clear-search action.
+
+### Accessibility
+- Submit search from the keyboard.
+- Make suggestions keyboard/touch accessible.
+- Do not rely on colour alone to indicate selected suggestions.
+
+---
+
+## 8. Single Product Detail Page and Quick View
+
+### 8.1 Product Detail Page
+
+Show:
+- Product image gallery/carousel with swipe and image position indicators
+- Product name
+- Pack size/variant selector where available
+- Current price and valid discount/original price if applicable
+- Stock/availability status
+- Quantity selector and prominent Add to Cart CTA
+- Short product description
+- Ingredients or product attributes when provided
+- Storage instructions and freshness details where relevant
+- Sourcing/producer information when available
+- Delivery availability or ETA only when confirmed by configured data
+- Genuine customer reviews where available
+- Related or frequently bought products slider
+
+**Interaction rules:**
+- Variant selection updates the relevant price, SKU and availability.
+- Disable Add to Cart when unavailable and explain why.
+- Avoid unverified “100% chemical-free”, certified organic or health-benefit claims. Show certification only when a valid product certification record exists.
+- Keep Add to Cart easy to reach. On mobile, a sticky bottom purchase bar may be used, while respecting safe areas.
+
+### 8.2 Product Quick View Bottom Sheet
+
+Provide a quick-view sheet from product cards where useful.
+
+Include the main image, name, unit/size, price, availability, quantity selector and Add to Cart. Add a **View Full Details** link to open the full product detail page.
+
+The sheet must be dismissible by close button and swipe where supported, with proper focus handling and no clipped controls. Do not put every long description into the quick-view sheet.
+
+---
+
+## 9. Cart
+
+**Page title:** “Your Cart”
+
+### Populated cart
+- Product thumbnail, name and pack size
+- Quantity increment/decrement control and remove action
+- Unit price and line total
+- Availability/price-change notice if needed
+- Promo code field only if coupon support is enabled
+- Order summary: subtotal, discounts, delivery charges, taxes/fees and payable total as supplied/calculated by the backend
+- Delivery address/location summary
+- CTA: **Proceed to Checkout**
+- Continue Shopping link
+
+### Empty cart
+- Warm illustration or simple basket icon
+- Heading: “Your basket is waiting for something fresh.”
+- CTA: **Explore Products**
+- Optional category shortcuts
+
+### Cart behaviour
+- Keep cart state consistent across screens and reloads according to the chosen app architecture.
+- Revalidate stock and pricing before checkout.
+- If an item becomes unavailable or the price changes, explain the change and ask the customer to confirm if needed.
+- Show a compact confirmation after item removal with an Undo action if supported.
+- Do not silently remove unavailable items or alter totals without explanation.
+
+---
+
+## 10. Checkout and Order Confirmation
+
+Use a clear, step-based checkout with minimal distraction. On mobile, a single scrolling page with distinct sections may be simpler than several separate screens, provided errors and progress are clear.
+
+### 10.1 Checkout sections
+
+1. **Delivery Address** — choose a saved address or add a new one; verify location/pincode and address notes.
+2. **Delivery Slot / Timing** — show only options actually supported and returned by the backend.
+3. **Order Summary** — products, quantities, subtotal, valid discounts, delivery fees, taxes/fees and total.
+4. **Payment Method** — show enabled payment methods only; include the appropriate secure payment flow.
+5. **Place Order** — clear total and final CTA.
+
+### 10.2 Address form
+
+Possible fields: recipient name, mobile number, house/building, street/area, landmark, pincode, address type and delivery instructions. Mark required fields clearly and avoid asking for data that is not needed. Provide a map pin adjustment only if mapping is actually integrated.
+
+### 10.3 Payment and order placement states
+
+Design:
+- Payment loading/processing state
+- Successful order confirmation
+- Payment failed/retry state
+- Order submission failed/retry state
+- Duplicate-tap prevention while submitting
+
+Do not display “Order placed” until the backend confirms the order. If payment succeeds but order confirmation is delayed, show a clear pending-verification state rather than telling the customer to pay again.
+
+### 10.4 Order confirmation
+
+- Success icon/illustration
+- Order ID from backend
+- Confirmed order summary
+- Delivery address and confirmed ETA/slot if available
+- CTA: **Track Order**
+- Secondary CTA: **Continue Shopping**
+
+---
+
+## 11. Profile, Addresses, Orders and Help
+
+### 11.1 Profile Overview
+
+Show:
+- Customer name/mobile number when authenticated
+- Edit profile shortcut
+- Saved addresses
+- Your Orders
+- Wishlist
+- Refer and Earn
+- Help and Support
+- FAQs
+- Policies and legal information
+- Log Out
+
+Do not display irrelevant data or require a complete profile before shopping.
+
+### 11.2 Edit User Profile
+
+Fields may include name, email and other information required by the business. Mobile number verification/update should use a secure OTP flow. Include Save, Cancel, validation and success/error states.
+
+### 11.3 Saved Addresses / Location Management
+
+- List saved addresses with address labels such as Home or Work.
+- Add, edit, delete and select an address.
+- Show serviceability after a location is chosen.
+- Confirm before deleting a saved address.
+- Clearly mark the currently selected delivery address.
+
+### 11.4 Your Orders
+
+- Tabs or filters such as Active and Past Orders, if supported.
+- Each order card: order ID, date, status, amount and small item preview.
+- Actions: View Details, Track Order, Get Help, Reorder when allowed.
+- Empty state for first-time users: **“Your orders will appear here.”** CTA: Shop Now.
+
+### 11.5 Order Details and Status / Tracking
+
+Show:
+- Order ID and placed date/time
+- Ordered items, quantities and prices
+- Delivery address
+- Payment status and method (without exposing sensitive payment credentials)
+- Order status timeline based only on backend status
+- Delivery estimate only when confirmed
+- Help / report issue CTA
+- Cancel or return action only if the order state and policy allow it
+
+### 11.6 Help and Support
+
+Use a search/help landing page with:
+- FAQs
+- Delivery questions
+- Order and payment questions
+- Missing, damaged or incorrect items
+- Returns/replacements policy
+- Contact support options configured for the business
+- AI chatbot entry point
+
+The chatbot should be visually available but not obscure product content or checkout. It must not pretend it has performed an account action unless a connected service confirms it. Offer escalation to human support where possible.
+
+### 11.7 FAQ Screen
+
+Use collapsible question rows with concise answers. Initial topics:
+- Are your products organic?
+- Do you use chemical pesticides?
+- How do you ensure freshness?
+- Can I return or replace an item?
+- Where do you deliver?
+- Which payment methods can I use?
+
+Answers must reflect approved business policy and verified sourcing practices. Explain that product-specific sourcing/certification details should be shown when available.
+
+### 11.8 Refer and Earn
+
+Create the screen only if the referral programme is actually configured.
+
+- Clear explanation of the benefit and eligibility
+- Unique referral code/link from the backend
+- Copy and Share actions
+- Referral progress/status if supported
+- Terms and conditions
+- Empty/loading/error states
+
+Do not invent cash rewards, amounts or referral counts. If the programme is not active, hide the entry or show an approved “Coming soon” state.
+
+### 11.9 Wishlist / Saved Products
+
+- Product grid/list using the shared Product Card.
+- Remove/save action with clear feedback.
+- Add to Cart from wishlist.
+- Handle out-of-stock items gracefully.
+- Empty state with **Explore Products** CTA.
+
+---
+
+## 12. Skeleton Loaders, Empty, Error and Edge States
+
+Design polished states, not just the happy path.
+
+### Skeleton loaders
+
+- Use cream/soft-grey placeholder blocks matching final image, title, price and button sizes.
+- Use a gentle shimmer only if it does not distract; respect reduced motion.
+- Avoid showing blank pages during product/catalogue loading.
+- Keep layout dimensions stable to prevent content jumping.
+
+### Empty states
+
+Create meaningful empty states for:
+- Empty cart
+- No search results
+- No wishlist items
+- No orders yet
+- Empty category/listing
+- No referral activity
+- No saved address
+
+Each empty state should include a concise explanation and one sensible next action.
+
+### Errors and network states
+
+- Display a human-readable message.
+- Provide Retry where retrying is useful.
+- Preserve user inputs and cart contents when possible.
+- Distinguish “no products found” from “couldn't load products”.
+- Use error styling sparingly and never rely only on red colour.
+
+### Permission and serviceability states
+
+Include location permission denied, GPS unavailable, invalid pincode, address outside service area and temporarily unavailable delivery service. Always provide an alternative or recovery route where possible.
+
+---
+
+## 13. Reusable Component Library
+
+Create reusable components rather than styling each screen independently.
+
+### Navigation and layout
+- AppHeader
+- LocationSelector
+- SearchBar
+- QuickLinksBar
+- BottomNavigationBar
+- CartBadge
+- PageSectionHeader
+- Breadcrumbs / BackHeader
+- SafeAreaContainer
+
+### Shopping and catalogue
+- CategoryCard
+- CategoryGrid
+- SubcategoryGrid
+- SubcategoryChips
+- CategorySidebar (larger screens)
+- ProductCard
+- HorizontalProductSlider
+- ProductImageGallery
+- ProductVariantSelector
+- QuantityStepper
+- AddToCartButton
+- PriceBlock
+- StockStatus
+- RatingSummary (only when real rating data exists)
+- ProductListToolbar
+- FilterBottomSheet
+- SortBottomSheet
+- SearchSuggestionList
+- SearchResultGrid
+
+### Home and brand content
+- AnimatedHero
+- HeroCarouselControls
+- ValuePropositionCard
+- ValuePropositionGrid
+- FeaturedPromoCard
+- FeaturedPromoGrid
+- PromoBannerCarousel
+- TrendingProductSection
+- LifestyleCollectionCard
+- ComparisonTable
+- FarmStorySection
+- TestimonialCarousel
+- FAQAccordion
+- FinalShoppingCTA
+
+### Cart, checkout and account
+- CartItemRow
+- OrderSummary
+- CouponInput (only if supported)
+- AddressCard
+- AddressForm
+- DeliverySlotSelector (only if supported)
+- PaymentMethodSelector
+- OrderStatusTimeline
+- OrderCard
+- ProfileMenuItem
+- ReferralShareCard
+- SupportEntryCard
+
+### System and feedback
+- SkeletonProductCard
+- SkeletonSection
+- EmptyState
+- ErrorState
+- Toast / InlineNotice
+- ConfirmationDialog
+- LoadingButton
+- FormField / ValidationMessage
+- OTPInput
+
+All components should have normal, pressed/hover, disabled, loading and error states where relevant. Components must use the brand design tokens.
+
+---
+
+## 14. Animation and Interaction Guidelines
+
+Use motion to explain the interface and add warmth, not as decoration everywhere.
+
+| Element | Motion | Behaviour |
+|---|---|---|
+| Splash logo | Quick fade/scale | Brief brand entrance, then continue automatically |
+| Hero | Staggered fade-up, gentle image parallax/scale | CTA remains usable; reduce motion when requested |
+| Hero/promo carousel | Crossfade or short horizontal slide | Manual controls; pause/stop auto-rotation on interaction |
+| Category cards | Subtle scale/shadow or image zoom | Do not move layout or delay navigation |
+| Product cards | Light pressed feedback | No exaggerated bounce; maintain touch responsiveness |
+| Add to Cart | Button loading state and brief confirmation | Shared cart badge/quantity updates consistently |
+| Filter sheet | Slide up from bottom | Focus remains inside sheet; close button is clear |
+| Sort menu | Short fade/slide | Selection is visible and reversible |
+| Toast notice | Short slide/fade | Brief, non-blocking and screen-reader announced when relevant |
+| Skeleton | Optional soft shimmer | Disable or simplify with reduced motion |
+| Order status | Small progress indicator | Reflect backend-confirmed status only |
+
+Avoid parallax that causes nausea, auto-playing video, sound, long page entrance animations, looping movement on every card and animations that delay form submission.
+
+---
+
+## 15. Odoo Backend and Data Expectations
+
+This is a frontend design specification, not permission to assume unimplemented endpoints. Design the screens so they can integrate with the Odoo backend through a secure application API layer.
+
+### Data that should come from backend/configuration
+
+- Product catalogue, product IDs/SKUs, categories and subcategories
+- Product images, names, descriptions, pack sizes and variants
+- Price, applicable discount, taxes/fees and availability
+- Product attributes, ingredients, allergen and storage information where supplied
+- Search, sort and filter results where supported
+- Cart contents and server-validated totals
+- Customer identity and profile
+- Saved addresses and serviceability/delivery-zone rules
+- Order creation, payment status and order history
+- Delivery slots/status/ETA where supported
+- Promotional cards, banners, coupons and eligibility rules
+- Customer reviews/ratings if a real review source is implemented
+- Referral programme details if implemented
+- Help/contact details and customer support settings where practical
+
+### Integration rules
+
+- Never put Odoo administrator credentials, API secrets or private access tokens in the client app.
+- Use a secure backend/API integration layer for authentication and protected requests.
+- Treat the backend as the source of truth for prices, stock, checkout totals and order status.
+- Revalidate stock, pricing, promotion eligibility and delivery availability before order submission.
+- Show errors and retry actions for failed requests.
+- Do not assume Odoo has a specific module or endpoint unless it is confirmed in the implementation.
+- If an optional feature (wishlist, reviews, coupons, referrals, live ETA) is not enabled, hide it or show a clear disabled/coming-soon state approved by the business.
+
+---
+
+## 16. Responsive Behaviour
+
+### Mobile — primary target
+
+- Design the core shopping experience for narrow phone widths first.
+- Fixed bottom navigation on main app screens, with adequate safe-area spacing.
+- Product grids typically use two columns; switch to one column only when cards would become too narrow.
+- Product sliders use touch scrolling and show a small portion of the next card.
+- Filter and sort open as bottom sheets.
+- Comparison table may become a horizontally scrollable table or stacked comparison cards.
+- Checkout uses full-width controls and a clearly visible total/CTA.
+
+### Tablet
+
+- Increase grid columns and use wider product cards.
+- Keep content centred with a sensible maximum width.
+- Use a category sidebar only when it adds value and does not reduce product space.
+- Use side sheets for filters only when appropriate.
+
+### Desktop / wide browser (if Stitch produces a responsive web companion)
+
+- Use a compact top navigation/header instead of a phone-like oversized header.
+- Show more product cards in each row and previous/next controls for carousels.
+- Use a two-column product detail layout where useful.
+- Keep form widths constrained for checkout and login.
+- Do not simply stretch the mobile layout to fill a large screen.
+
+---
+
+## 17. Accessibility, Trust and Content Rules
+
+- Maintain sufficient contrast for text, icons, buttons and selected states.
+- Use meaningful accessible labels for icon-only controls.
+- Ensure touch targets are comfortable and controls do not overlap.
+- Support keyboard and screen-reader navigation wherever the platform supports it.
+- Respect reduced-motion preferences and keep animations non-essential.
+- Label form errors next to the relevant field and explain how to fix them.
+- Use clear language for delivery restrictions, substitutions, price changes and payment failures.
+- Do not make absolute “100% chemical-free” or certified-organic claims unless they are substantiated and approved for the relevant products.
+- Prefer approved, specific wording such as “responsibly sourced” or “grown using natural practices” where accurate.
+- Never fabricate customer testimonials, review stars, Google ratings, customer counts, stock levels, live activity or delivery timings.
+- Show business contact information only after the official phone number, address, email and social links have been confirmed.
+
+---
+
+## 18. Home Screen Content Priority
+
+The homepage has many requested sections. Preserve this priority so users can shop quickly:
+
+1. **Immediate utility:** location, search and quick links.
+2. **Brand introduction:** animated hero and value proposition cards.
+3. **Fast discovery:** category grid and featured promo cards.
+4. **Conversion:** trending/popular collection and horizontal product sliders.
+5. **Personalised discovery:** lifestyle and concern-based collections where product data supports them.
+6. **Trust:** farm story, comparison section and testimonials.
+7. **Support:** FAQ preview and Help access.
+
+Do not force users to scroll through the full brand story or comparison table before reaching products. Shopping components should appear near the top; deeper storytelling can follow.
+
+---
+
+## 19. Stitch Deliverables and Acceptance Checklist
+
+Build the UI screens and reusable component variants described in this file. The result should include:
+
+- [ ] Splash / Welcome screen
+- [ ] Location detection, manual location entry and serviceability states
+- [ ] Mobile number and OTP screens
+- [ ] Home page with animated hero
+- [ ] Value proposition cards
+- [ ] Category grid and category browsing screen
+- [ ] Featured promotional cards
+- [ ] Product categories, subcategories and category sidebar/responsive alternative
+- [ ] Trending/popular product area
+- [ ] Horizontal product card slider reused across multiple sections
+- [ ] Promotional banner carousel and carousel controls
+- [ ] Lifestyle/category and concern-based collection cards where supported
+- [ ] Heera Organics comparison section/table
+- [ ] Product listing page
+- [ ] Search initial, suggestion, results and no-results states
+- [ ] Filter overlay and sort-by overlay
+- [ ] Product detail page and quick-view bottom sheet
+- [ ] Cart populated and empty states
+- [ ] Checkout, payment processing/failure and order confirmation states
+- [ ] Profile overview, edit profile and saved addresses
+- [ ] Your Orders, order details and status timeline
+- [ ] Help/FAQ and chatbot entry point
+- [ ] Refer and Earn (feature-gated if not configured)
+- [ ] Wishlist
+- [ ] Skeleton loaders, empty states, network errors and retries
+- [ ] Consistent typography, colours, spacing, icons and responsive rules
+- [ ] Reduced-motion behaviour for animated components
+- [ ] Clear distinction between demo content and backend-provided real data
+
+### Final design direction
+
+**Heera Organics should feel like a warm, modern quick-grocery app built around trust.** The animated hero introduces the farm-to-family promise; value cards explain the difference; category grids and horizontal product sliders make shopping fast; promo cards help customers discover relevant offers; and the product, cart, checkout and order flows remain clear, reliable and connected to the Odoo-backed catalogue.

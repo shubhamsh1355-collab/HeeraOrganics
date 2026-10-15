@@ -1,0 +1,367 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"><meta content="mobile_stack" name="shell-type"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400..700&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "error-container": "#ffdad6", "secondary": "#685f30", "on-tertiary-fixed": "#102000", "primary": "#093521", "outline": "#717972", "soft-green": "#DBF5D1", "primary-fixed-dim": "#a4d1b4", "border-subtle": "#E5DDCF", "primary-container": "#234c36", "inverse-primary": "#a4d1b4", "deep-text": "#243126", "tertiary": "#1d3400", "muted-text": "#706F63", "surface-container": "#f5ede1", "on-secondary-fixed-variant": "#4f471a", "on-tertiary": "#ffffff", "surface-container-highest": "#e9e1d6", "secondary-container": "#ede0a5", "error": "#ba1a1a", "inverse-surface": "#343028", "inverse-on-surface": "#f8f0e4", "error-alert": "#B42318", "tertiary-fixed-dim": "#b1d18a", "white-surface": "#FFFFFF", "surface-container-low": "#fbf3e7", "on-tertiary-container": "#9cbb76", "surface": "#fff8f1", "on-tertiary-fixed-variant": "#354e16", "on-background": "#1e1b14", "on-primary-fixed-variant": "#264f38", "on-primary-fixed": "#002111", "surface-tint": "#3e674f", "on-secondary": "#ffffff", "surface-bright": "#fff8f1", "secondary-fixed": "#f0e3a8", "on-surface": "#1e1b14", "surface-container-high": "#efe7db", "outline-variant": "#c1c8c1", "on-error-container": "#93000a", "background": "#fff8f1", "on-error": "#ffffff", "surface-container-lowest": "#ffffff", "surface-dim": "#e1d9cd", "surface-variant": "#e9e1d6", "tertiary-container": "#324b13", "on-primary-container": "#8fbc9f", "secondary-fixed-dim": "#d3c78e", "primary-fixed": "#bfedcf", "on-secondary-fixed": "#211c00", "on-secondary-container": "#6c6333", "on-primary": "#ffffff", "tertiary-fixed": "#cdeda3", "on-surface-variant": "#414943" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-sm": "0.5rem", "space-md": "0.75rem", "margin": "1rem", "margin-tablet": "1.5rem", "space-xl": "1.5rem", "space-xxl": "2rem", "margin-desktop": "2.5rem", "space-xs": "0.25rem", "gutter-desktop": "1.5rem", "gutter": "1rem", "space-lg": "1rem" }, "fontFamily": { "label-sm": ["\"Source Serif 4\""], "headline-md": ["Literata"], "title-card": ["Literata"], "display-hero": ["Literata"], "label-lg": ["\"Source Serif 4\""], "headline-lg-mobile": ["Literata"], "body-md": ["\"Source Serif 4\""], "headline-lg": ["Literata"], "label-md": ["\"Source Serif 4\""], "body-lg": ["\"Source Serif 4\""], "display-hero-mobile": ["Literata"], "headline-sm": ["Literata"], "body-sm": ["\"Source Serif 4\"" ] }, "fontSize": { "label-sm": ["0.6875rem", { "lineHeight": "0.875rem", "fontWeight": "600" }], "headline-md": ["1.25rem", { "lineHeight": "1.75rem", "fontWeight": "600" }], "title-card": ["1rem", { "lineHeight": "1.375rem", "fontWeight": "600" }], "display-hero": ["2.5rem", { "lineHeight": "3rem", "fontWeight": "700" }], "label-lg": ["0.875rem", { "lineHeight": "1.25rem", "fontWeight": "600" }], "headline-lg-mobile": ["1.5rem", { "lineHeight": "2rem", "fontWeight": "600" }], "body-md": ["0.9375rem", { "lineHeight": "1.5rem", "fontWeight": "400" }], "headline-lg": ["2rem", { "lineHeight": "2.5rem", "fontWeight": "700" }], "label-md": ["0.75rem", { "lineHeight": "1rem", "fontWeight": "600" }], "body-lg": ["1.125rem", { "lineHeight": "1.75rem", "fontWeight": "400" }], "display-hero-mobile": ["1.875rem", { "lineHeight": "2.25rem", "fontWeight": "700" }], "headline-sm": ["1.125rem", { "lineHeight": "1.5rem", "fontWeight": "600" }], "body-sm": ["0.8125rem", { "lineHeight": "1.25rem", "fontWeight": "400" }] } } } }</script><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head><body class="bg-surface font-body-md text-body-md text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(36,49,38,0.04)] pt-safe"><div class="h-16 px-gutter flex items-center justify-between"><div class="flex items-center gap-space-sm"><button aria-label="Go back" class="w-11 h-11 flex items-center justify-center rounded-full text-primary hover:bg-surface-container active:scale-95 transition-all" onclick="history.back()" type="button"><span class="material-symbols-outlined text-[24px]">arrow_back</span></button><h1 class="font-headline-sm text-headline-sm text-primary tracking-tight">FAQs</h1></div><div class="flex items-center"><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-2 ring-primary-container/20" src="https://lh3.googleusercontent.com/aida/AEtjO1VRU1NQ84lDxXeiay8II1Z6kNBdZUu9NYUc0L75bHS3WMQeVrUo9yYPmwN3X45z7gjy_JWmXrbsTNsOJrFAaLIADzHPAGuf7HQFDQKWTgzgUjj0MwXgkUc8TX6DJt5Z66U48yt8N784BAO0oKe3wIl16Mz_ky3M43_aaFwCSRl9JnSye2SCw0dt-82eyxzrM47zPkJdgS2eG9sYkeKVAVY2y-RQghgXujWT3IeMR7Cs5THb8uH8WyVyLaNNzcshW3t3oDmF0KtBNQ"></div></div></header><main class="flex flex-col relative w-full pt-16 bg-surface min-h-screen"><div class="flex flex-col w-full pb-safe">
+<!-- Search Module -->
+<div class="px-margin pt-space-md pb-space-sm">
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3.5 text-outline text-[20px] pointer-events-none">search</span>
+<input aria-label="Search frequently asked questions" class="w-full bg-surface-container-lowest text-deep-text font-body-md text-body-md pl-11 pr-10 py-3 rounded-xl focus:outline-none focus:ring-0 placeholder:text-muted-text shadow-sm transition-all" id="faqSearchInput" placeholder="Search sourcing, milk, delivery..." type="text">
+<button aria-label="Clear search" class="hidden absolute right-3 p-1 rounded-full text-muted-text hover:text-deep-text active:scale-95 transition-transform" id="clearSearchBtn" onclick="clearSearch()">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+</div>
+<!-- Category Filter Pills (Horizontal Scrollable) -->
+<div class="w-full overflow-x-auto no-scrollbar py-space-xs px-margin flex items-center gap-space-sm">
+<button class="category-pill whitespace-nowrap px-4 py-2 rounded-full font-label-md text-label-md bg-primary-container text-surface transition-all shadow-sm active:scale-95" data-category="all" onclick="filterCategory('all', this)">
+      All Topics
+    </button>
+<button class="category-pill whitespace-nowrap px-4 py-2 rounded-full font-label-md text-label-md bg-surface-container-lowest text-muted-text hover:text-deep-text transition-all active:scale-95" data-category="organic" onclick="filterCategory('organic', this)">
+      Organic &amp; Sourcing
+    </button>
+<button class="category-pill whitespace-nowrap px-4 py-2 rounded-full font-label-md text-label-md bg-surface-container-lowest text-muted-text hover:text-deep-text transition-all active:scale-95" data-category="dairy" onclick="filterCategory('dairy', this)">
+      Milk &amp; Dairy
+    </button>
+<button class="category-pill whitespace-nowrap px-4 py-2 rounded-full font-label-md text-label-md bg-surface-container-lowest text-muted-text hover:text-deep-text transition-all active:scale-95" data-category="delivery" onclick="filterCategory('delivery', this)">
+      Delivery &amp; Timing
+    </button>
+<button class="category-pill whitespace-nowrap px-4 py-2 rounded-full font-label-md text-label-md bg-surface-container-lowest text-muted-text hover:text-deep-text transition-all active:scale-95" data-category="returns" onclick="filterCategory('returns', this)">
+      Returns &amp; Bottles
+    </button>
+<button class="category-pill whitespace-nowrap px-4 py-2 rounded-full font-label-md text-label-md bg-surface-container-lowest text-muted-text hover:text-deep-text transition-all active:scale-95" data-category="payments" onclick="filterCategory('payments', this)">
+      Payments
+    </button>
+</div>
+<!-- Featured Pinned Sourcing Card -->
+<div class="px-margin pt-space-md">
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm relative overflow-hidden transition-all">
+<!-- Decorative leafy accent watermark -->
+<div class="absolute -right-6 -bottom-6 w-28 h-28 bg-soft-green/40 rounded-full blur-xl pointer-events-none"></div>
+<div class="flex items-center justify-between gap-space-sm mb-space-sm">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-soft-green text-primary font-label-sm text-label-sm tracking-wide">
+<span class="material-symbols-outlined text-[15px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+          Verified Harvest Seal
+        </span>
+<span class="font-label-sm text-label-sm text-secondary font-semibold">Sedam &amp; Aland Clusters</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-deep-text mb-space-xs leading-snug">
+        Are Heera Organics products 100% naturally grown?
+      </h2>
+<p class="font-body-md text-body-md text-deep-text/90 leading-relaxed mb-space-md">
+        Cultivated in the mineral-dense black soil of our partner Sedam and Aland farm clusters without synthetic chemical pesticides or artificial ripening agents. Every morning harvest undergoes lab batch testing and is stamped with individual batch QR traceability.
+      </p>
+<div class="flex items-center justify-between pt-space-xs">
+<div class="flex items-center gap-2 text-primary font-label-md text-label-md">
+<span class="material-symbols-outlined text-[18px]">eco</span>
+<span class="">Zero Residue Certified</span>
+</div>
+<button class="font-label-sm text-label-sm text-primary underline underline-offset-4 font-semibold active:opacity-70" onclick="triggerHaptic()">
+          View Batch QR Data
+        </button>
+</div>
+</div>
+</div>
+<!-- Sourcing Heritage & Farm Metrics Banner -->
+<div class="px-margin pt-space-md">
+<div class="bg-surface-container-high rounded-xl p-space-md flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-soft-green flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">agriculture</span>
+</div>
+<div>
+<div class="font-title-card text-title-card text-deep-text">42 Heirloom Farms</div>
+<div class="font-body-sm text-body-sm text-muted-text">Kalaburagi direct morning supply</div>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-primary font-semibold px-2 py-1 bg-surface-container-lowest rounded-md shadow-xs">
+        100% Traceable
+      </span>
+</div>
+</div>
+<!-- FAQ Accordion List -->
+<div class="px-margin pt-space-md flex flex-col gap-space-sm" id="faqAccordionList">
+<!-- Item 1: Morning Sunrise Delivery -->
+<div class="faq-item bg-surface-container-lowest rounded-xl shadow-sm transition-all overflow-hidden" data-category="delivery">
+<button aria-expanded="false" class="faq-header w-full px-space-lg py-4 flex items-start justify-between gap-space-md text-left active:bg-surface-container-low transition-colors" onclick="toggleFaq(this)" type="button">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-[20px] shrink-0 mt-0.5">wb_twilight</span>
+<span class="font-headline-sm text-headline-sm text-deep-text">How does the morning sunrise delivery window work in Kalaburagi?</span>
+</div>
+<span class="accordion-chevron material-symbols-outlined text-muted-text text-[20px] shrink-0 transition-transform duration-200 mt-1">expand_more</span>
+</button>
+<div class="faq-body hidden px-space-lg pb-space-lg pt-1">
+<div class="pl-8">
+<p class="font-body-md text-body-md text-deep-text/90 leading-relaxed">
+            Our vans dispatch at 4:30 AM directly from the farm pack-house. Deliveries arrive at your door between 6:30 AM and 8:00 AM in insulated bags, so your milk and greens are ready before breakfast prep.
+          </p>
+<div class="mt-space-sm flex items-center gap-2">
+<span class="inline-flex items-center gap-1 font-label-sm text-label-sm text-secondary bg-surface-container px-2 py-0.5 rounded">
+<span class="material-symbols-outlined text-[14px]">schedule</span> 6:30 AM - 8:00 AM
+            </span>
+<span class="inline-flex items-center gap-1 font-label-sm text-label-sm text-secondary bg-surface-container px-2 py-0.5 rounded">
+<span class="material-symbols-outlined text-[14px]">ac_unit</span> Insulated bags
+            </span>
+</div>
+</div>
+</div>
+</div>
+<!-- Item 2: A2 Glass Bottle Exchange -->
+<div class="faq-item bg-surface-container-lowest rounded-xl shadow-sm transition-all overflow-hidden" data-category="dairy returns">
+<button aria-expanded="false" class="faq-header w-full px-space-lg py-4 flex items-start justify-between gap-space-md text-left active:bg-surface-container-low transition-colors" onclick="toggleFaq(this)" type="button">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-[20px] shrink-0 mt-0.5">recycling</span>
+<span class="font-headline-sm text-headline-sm text-deep-text">How does the A2 glass bottle exchange process work?</span>
+</div>
+<span class="accordion-chevron material-symbols-outlined text-muted-text text-[20px] shrink-0 transition-transform duration-200 mt-1">expand_more</span>
+</button>
+<div class="faq-body hidden px-space-lg pb-space-lg pt-1">
+<div class="pl-8">
+<p class="font-body-md text-body-md text-deep-text/90 leading-relaxed">
+            Simply rinse your empty A2 milk glass bottle and place it outside your door before 10 PM. Our delivery champion swaps it with your fresh milk bottle during the sunrise run. No plastic waste!
+          </p>
+<div class="mt-space-sm flex items-center gap-2">
+<span class="inline-flex items-center gap-1 font-label-sm text-label-sm text-primary bg-soft-green px-2 py-0.5 rounded font-semibold">
+<span class="material-symbols-outlined text-[14px]">check_circle</span> Zero Deposit Hassle
+            </span>
+</div>
+</div>
+</div>
+</div>
+<!-- Item 3: Lab Reports & Traceability -->
+<div class="faq-item bg-surface-container-lowest rounded-xl shadow-sm transition-all overflow-hidden" data-category="organic">
+<button aria-expanded="false" class="faq-header w-full px-space-lg py-4 flex items-start justify-between gap-space-md text-left active:bg-surface-container-low transition-colors" onclick="toggleFaq(this)" type="button">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-[20px] shrink-0 mt-0.5">science</span>
+<span class="font-headline-sm text-headline-sm text-deep-text">Do you offer chemical-free verification or lab reports?</span>
+</div>
+<span class="accordion-chevron material-symbols-outlined text-muted-text text-[20px] shrink-0 transition-transform duration-200 mt-1">expand_more</span>
+</button>
+<div class="faq-body hidden px-space-lg pb-space-lg pt-1">
+<div class="pl-8">
+<p class="font-body-md text-body-md text-deep-text/90 leading-relaxed">
+            Yes. Every harvest crate features batch origin data and dew-check timestamps. Soil health and residue test reports from our partner labs can be viewed on the Product Traceability page.
+          </p>
+</div>
+</div>
+</div>
+<!-- Item 4: Damaged / Unavailable produce -->
+<div class="faq-item bg-surface-container-lowest rounded-xl shadow-sm transition-all overflow-hidden" data-category="returns">
+<button aria-expanded="false" class="faq-header w-full px-space-lg py-4 flex items-start justify-between gap-space-md text-left active:bg-surface-container-low transition-colors" onclick="toggleFaq(this)" type="button">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-[20px] shrink-0 mt-0.5">published_with_changes</span>
+<span class="font-headline-sm text-headline-sm text-deep-text">What if an item is damaged or unavailable in morning dispatch?</span>
+</div>
+<span class="accordion-chevron material-symbols-outlined text-muted-text text-[20px] shrink-0 transition-transform duration-200 mt-1">expand_more</span>
+</button>
+<div class="faq-body hidden px-space-lg pb-space-lg pt-1">
+<div class="pl-8">
+<p class="font-body-md text-body-md text-deep-text/90 leading-relaxed">
+            If natural crop conditions cause a delay or wilted produce, we notify you immediately. Our No-Questions-Asked replacement or instant Farm Wallet refund takes effect in 1 tap.
+          </p>
+</div>
+</div>
+</div>
+<!-- Item 5: Delivery Locations in Kalaburagi -->
+<div class="faq-item bg-surface-container-lowest rounded-xl shadow-sm transition-all overflow-hidden" data-category="delivery">
+<button aria-expanded="false" class="faq-header w-full px-space-lg py-4 flex items-start justify-between gap-space-md text-left active:bg-surface-container-low transition-colors" onclick="toggleFaq(this)" type="button">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-[20px] shrink-0 mt-0.5">location_on</span>
+<span class="font-headline-sm text-headline-sm text-deep-text">Where all do you currently deliver in Kalaburagi?</span>
+</div>
+<span class="accordion-chevron material-symbols-outlined text-muted-text text-[20px] shrink-0 transition-transform duration-200 mt-1">expand_more</span>
+</button>
+<div class="faq-body hidden px-space-lg pb-space-lg pt-1">
+<div class="pl-8">
+<p class="font-body-md text-body-md text-deep-text/90 leading-relaxed mb-space-xs">
+            We currently serve Sedam Road, Jewargi Road, Pragati Nagar, Gubbi Colony, and Central Kalaburagi. We are rapidly expanding to peripheral farm clusters.
+          </p>
+<div class="flex flex-wrap gap-1.5 pt-1">
+<span class="font-label-sm text-label-sm text-deep-text bg-surface-container px-2 py-0.5 rounded-full">Sedam Road</span>
+<span class="font-label-sm text-label-sm text-deep-text bg-surface-container px-2 py-0.5 rounded-full">Jewargi Road</span>
+<span class="font-label-sm text-label-sm text-deep-text bg-surface-container px-2 py-0.5 rounded-full">Pragati Nagar</span>
+<span class="font-label-sm text-label-sm text-deep-text bg-surface-container px-2 py-0.5 rounded-full">Gubbi Colony</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Item 6: Daily Milk Pause / Vacation -->
+<div class="faq-item bg-surface-container-lowest rounded-xl shadow-sm transition-all overflow-hidden" data-category="dairy delivery">
+<button aria-expanded="false" class="faq-header w-full px-space-lg py-4 flex items-start justify-between gap-space-md text-left active:bg-surface-container-low transition-colors" onclick="toggleFaq(this)" type="button">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-[20px] shrink-0 mt-0.5">pause_circle</span>
+<span class="font-headline-sm text-headline-sm text-deep-text">Can I pause or skip my daily milk delivery?</span>
+</div>
+<span class="accordion-chevron material-symbols-outlined text-muted-text text-[20px] shrink-0 transition-transform duration-200 mt-1">expand_more</span>
+</button>
+<div class="faq-body hidden px-space-lg pb-space-lg pt-1">
+<div class="pl-8">
+<p class="font-body-md text-body-md text-deep-text/90 leading-relaxed">
+            Yes! From your Orders or Profile tab, toggle vacation pause anytime before 9:00 PM for the next morning. You can set specific dates or pause indefinitely without losing subscription perks.
+          </p>
+</div>
+</div>
+</div>
+<!-- Item 7: Payment Options & Wallets -->
+<div class="faq-item bg-surface-container-lowest rounded-xl shadow-sm transition-all overflow-hidden" data-category="payments">
+<button aria-expanded="false" class="faq-header w-full px-space-lg py-4 flex items-start justify-between gap-space-md text-left active:bg-surface-container-low transition-colors" onclick="toggleFaq(this)" type="button">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-[20px] shrink-0 mt-0.5">account_balance_wallet</span>
+<span class="font-headline-sm text-headline-sm text-deep-text">What payment modes are supported for farm subscriptions?</span>
+</div>
+<span class="accordion-chevron material-symbols-outlined text-muted-text text-[20px] shrink-0 transition-transform duration-200 mt-1">expand_more</span>
+</button>
+<div class="faq-body hidden px-space-lg pb-space-lg pt-1">
+<div class="pl-8">
+<p class="font-body-md text-body-md text-deep-text/90 leading-relaxed">
+            We accept UPI (GPay, PhonePe, Paytm), Net Banking, RuPay debit/credit cards, and Heera Farm Wallet auto-recharge for seamless daily deliveries without micro-transactions.
+          </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Empty state for search filter -->
+<div class="hidden px-margin py-space-xl text-center" id="noFaqResults">
+<div class="w-16 h-16 rounded-full bg-surface-container-high mx-auto flex items-center justify-center text-muted-text mb-space-sm">
+<span class="material-symbols-outlined text-[32px]">manage_search</span>
+</div>
+<div class="font-headline-sm text-headline-sm text-deep-text mb-1">No matching harvest queries</div>
+<p class="font-body-sm text-body-sm text-muted-text max-w-xs mx-auto">
+      Try searching for 'milk', 'bottle', 'timing', or chat directly with our farm agronomist below.
+    </p>
+</div>
+<!-- Sourcing Transparency / Farm Care WhatsApp Card -->
+<div class="px-margin pt-space-xl pb-space-xxl">
+<div class="bg-surface-container rounded-xl p-space-lg text-center relative overflow-hidden shadow-sm">
+<!-- Soft ambient backdrop glow -->
+<div class="w-12 h-12 rounded-full bg-soft-green text-primary mx-auto flex items-center justify-center mb-space-sm shadow-xs">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">nature_people</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-deep-text mb-1">
+        Still have questions about our soil, cattle, or seeds?
+      </h3>
+<p class="font-body-md text-body-md text-muted-text max-w-sm mx-auto mb-space-lg leading-relaxed">
+        Speak directly with our field agronomists, native Gir cow handlers, and pack-house coordinators.
+      </p>
+<a class="inline-flex items-center justify-center gap-2 w-full py-3.5 px-6 rounded-xl bg-primary-container text-surface font-label-lg text-label-lg hover:bg-primary active:scale-[0.98] transition-all shadow-md" href="https://wa.me/919483000000?text=Hi%20Heera%20Organics,%20I%20have%20a%20question%20about%20your%20sourcing" rel="noopener noreferrer" target="_blank">
+<span class="material-symbols-outlined text-[20px]">chat</span>
+<span class="">Chat with Farm Support</span>
+</a>
+<div class="mt-space-md flex items-center justify-center gap-4 text-muted-text font-label-sm text-label-sm">
+<span class="flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-primary inline-block"></span>
+          Avg reply: 8 mins
+        </span>
+<span class="">•</span>
+<span class="">Mon - Sun: 6 AM - 8 PM</span>
+</div>
+</div>
+</div>
+</div>
+<script>
+  function toggleFaq(button) {
+    const isExpanded = button.getAttribute('aria-expanded') === 'true';
+    const faqBody = button.nextElementSibling;
+    const chevron = button.querySelector('.accordion-chevron');
+
+    // Toggle current item
+    if (isExpanded) {
+      button.setAttribute('aria-expanded', 'false');
+      faqBody.classList.add('hidden');
+      if (chevron) chevron.style.transform = 'rotate(0deg)';
+    } else {
+      button.setAttribute('aria-expanded', 'true');
+      faqBody.classList.remove('hidden');
+      if (chevron) chevron.style.transform = 'rotate(180deg)';
+    }
+  }
+
+  function filterCategory(category, buttonEl) {
+    // Update active pill styling
+    const pills = document.querySelectorAll('.category-pill');
+    pills.forEach(pill => {
+      pill.classList.remove('bg-primary-container', 'text-surface', 'shadow-sm');
+      pill.classList.add('bg-surface-container-lowest', 'text-muted-text');
+    });
+
+    buttonEl.classList.remove('bg-surface-container-lowest', 'text-muted-text');
+    buttonEl.classList.add('bg-primary-container', 'text-surface', 'shadow-sm');
+
+    // Filter FAQs
+    const faqItems = document.querySelectorAll('.faq-item');
+    let visibleCount = 0;
+
+    faqItems.forEach(item => {
+      const itemCategories = item.getAttribute('data-category') || '';
+      if (category === 'all' || itemCategories.includes(category)) {
+        item.classList.remove('hidden');
+        visibleCount++;
+      } else {
+        item.classList.add('hidden');
+      }
+    });
+
+    const noResults = document.getElementById('noFaqResults');
+    if (visibleCount === 0) {
+      noResults.classList.remove('hidden');
+    } else {
+      noResults.classList.add('hidden');
+    }
+  }
+
+  const searchInput = document.getElementById('faqSearchInput');
+  const clearBtn = document.getElementById('clearSearchBtn');
+
+  if (searchInput) {
+    searchInput.addEventListener('input', function(e) {
+      const query = e.target.value.toLowerCase().trim();
+      
+      if (query.length > 0) {
+        clearBtn.classList.remove('hidden');
+      } else {
+        clearBtn.classList.add('hidden');
+      }
+
+      const faqItems = document.querySelectorAll('.faq-item');
+      let visibleCount = 0;
+
+      faqItems.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        if (text.includes(query)) {
+          item.classList.remove('hidden');
+          visibleCount++;
+        } else {
+          item.classList.add('hidden');
+        }
+      });
+
+      const noResults = document.getElementById('noFaqResults');
+      if (visibleCount === 0) {
+        noResults.classList.remove('hidden');
+      } else {
+        noResults.classList.add('hidden');
+      }
+    });
+  }
+
+  function clearSearch() {
+    if (searchInput) {
+      searchInput.value = '';
+      clearBtn.classList.add('hidden');
+      searchInput.dispatchEvent(new Event('input'));
+      searchInput.focus();
+    }
+  }
+
+  function triggerHaptic() {
+    if (navigator.vibrate) {
+      navigator.vibrate(20);
+    }
+  }
+</script></main>
+
+</body></html>

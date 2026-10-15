@@ -1,0 +1,414 @@
+# Heera Organics — Antigravity Master Project Brief
+
+**Document ID:** HO-AG-001  
+**Version:** 1.0  
+**Date:** 15 October 2026  
+**Purpose:** Give Antigravity a complete understanding of the product, design references, Flutter frontend scope, architecture, implementation phases, file organization, testing, and GitHub workflow before coding begins.
+
+---
+
+## 1. Your Role and Immediate Instruction
+
+Act as the lead Flutter mobile engineer and implementation planner for **Heera Organics**, a single-business organic grocery delivery app for customers on Android and iOS.
+
+The owner has already designed the customer-app screens in Google Stitch. Your job is to implement those approved screens in Flutter faithfully, then make their interactions work with mock data, validate the frontend, and later prepare it for integration with Odoo.
+
+**For this initial task, do not start coding yet.** First inspect the workspace and source materials, understand the entire plan, and return a concrete implementation plan and file structure for approval. Do not stop after this planning step in later phases: once the user approves the plan, implement the approved phase, test it, and report actual results.
+
+Do not ask questions that can be answered from the supplied documents. If an essential blocker remains, identify it precisely. Keep unconfirmed business behavior as a documented open question instead of inventing a rule.
+
+## 2. Product and Business Context
+
+- **Brand:** Heera Organics
+- **Tagline:** Naturally Grown, Honestly Delivered
+- **Product:** One Heera Organics grocery business serving multiple customers. This is not a multi-tenant SaaS product.
+- **Audience:** Grocery customers in serviceable delivery areas, initially expected to include Kalaburagi and eligible nearby areas. Do not hard-code a city restriction; delivery coverage should be configurable later through the backend.
+- **Purpose:** Let customers discover grocery products, search and browse the catalogue, manage their basket, complete a checkout flow, view orders, manage their profile/addresses, save products, and access support screens.
+- **Platforms:** Android and iOS mobile applications from a shared codebase.
+- **Frontend technology:** Flutter + Dart only.
+- **Backend during frontend build:** Mock data and mock repositories only.
+- **Future backend:** Odoo Community as the sole business backend and operational system of record; Odoo uses PostgreSQL internally. The mobile app must never connect directly to PostgreSQL.
+- **Existing separate dairy operations app:** Out of scope for this Flutter customer app. Do not modify or rebuild it as part of this task.
+
+## 3. Fixed Decisions — Do Not Change Without Approval
+
+1. Use **Flutter and Dart**, not React Native, Expo, TypeScript, Next.js, or a WebView-based app.
+2. Build one customer grocery app for Android and iOS.
+3. The attached Google Stitch export and `DESIGN.md` are the visual source of truth. Recreate the approved designs; do not invent an unrelated new visual direction.
+4. Use all supplied 24 screen references, including alternate states, as the screen implementation inventory.
+5. Build the frontend before integrating Odoo. Use mock repositories during this phase.
+6. Do not connect real OTP, payments, Odoo, PostgreSQL, SMS, WhatsApp, live location/tracking, notifications, or AI services during the current frontend phase.
+7. A control that is represented as interactive must provide a sensible local mock interaction or a clearly marked “not connected yet” state. Never claim a mocked action is a real order, payment, serviceability check, referral, delivery update, or AI response.
+8. Keep business data and future network access behind models/repositories/services, not inside screen widgets. Later, mock repositories should be replaceable by Odoo-backed implementations without rewriting the UI.
+9. The app’s GitHub repository must be separate from the existing dairy app repository.
+10. All work must appear as real files in the opened Antigravity workspace and Explorer; a proposed file tree in chat is not sufficient.
+11. Create files and folders progressively when needed. Do not create dozens of empty future-screen files.
+12. Do not push directly to `main`, force-push, rewrite shared history, change repository visibility, or delete branches without explicit approval.
+
+## 4. Read These Source Materials First
+
+Locate and inspect these supplied files in the workspace:
+
+- `05_Heera_Organics_Flutter_Frontend_Build_Spec.md` — detailed screen-by-screen UI/interaction specification and acceptance criteria.
+- The Stitch export ZIP: `stitch_heera_organics_grocery_app_design_system.zip`.
+- The supplied `DESIGN.md` (uploaded file may be named `DESIGN (6).md` locally). Use it as the approved design token source; copy it to a stable reference name such as `design/reference/DESIGN.md` if needed, preserving the original.
+- The existing Requirements/SRS, System Design/SDD, and Implementation Plan if available in the workspace. They define the Waterfall development direction and backend boundary.
+
+### Source-of-truth order
+
+1. The relevant Stitch `screen.png` is the primary visual comparison target for that screen.
+2. The matching Stitch `code.html` helps identify content, layout, controls, and behavior. It is a reference only; do not ship it inside a WebView or convert the application into HTML.
+3. `DESIGN.md` defines brand colors, typography, spacing, component shapes, image guidance, and responsive rules.
+4. `05_Heera_Organics_Flutter_Frontend_Build_Spec.md` defines screen inventory, app navigation, mock interactions, test criteria, and boundaries.
+5. The SRS/SDD and this master brief define product scope, technology decisions, implementation phases, and governance.
+
+If sources appear to conflict, report the conflict in `docs/frontend/OPEN_QUESTIONS.md` rather than silently rewriting approved requirements.
+
+## 5. Stitch Screen Inventory — 24 References
+
+Confirm that all 24 exported screen folders are present and inspect each screenshot/HTML pair. The expected screen names and purpose are:
+
+1. `splash_welcome_screen` — brand welcome, explore catalogue, check delivery area, browse as guest.
+2. `phone_otp_login` — phone number, six-digit code UI, resend, verification and terms/privacy links; mock only.
+3. `location_delivery_area` — use current location affordance, pincode/locality entry, supported area suggestions and confirmation; mock only.
+4. `home_page` — delivery area header, cart, search, category shortcuts, hero carousel, curated product sections and promotions.
+5. `search_discovery` — search input, trending/recent searches, category suggestions and popular products.
+6. `category_browsing_subcategories` — category browsing, subcategories, featured tiles and product suggestions.
+7. `fresh_vegetables_product_listing` — product grid, categories, filter/sort, grid/list toggle, add controls and basket bar.
+8. `product_quick_view_filter_overlays` — quick view, variant/size options, filter sheet and sort sheet.
+9. `product_details_desi_country_tomatoes` — reusable product-detail template with gallery, pack selection, price, details, related products, favorite/share and add-to-basket.
+10. `your_cart_basket` — basket rows, quantities, remove/clear, offers/coupons, delivery-slot choice and bill details.
+11. `checkout` — address, slot, item/bill summary and payment-method choices; mock only.
+12. `order_confirmation_live_tracking` — mock success/confirmation, order reference, item summary, tracking/invoice/help entry points.
+13. `your_orders` — order list, tabs, order cards, tracking, invoice, reorder and issue/support actions.
+14. `order_details_status_tracking` — one order's products, status timeline, destination, bill/payment summary, invoice/help/reorder actions.
+15. `profile_account_overview` — profile summary, quick actions, orders, address/preferences, referrals, sourcing, support, FAQ and sign-out.
+16. `edit_profile_account_settings` — editable personal details and preference UI; save/discard with local mock state.
+17. `saved_addresses_location_management` — saved/default addresses, select/edit/delete/add, notes and location UI; mock only.
+18. `saved_harvests_wishlist` — saved products, tabs/groups, remove, move to basket, add all, empty state.
+19. `refer_earn` — referral information, copy/share UI, how it works and terms; no real rewards in mock mode.
+20. `help_support` — support categories, delivery/payment help, call/WhatsApp/chat links, guides and FAQ entry points; no automated real communications.
+21. `frequently_asked_questions_faqs` — topic chips and expandable FAQ rows.
+22. `ai_farm_chatbot_agronomist_support` — chat UI, suggested prompts and sample responses; no real AI/expert service.
+23. `empty_unavailable_states` — empty basket, out-of-area, no results, offline/retry and unavailable content.
+24. `system_states_loaders` — skeletons, network errors/retry, mock payment processing, location permission states and disabled content.
+
+Some designs include subscription/milk labels, bottle exchange, farmer/agronomist support, delivery-partner tips, referral rewards, live dispatch, wallet/credit, or voice/photo features. Reproduce the UI elements shown in the approved design, but keep unapproved or service-dependent behavior as mock UI. Do not build internal dairy operations screens or invent real production workflows.
+
+## 6. Design Direction and Tokens
+
+The approved style is **editorial tactile warm naturalism**: organic, premium but approachable, trustworthy, and farm-to-home. Avoid generic neon quick-commerce styling, heavy shadows, glassmorphism, or unapproved redesigns.
+
+Important values from `DESIGN.md`:
+
+- Warm canvas/surface: `#FFF8F1`
+- Secondary warm surface: `#FBF3E7`
+- White content surfaces: `#FFFFFF`
+- Deep green primary token: `#093521`
+- Forest green action/component token: `#234C36`
+- Soft green: `#DBF5D1`
+- Harvest yellow: approximately `#EDE0A5` / `#EEE1A6` as defined by the design token and component notes
+- Main text/deep text: `#1E1B14` / `#243126` as used in tokens/components
+- Muted text: `#706F63`
+- Subtle border: `#E5DDCF`
+- Error accent: `#B42318` / `#BA1A1A` as supplied; centralize the chosen component value and document any token reconciliation.
+
+Typography:
+
+- **Literata** for display and editorial headlines.
+- **Source Serif 4** for body text, labels and numeric/price details.
+- Locate and bundle the approved font files if included and permitted. If missing, document the missing file and use a clearly temporary, documented fallback during scaffolding.
+
+Layout and shape guidance:
+
+- Mobile-first viewport range: 360–480 logical pixels.
+- Standard phone gutter: 16 px.
+- Product grid: two columns with roughly 12 px gaps.
+- Product cards: roughly 16 px radius, white background, subtle border, square product image, pack size, product name, price and add/quantity controls.
+- Inputs: roughly 12 px radius; modal sheets: roughly 16 px top corners; chips/badges use pill radius.
+- Bottom navigation: about 64 px plus platform safe-area inset.
+- Use low-contrast borders and subtle elevation. Do not use heavy shadow or blur.
+- Respect iOS/Android safe areas, keyboard insets, device notches, and text scaling.
+
+Implement the design tokens once in reusable Dart theme/constant files. Avoid scattering raw hex values and spacing throughout screens.
+
+## 7. Architecture and Project Structure
+
+Use a feature-first, maintainable Flutter architecture. Suggested choices are `go_router` for navigation and Riverpod for state management, after checking compatibility with the installed stable Flutter/Dart versions. Use only necessary dependencies and record why each is added.
+
+Possible target structure (create progressively; don't generate empty files for every feature up front):
+
+```text
+heera-organics/
+├── android/
+├── ios/
+├── assets/
+│   ├── fonts/
+│   ├── images/
+│   └── icons/
+├── design/
+│   ├── source/
+│   └── reference/
+├── docs/
+│   ├── architecture.md
+│   ├── implementation-plan.md
+│   ├── implementation-progress.md
+│   ├── decisions.md
+│   ├── screen-map.md
+│   ├── testing-strategy.md
+│   ├── api-contract.md
+│   └── frontend/OPEN_QUESTIONS.md
+├── lib/
+│   ├── main.dart
+│   ├── app.dart
+│   ├── core/
+│   │   ├── config/
+│   │   ├── constants/
+│   │   ├── errors/
+│   │   ├── routing/
+│   │   ├── theme/
+│   │   ├── utils/
+│   │   └── widgets/
+│   ├── data/
+│   │   ├── mock/
+│   │   └── repositories/
+│   └── features/
+│       ├── onboarding/
+│       ├── authentication/
+│       ├── delivery_area/
+│       ├── home/
+│       ├── search/
+│       ├── categories/
+│       ├── product_listing/
+│       ├── product_details/
+│       ├── cart/
+│       ├── checkout/
+│       ├── orders/
+│       ├── profile/
+│       ├── addresses/
+│       ├── wishlist/
+│       ├── referral/
+│       ├── support/
+│       ├── farm_assistant/
+│       └── app_states/
+├── test/
+│   ├── unit/
+│   ├── widget/
+│   └── navigation/
+├── .github/workflows/flutter_ci.yml
+├── .gitignore
+├── .editorconfig
+├── analysis_options.yaml
+├── pubspec.yaml
+├── pubspec.lock
+├── README.md
+└── CHANGELOG.md
+```
+
+The tree is guidance, not a requirement to make empty directories or files now. Use the existing project structure if a sound Flutter structure already exists; inspect before changing it. Do not have duplicated architectures or duplicate design specifications.
+
+### Code responsibilities
+
+- `main.dart`: app entry/init.
+- `app.dart`: root app widget, global theme and router setup.
+- `core/theme/`: colors, typography, spacing, radius and shared theme.
+- `core/routing/`: named routes and route arguments.
+- `core/widgets/`: truly reusable buttons, fields, cards, chips, steppers, bottom navigation, skeleton/error/empty widgets.
+- `data/mock/`: fictitious product/category/address/order/FAQ data.
+- `data/repositories/`: repository interfaces and mock implementations.
+- `features/`: feature-specific presentation/state/data only where useful.
+- `test/`: unit, widget and navigation tests.
+
+Keep widgets separate from business/data access. Prefer typed models such as `Product`, `ProductVariant`/`PackOption`, `Category`, `CartItem`, `DeliveryAddress`, `DeliverySlot`, `Order`, `OrderLine`, `UserProfile`, and `FaqItem`. Calculate derived cart totals from one cart state source. Use `intl` for INR/date formatting rather than formatting values ad hoc in widgets.
+
+## 8. Frontend Behavior During Mock Mode
+
+All visible primary controls must work with local mock behavior or show a clear not-connected placeholder. Keep fake behavior explicitly identified during development.
+
+- Search filters/suggests mock products; recent/trending searches are tappable.
+- Category/filter/sort controls update visible results and retain selected state.
+- Product card, quick-view, detail page, variant selection, favorite and add-to-basket share a coherent product/cart state.
+- Cart quantity, removal, coupon UI, delivery slot and displayed bill totals update consistently from mock data.
+- Checkout validates required local inputs, then creates a demo/mock order only; it must not place a real order or call a payment gateway.
+- Order list and detail use the same mock order repository. Reorder copies eligible items into the basket. Tracking timeline is simulated—not real GPS tracking.
+- Profile and address edits update local mock state. Selected default address is reflected on related screens.
+- Wishlist supports save/remove/move-to-cart using shared cart state.
+- FAQs filter/expand. Support actions do not send real WhatsApp/SMS or place calls without a user-initiated OS handoff and valid implementation.
+- Farm Assistant provides sample conversation behavior only and must not imply a live agronomist or AI service.
+- OTP and location/service-area screens are UI/mock flows only until real providers and backend logic are approved.
+- Empty, loading, error, unavailable, validation, and permission-denied states must be implemented as reusable patterns using the supplied state references.
+
+Do not add real backend behavior, use real customer information, store secrets, or claim mock results are production transactions.
+
+## 9. Future Odoo Integration Boundary
+
+Odoo Community and PostgreSQL are the planned single business backend/system of record after the frontend is stable. Do not build a separate MongoDB database or separate FastAPI business backend for the target architecture.
+
+Flutter must eventually talk to secure, approved Odoo-facing HTTP API endpoints. It must not connect directly to PostgreSQL or expose Odoo administrator credentials. Do not assume the Odoo version, installed modules, custom fields, API endpoints or authentication details until the actual Odoo environment is inspected.
+
+Protect the mobile UI from internal schema changes by defining a stable API contract and a dedicated repository/API adapter layer. Where suitable, product attributes and supported checkout fields may be driven by server configuration, but only predefined safe field types should be rendered dynamically. Odoo remains authoritative for price, inventory, availability, taxes, discounts, payment status and order status. Server-side validation will be required during integration.
+
+The current stage uses mock repositories only. Odoo integration comes after UI behavior is verified. Consider an OTA update option such as Shorebird later for compatible Dart/UI hotfixes; do not make it a dependency for initial frontend scaffolding or treat it as a substitute for stable API contracts. Native platform changes may still require store releases.
+
+## 10. Implementation Phases and Exit Checks
+
+### Phase 0 — Workspace and reference audit
+
+- Inspect current workspace path, repository status, current Flutter/Dart installation, target device/build tooling, files, branches and remote.
+- Preserve existing source and documentation; never overwrite blindly.
+- Confirm all 24 Stitch screen folders/screenshots/HTML files are present and read `DESIGN.md`.
+- Identify assets/fonts actually included; record missing fonts/images clearly.
+- Return a short source inventory, current project condition, blockers and proposed file tree.
+
+**Exit:** References are accounted for, repository/workspace status is understood, no unrelated app is modified.
+
+### Phase 1 — Flutter project and shared design system
+
+- Create or safely configure Flutter Android/iOS project.
+- Set up app entry/root widget, router, state-management foundation, design tokens, typography, safe-area layout and reusable UI primitives.
+- Add a first screen from the actual Stitch design, such as the splash/welcome screen.
+- Add baseline tests and verify formatting/static analysis/build where the environment permits.
+
+**Exit:** App launches; first screen visually compared with Stitch; shared theme and components tested; file tree documented.
+
+### Phase 2 — Entry/authentication/location screens
+
+- Implement splash/welcome, phone OTP screen and delivery-area screen.
+- Add guest browsing and mock auth/location repositories.
+- Validation and denied/unavailable states must match the references.
+
+**Exit:** Entry flow works from splash to home with mock state; no real OTP or serviceability claim.
+
+### Phase 3 — Main shopping discovery
+
+- Implement home, search discovery, category browsing, product listing, quick view/filter/sort and product details.
+- Implement mock catalogue/models/repositories and reusable product/category widgets.
+
+**Exit:** Search, filters, sort, product variants/favorites, detail navigation and add-to-basket work consistently.
+
+### Phase 4 — Basket and checkout
+
+- Implement basket/cart, checkout and order confirmation/tracking UI.
+- Add derived totals, selected address/slot/payment option state, validations and mock order creation.
+
+**Exit:** Cart state/totals remain consistent, checkout validates, mock order is created once and clearly remains demo-only.
+
+### Phase 5 — Orders and account
+
+- Implement orders list/detail, profile, edit profile/settings, addresses, wishlist and refer/earn.
+- Reuse the same repositories and models across screens.
+
+**Exit:** Orders/details, local edits, default address changes, wishlist and reorder/move-to-basket interactions work.
+
+### Phase 6 — Help, Farm Assistant and app states
+
+- Implement support hub, FAQs, mock Farm Assistant, empty/unavailable states and system loader/error/permission states.
+
+**Exit:** FAQ search/filter/expand, mock chat, retry/error flows and support navigation all work.
+
+### Phase 7 — QA, visual polish and handoff
+
+- Compare all 24 implemented screens/states with their Stitch screenshots at comparable mobile viewport sizes.
+- Fix typography, colors, spacing, card geometry, image crops, safe-area/keyboard issues and navigation inconsistencies.
+- Run formatting, analysis, unit/widget/navigation tests and Android build; verify iOS build when macOS/Xcode is available.
+- Finish README and handoff notes; mark actual screen status.
+
+**Exit:** Screens are visually reviewed; no critical UI defects; all possible checks run and their true results are documented; no production backend is accidentally connected.
+
+Do not start all 24 screens simultaneously. Complete and verify phase-by-phase, with user review between major milestones.
+
+## 11. Explorer, Files, and Documentation Requirements
+
+All files must be real on-disk files inside the current project workspace and appear in the Antigravity IDE Explorer. Do not merely print a tree in chat.
+
+- `lib/`: Dart app/source code.
+- `assets/`: fonts/images/icons that the app actually uses.
+- `design/source/`: original Stitch ZIP or unmodified source archive.
+- `design/reference/`: extracted screenshots/HTML/design reference files for development; do not bundle source screenshots into production assets unless genuinely used by the UI.
+- `docs/`: architecture, plan, progress, decisions, screen map, testing strategy, API contract, and open questions.
+- `test/`: automated tests.
+- `.github/workflows/`: GitHub Actions checks.
+
+Create files when needed and keep names predictable. Do not put the entire app in one file, duplicate the theme in multiple places, create empty placeholder files for all future screens, or delete existing files without understanding them.
+
+Maintain:
+
+- `README.md` — prerequisites, Flutter/Dart version assumptions, setup, run/test commands, app purpose, mock-mode limits.
+- `docs/architecture.md` — architecture, state management, routing, data flow and dependency choices.
+- `docs/implementation-plan.md` — approved phases and deliverables.
+- `docs/implementation-progress.md` — completed work, pending work, blockers, validation results and next milestone.
+- `docs/decisions.md` — technical decisions and reasons.
+- `docs/screen-map.md` — all 24 Stitch reference names, screenshot source, Flutter file/route, status, tests.
+- `docs/testing-strategy.md` — test plan and commands.
+- `docs/api-contract.md` — planned Odoo boundary, clearly marked provisional until the actual Odoo environment is inspected.
+- `docs/frontend/OPEN_QUESTIONS.md` — genuine unresolved details and missing assets.
+- `CHANGELOG.md` — significant development milestones.
+
+Update these documents as actual work progresses. Do not claim that a screen/test/feature is complete because a file merely exists.
+
+## 12. GitHub Workflow and Safety
+
+Treat GitHub as the traceable history for the project. Begin by inspecting Git state; do not assume the repository or branch.
+
+### Repository and branches
+
+- Confirm the opened repo is the Heera Organics grocery frontend—not the separate dairy repo.
+- Preserve existing history and work.
+- Keep `main` as the stable branch.
+- Use descriptive feature branches for each phase, for example `feat/flutter-foundation`, `feat/onboarding-location`, `feat/shopping-discovery`, `feat/cart-checkout`, `feat/orders-profile`, and `test/frontend-qa`.
+- Do not commit directly to `main` unless specifically approved.
+- If no remote exists or its URL is unclear, ask for the correct GitHub remote. Never create a public repository or change visibility without approval.
+
+### Commits and pushes
+
+After every logical, verified milestone:
+
+1. Run `dart format` on changed Dart files.
+2. Run `flutter analyze` and relevant tests.
+3. Build/run where the available environment supports it.
+4. Inspect `git diff` and `git status`.
+5. Confirm no secrets, real customer data, signing files or credentials are included.
+6. Commit using a descriptive Conventional Commit message, such as `chore: initialize Flutter project`, `feat: add Heera Organics design system`, `feat: implement welcome screen`, or `test: add welcome screen widget tests`.
+7. Push the working branch when GitHub access is configured and the user has approved the repository workflow.
+8. Report branch, commit hash/message, checks run, and push result honestly.
+
+Never force-push, rewrite shared history, delete branches or change repository visibility without permission. If authentication or network prevents pushing, preserve local changes and state what must be done; never claim the push succeeded unless Git confirms it.
+
+### `.gitignore` and CI
+
+- Ensure generated build outputs, `.dart_tool/`, IDE-local settings, machine-specific configuration, caches, secrets and local environment files are ignored.
+- Commit `pubspec.lock` for the application.
+- Create a lightweight `.github/workflows/flutter_ci.yml` when the project reaches a testable foundation. It should use a supported stable Flutter SDK and run relevant dependency, formatting, analysis and test checks. Verify the workflow before claiming it works.
+- Never put tokens/credentials in source, chat transcript files, documentation or workflow logs.
+
+## 13. Quality and Acceptance Criteria
+
+The frontend is complete only when:
+
+- All 24 supplied Stitch screens are implemented, or any variance is explicitly documented and approved.
+- Each screen has been compared against its matching Stitch screenshot; the screenshots themselves are not used as screen backgrounds.
+- Typography, palette, spacing, images/crops, surfaces, borders, controls, safe areas and navigation follow the design system.
+- Search, category/filter/sort, product/variant selection, cart quantities, totals, checkout validation, mock order, orders/details, addresses, wishlist and FAQ flows work coherently.
+- Loading, empty, error, unavailable, and permission states are reachable and recoverable.
+- Shared state is not duplicated between screens; mock repository data is the only source for frontend demo records.
+- No direct PostgreSQL access, production secret, real OTP/payment/order or unapproved backend integration exists in this phase.
+- `dart format`, `flutter analyze`, relevant tests and available builds are run; actual results are documented.
+- The file tree is understandable; docs and screen map reflect reality; Git status is clean after commit where applicable.
+- Android build/test is verified where possible. iOS build can only be confirmed in an environment with the required macOS/Xcode tooling; report that limitation honestly if unavailable.
+
+## 14. Instructions for This First Antigravity Session — Plan Only
+
+Before touching application code, do the following:
+
+1. Inspect the actual workspace and current Explorer/file tree.
+2. Inspect Git status, current branch, remote and recent commits without changing history.
+3. Check Flutter/Dart availability and `flutter doctor` output if the toolchain is installed.
+4. Locate the frontend build specification, SRS/SDD, Stitch ZIP, and `DESIGN.md`. Confirm all 24 screen references and identify missing images/fonts.
+5. Summarize the product, the fixed decisions, the UI source-of-truth order, and the future Odoo boundary in your own words.
+6. Propose the final feature-first folder tree and the exact packages to use, with concise reasons and compatibility checks.
+7. Show the 8 implementation phases, deliverables, exit checks, GitHub branch/commit plan, and testing plan.
+8. Report any actual blocker, but do not ask the user to decide matters already settled in this brief.
+9. Create a short phase checklist and screen-map approach in the proposed plan. Since this is a planning-only session, do not create or modify project/code files yet unless the user explicitly asks you to save the plan into the workspace.
+10. Wait for the user's approval before beginning Phase 0/Phase 1 implementation.
+
+Your first response must be an implementation plan based on actual source inspection, not generic advice. Clearly separate verified facts, recommendations, and unresolved questions. Do not claim that any work, file creation, build, test, commit, or push occurred unless it actually did.

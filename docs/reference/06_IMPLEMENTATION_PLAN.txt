@@ -1,0 +1,230 @@
+# Heera Organics — Implementation Execution Plan
+
+**Document ID:** HO-IMPL-001  
+**Version:** 1.1  
+**Date:** 2026-10-15  
+**SDLC:** Waterfall  
+**Status:** Proposed execution plan; implementation and production changes have not started  
+**Related documents:** `01_Heera_Organics_Requirements.md`, `02_Heera_Organics_System_Design.md`, `03_Heera_Organics_Odoo_Migration_Plan.md`, `Dairy_Farm_Repository_Audit.md`
+
+---
+
+## 1. Purpose and Current State
+
+This plan converts the approved requirements and system design into an ordered implementation sequence. It is a build plan—not evidence that code has been changed, Odoo has been configured, data has been migrated, or an app is live on the target architecture.
+
+**Current-state correction:** The Heera Organics grocery customer frontend has **not been built yet**. Frontend development must therefore be an explicit early work package, not treated as an already-completed app that only needs connecting. A separate dairy app codebase exists; it should be inspected and reused where practical rather than automatically rebuilt from scratch. Its readiness and completeness must be verified against the approved requirements.
+
+The target architecture remains:
+
+- **Odoo Community + PostgreSQL:** the sole target business backend and system of record.
+- **Heera Organics grocery customer frontend:** build the frontend first from the approved requirements/design, initially using clearly identified mock data where backend APIs are not available; connect it to Odoo after the API contracts and endpoints are ready.
+- **Dairy delivery frontend:** inspect the existing Expo/React Native + TypeScript app, retain usable screens, and adapt missing or changed flows before connecting it to Odoo.
+- **Legacy FastAPI + MongoDB:** use only for controlled export/trial/final migration and approved temporary archive purposes. Do not create new day-to-day business features on this stack. Retire it after verified cutover and the agreed retention period.
+- **No direct database access from either frontend.** No separate FastAPI business backend in the target production architecture.
+
+## 2. Waterfall Entry Gate
+
+Before feature implementation begins, confirm and record:
+
+- Requirements and system design are the approved baseline versions.
+- The current dairy repository, any existing deployment, environment settings, and data sources are inventoried.
+- The grocery frontend repository/project is created and source control is set up; there is no assumption that the grocery frontend already exists.
+- Existing design references (including `design.md`, if still current) are reviewed against the approved SRS and SDD.
+- The actual Odoo version, hosting constraints, authentication/session design, custom-addon approach, and external providers are resolved before integration depends on them.
+- The detailed data dictionary, role matrix, API contracts, migration strategy, and acceptance tests have been reviewed.
+- Backups of existing source and legacy data are available; restoration has been verified in a non-production environment.
+
+If a required item is unknown, create a tracked discovery task before depending on it. Do not connect a production frontend or migrate live data based on assumptions.
+
+## 3. Implementation Work Packages
+
+### WP-0 — Protect and baseline the current solution
+
+**Tasks**
+- Record the exact commit/hash for the existing dairy app and any backend repository in use.
+- Create the source repository for the new grocery frontend and set up a basic branching/review convention.
+- Review environment variables, deployment configuration, access rights, and secrets without copying secrets into files or source control.
+- Verify that a restricted backup of legacy MongoDB data can be restored to a non-production environment.
+- Create separate development/staging configuration; prohibit experiments against production data.
+- Address or track source-audit findings, including any mock OTP response, fallback JWT secret, insecure TLS configuration, broad CORS, readable PIN storage, inadequate route/customer authorization, and duplicate/concurrent updates.
+
+**Deliverables:** source baseline, grocery frontend repository, restore evidence, environment inventory, remediation backlog.  
+**Exit check:** existing code/data is recoverable, the new frontend has a source-control home, and known security blockers are tracked.
+
+### WP-1 — Build the Heera Organics grocery frontend
+
+This package builds the grocery customer-facing UI because it has not yet been built. It does **not** pretend that backend-connected features work before Odoo APIs are available.
+
+**Tasks**
+- Review the approved requirements and system design, then confirm the page list and customer user flows before coding.
+- Review the existing `design.md` and any Stitch designs as references; treat them as approved only after they match the current requirements.
+- Set up the selected frontend framework and project structure consistent with the system design. Do not add a second business backend or a separate database.
+- Build the required customer pages, including the applicable home/catalogue, category and product listing, product details, search, cart, address/checkout, order status/history, profile, contact/help, and policy screens listed in the approved requirements.
+- Implement reusable layout, navigation, product cards, forms, validation messages, loading states, empty states, error states, and responsive behavior.
+- Use clearly labeled mock data or a local mock service only for screens that cannot yet call Odoo. Keep mock data isolated so it can be replaced by the real API client without rewriting the UI.
+- Add frontend navigation and component tests for critical customer flows; do not store authoritative product prices, stock, orders, or payment status only in client state.
+
+**Deliverables:** working grocery frontend screens, source code, page/flow checklist, UI test results, list of mocked operations.  
+**Exit check:** agreed screens and navigation work with mock data; all mocked functions are explicitly documented; no fake operation is represented as a real order or payment.
+
+### WP-2 — Inspect and complete the existing dairy frontend
+
+Preserve and adapt the current Expo/React Native + TypeScript frontend where practical. This is a separate application from the grocery customer frontend.
+
+**Tasks**
+- Compare the actual current screens and implementation with the approved requirements and repository audit; record what exists, what is incomplete, and what must change.
+- Keep usable current login, owner, customer, milk-log, and delivery-route flows; rebuild a screen only when the existing implementation cannot meet the approved rules safely.
+- Build or adapt missing UI for mandatory GPS registration, effective-dated milk quantities, selected-date extra milk, delivery pauses, temporary reassignment, pre-route loading, actual partial quantities/reasons, milk returns, sync states, discrepancy visibility, audit history, and Excel exports as required by the SRS.
+- Enforce the approved role-specific visibility in the interface, while recognizing that server-side authorization must also enforce it.
+- Use mock/local test data where needed until the Odoo integration is ready; keep mock behavior separate from real API operations.
+
+**Deliverables:** dairy frontend gap analysis, updated screens, user-flow checklist, regression test results.  
+**Exit check:** required dairy app screens and states are implemented or any remaining gaps are explicitly approved and tracked.
+
+### WP-3 — Provision and verify Odoo development/staging
+
+**Tasks**
+- Confirm the approved Odoo Community version and supported hosting model.
+- Provision Odoo and PostgreSQL in a non-production environment with access restricted to approved users.
+- Configure separate development, staging, and production settings; protect secrets outside source control.
+- Enable secure transport, database backups, logs, and a documented restore procedure.
+- Install only the standard Odoo modules actually required after workflow discovery; avoid assuming that every standard module or customization is needed.
+
+**Deliverables:** environment runbook, configuration inventory, tested backup/restore procedure.  
+**Exit check:** the implementation team can deploy a controlled Odoo change to staging and recover the staging database.
+
+### WP-4 — Define and implement Odoo modules/data models
+
+Use standard Odoo models where appropriate and custom addons/models where required. Final model names and field-level design must follow the approved data mapping.
+
+**Business areas to cover**
+- Users, roles, active/deactivated delivery-boy status, PIN reset lifecycle, and access rules.
+- Customer details, mandatory GPS coordinates, regular cow/buffalo requirements, effective-dated changes, and registration-link state.
+- Morning/evening production logs, with cow and buffalo quantities stored separately.
+- Permanent route assignments, temporary coverage with start/end dates, and automatic restoration of regular assignments.
+- Date-specific extra-milk schedules and date-specific delivery pauses.
+- Route runs, customer stops, approved target load, actual loaded quantities, delivery outcome, actual delivered quantities, partial-delivery reasons, returned quantities, and route closure.
+- Offline submission identifiers, sync receipts/idempotency, audit history, and conflict-review records.
+- Odoo-owned stock movements, production usage, wastage, physical closing stock, discrepancy/resolution, billing, and wider back-office responsibilities.
+
+**Required invariants**
+- Cow and buffalo quantities remain separate through production, loading, delivery, return, usage, wastage, stock reconciliation, and reports; combined totals are derived.
+- Business records are corrected, not hard-deleted through the application. Corrections require a reason and preserve the original and corrected values, actor, timestamp, and record relationship.
+- Completed delivery facts are not rewritten when future customer quantities change.
+- A submitted offline operation must be safe to retry without producing duplicate business effects.
+
+**Deliverables:** reviewed addon/model source, data dictionary, access-control rules, model-level tests.  
+**Exit check:** model, validation, audit, access-control, and duplicate-prevention tests pass in staging.
+
+### WP-5 — Build secured Odoo APIs/controllers
+
+**Tasks**
+- Create a versioned, documented API/controller surface for both frontends. Keep controllers within approved Odoo addons; do not introduce a separate FastAPI service.
+- Apply authentication, role checks, record-level authorization, input validation, safe error responses, and audit attribution on the server.
+- Enforce server-side quantity and route-state rules. Frontend checks alone are not security controls.
+- Implement idempotency or equivalent duplicate protection for offline delivery/production submissions and grocery order/payment operations.
+- Add API contract tests and structured diagnostics that avoid logging passwords, PINs, tokens, or unnecessary personal data.
+- Integrate external services only after the provider is chosen and credentials/webhook requirements are confirmed.
+
+**Deliverables:** API specification, controller/addon code, contract tests, integration notes.  
+**Exit check:** approved requests work through Odoo staging, unauthorized requests are rejected, and retries do not create duplicate records.
+
+### WP-6 — Connect both frontends to Odoo
+
+**Grocery frontend tasks**
+- Replace each mock data source with the appropriate secured Odoo API call, one flow at a time.
+- Connect catalogue, products, variants, prices, availability, customer/address data, cart quotes, checkout, orders, and order status as applicable to the approved SRS.
+- Validate prices, availability, serviceability, order creation, stock effects, and payment verification server-side.
+
+**Dairy frontend tasks**
+- Replace local/mock business data operations with Odoo API calls.
+- Connect user access, customer registration, milk production, route assignment, delivery actions, return quantities, offline synchronization, discrepancy review, audit history, and reporting.
+- Preserve offline records locally until Odoo acknowledges them. Use idempotency keys/sync receipts, show Pending Sync/Synced states, record last attempt/failure details, and flag genuine conflicts rather than overwriting data silently.
+
+**Shared tasks**
+- Keep authoritative business rules and data in Odoo; no frontend may connect directly to PostgreSQL.
+- Configure the selected authentication, maps/route optimization, WhatsApp/SMS, and payment integrations only after providers and contracts are approved.
+
+**Deliverables:** both frontends integrated with Odoo staging, integration tests, order/stock/delivery verification results.  
+**Exit check:** grocery and dairy end-to-end flows work through Odoo's source of truth; no separate MongoDB/FastAPI write path remains in active business use.
+
+### WP-7 — Data migration and reconciliation rehearsal
+
+**Tasks**
+- Export legacy data using a controlled, repeatable procedure.
+- Normalize units, dates/timezone, identifiers, customer references, and cow/buffalo milk types.
+- Run trial imports into a disposable or staging Odoo database.
+- Reconcile row counts, source-to-target totals, customer references, production quantities, delivery outcomes, route assignments, and required historic back-office records.
+- Document exclusions, duplicates, invalid rows, and any manual decisions. Never silently drop unresolved records.
+- Rehearse final delta migration and rollback steps before production cutover.
+
+**Deliverables:** mapping file, migration scripts, trial-import report, exception register, reconciliation sign-off.  
+**Exit check:** the business owner and technical lead approve the trial reconciliation and retention policy.
+
+### WP-8 — Verification, UAT and release readiness
+
+Tests must cover more than happy paths:
+- Unit/model and API contract tests.
+- Role and record-access tests for owner, admin, and delivery boy.
+- Production, loading, delivered/partial/skipped, return, balance, physical-count, and discrepancy calculations separately for cow and buffalo milk.
+- Effective dates, pauses, extra-milk dates, temporary route expiry/restoration, and locking after route start.
+- Offline use, intermittent connection, repeated retry, app restart, duplicate submission, and a genuine data conflict.
+- Route auto-optimization and recalculation after a skipped customer.
+- Excel filters/exports and audit-history completeness.
+- Notification failures/retries, with secrets and phone numbers handled safely.
+- Grocery order, price, stock, payment callback/webhook, and error/rollback paths.
+- Backup restore, production monitoring, access review, and performance against the agreed expected workload.
+
+**Deliverables:** requirement-to-test traceability, defect register, UAT sign-off, security review, operations/rollback runbooks.  
+**Exit check:** no unresolved critical security, data-integrity, order/payment, or delivery blocker remains.
+
+### WP-9 — Controlled cutover and retirement
+
+**Tasks**
+- Agree a maintenance/write-freeze window and named go/no-go approvers.
+- Back up existing data and code; verify backup readability and restore path.
+- Perform approved final migration and reconciliation.
+- Switch both frontends to Odoo endpoints; verify login, customer registration, grocery order path, production logging, route execution, reconciliation, and reports.
+- Monitor for duplicate submissions, missing records, API failures, and quantity mismatches.
+- Retain the legacy archive only for the agreed period and purpose; do not continue day-to-day operations on the old backend after cutover.
+- Decommission legacy service, connections, and credentials only after the rollback window closes and migration sign-off is complete.
+
+**Deliverables:** go-live checklist, final reconciliation, monitoring report, rollback decision record, retirement checklist.  
+**Exit check:** written owner and technical-lead approval.
+
+## 4. First Work Session — What to Do First
+
+Because the grocery frontend is not built yet, do **not** start by connecting a nonexistent frontend or treating backend endpoints as available. Start here:
+
+1. **Baseline the current code:** protect and inspect the existing dairy app; create a separate source-control project for the grocery frontend.
+2. **Confirm screens and flows:** map the approved SRS/SDD to a page-by-page frontend checklist; review `design.md` or Stitch output if it is current.
+3. **Build the grocery UI shell:** set up the chosen frontend project and implement the required screens/navigation with isolated mock data while documenting which operations are mocked.
+4. **Gap-check the dairy UI:** retain usable existing screens and implement only the missing/changed flows from the requirements.
+5. **Then establish Odoo staging and APIs:** build server-side models and endpoints, and connect the frontends after API contracts are ready.
+
+Do not use mock data for live business activity, and do not represent a mock checkout or delivery as a real transaction. Odoo must become the only production business source of truth.
+
+## 5. Status Tracking Template
+
+| Work package | Status | Evidence/link | Blockers/notes | Approval |
+|---|---|---|---|---|
+| WP-0 Baseline and source protection | Not started | | | |
+| WP-1 Grocery frontend build | Not started | | | |
+| WP-2 Dairy frontend gap completion | Not started | | | |
+| WP-3 Odoo staging | Not started | | | |
+| WP-4 Models and access control | Not started | | | |
+| WP-5 APIs/controllers | Not started | | | |
+| WP-6 Frontend-to-Odoo integration | Not started | | | |
+| WP-7 Migration rehearsal | Not started | | | |
+| WP-8 Verification and UAT | Not started | | | |
+| WP-9 Cutover and retirement | Not started | | | |
+
+## 6. Constraints and Honest Status
+
+- This plan does not mean code, hosting, Odoo, or production data has already been changed.
+- The Heera Organics grocery frontend is not yet built; WP-1 is explicitly for building it.
+- The existing dairy repository is a starting point, not proof that every screen or behavior is complete or production-safe.
+- Odoo version, hosting, installed modules, providers (maps, WhatsApp/SMS, payment), API authentication details, workload sizing, and retention windows remain implementation decisions and must be resolved through discovery/sign-off.
+- Do not commit credentials, PINs, tokens, database exports, or personal data to Git or documentation.
+- In Waterfall, a work package should pass its exit check before dependent production work proceeds; changes to approved requirements should follow change control.

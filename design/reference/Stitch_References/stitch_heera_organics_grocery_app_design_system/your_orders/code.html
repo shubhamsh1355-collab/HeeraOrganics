@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400..700&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-background": "#1e1b14", "tertiary": "#1d3400", "surface-variant": "#e9e1d6", "secondary": "#685f30", "surface-container-lowest": "#ffffff", "primary-container": "#234c36", "on-tertiary-container": "#9cbb76", "surface-container-low": "#fbf3e7", "soft-green": "#DBF5D1", "primary-fixed-dim": "#a4d1b4", "on-tertiary-fixed": "#102000", "deep-text": "#243126", "on-error-container": "#93000a", "white-surface": "#FFFFFF", "muted-text": "#706F63", "secondary-fixed": "#f0e3a8", "border-subtle": "#E5DDCF", "on-secondary-fixed": "#211c00", "tertiary-container": "#324b13", "on-surface-variant": "#414943", "on-secondary-fixed-variant": "#4f471a", "surface-dim": "#e1d9cd", "outline-variant": "#c1c8c1", "surface-container": "#f5ede1", "secondary-container": "#ede0a5", "on-error": "#ffffff", "on-secondary-container": "#6c6333", "surface-tint": "#3e674f", "on-secondary": "#ffffff", "on-surface": "#1e1b14", "inverse-surface": "#343028", "background": "#fff8f1", "tertiary-fixed": "#cdeda3", "primary": "#093521", "primary-fixed": "#bfedcf", "outline": "#717972", "error": "#ba1a1a", "tertiary-fixed-dim": "#b1d18a", "surface": "#fff8f1", "inverse-on-surface": "#f8f0e4", "on-tertiary-fixed-variant": "#354e16", "surface-bright": "#fff8f1", "on-primary-fixed-variant": "#264f38", "on-primary-container": "#8fbc9f", "error-container": "#ffdad6", "surface-container-high": "#efe7db", "on-primary": "#ffffff", "on-tertiary": "#ffffff", "on-primary-fixed": "#002111", "secondary-fixed-dim": "#d3c78e", "inverse-primary": "#a4d1b4", "error-alert": "#B42318", "surface-container-highest": "#e9e1d6" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "gutter-desktop": "1.5rem", "space-xs": "0.25rem", "margin-desktop": "2.5rem", "margin": "1rem", "space-sm": "0.5rem", "space-md": "0.75rem", "margin-tablet": "1.5rem", "space-xxl": "2rem", "space-xl": "1.5rem", "space-lg": "1rem", "gutter": "1rem" }, "fontFamily": { "headline-lg": ["Literata"], "label-md": ["\"Source Serif 4\""], "display-hero": ["Literata"], "headline-sm": ["Literata"], "headline-lg-mobile": ["Literata"], "label-lg": ["\"Source Serif 4\""], "body-sm": ["\"Source Serif 4\""], "headline-md": ["Literata"], "body-lg": ["\"Source Serif 4\""], "display-hero-mobile": ["Literata"], "title-card": ["Literata"], "label-sm": ["\"Source Serif 4\""], "body-md": ["\"Source Serif 4\""], "body": ["\"Source Serif 4\""] }, "fontSize": { "headline-lg": ["2rem", {"lineHeight": "2.5rem", "fontWeight": "700"}], "label-md": ["0.75rem", {"lineHeight": "1rem", "fontWeight": "600"}], "display-hero": ["2.5rem", {"lineHeight": "3rem", "fontWeight": "700"}], "headline-sm": ["1.125rem", {"lineHeight": "1.5rem", "fontWeight": "600"}], "headline-lg-mobile": ["1.5rem", {"lineHeight": "2rem", "fontWeight": "600"}], "label-lg": ["0.875rem", {"lineHeight": "1.25rem", "fontWeight": "600"}], "body-sm": ["0.8125rem", {"lineHeight": "1.25rem", "fontWeight": "400"}], "headline-md": ["1.25rem", {"lineHeight": "1.75rem", "fontWeight": "600"}], "body-lg": ["1.125rem", {"lineHeight": "1.75rem", "fontWeight": "400"}], "display-hero-mobile": ["1.875rem", {"lineHeight": "2.25rem", "fontWeight": "700"}], "title-card": ["1rem", {"lineHeight": "1.375rem", "fontWeight": "600"}], "label-sm": ["0.6875rem", {"lineHeight": "0.875rem", "fontWeight": "600"}], "body-md": ["0.9375rem", {"lineHeight": "1.5rem", "fontWeight": "400"}] } } } };</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-body-md text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 inset-x-0 z-50 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] pt-safe"><div class="h-16 px-4 flex items-center justify-between gap-3"><div class="flex flex-col justify-center min-w-0 flex-1"><div class="flex items-center gap-1.5"><span class="font-headline-sm text-headline-sm text-primary tracking-tight truncate">Heera Organics</span><span class="material-symbols-outlined text-primary text-[16px]">eco</span></div><div class="flex items-center gap-1 text-on-surface-variant"><span class="material-symbols-outlined text-[14px] text-secondary">location_on</span><span class="font-label-sm text-label-sm truncate max-w-[170px]">Deliver to Sedam Road</span><span class="material-symbols-outlined text-[14px]">expand_more</span></div></div><div class="flex items-center gap-2"><button aria-label="Cart" class="relative w-11 h-11 flex items-center justify-center text-primary rounded-full hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[24px]">shopping_bag</span><span class="absolute top-1 right-1 w-4 h-4 bg-primary text-on-primary rounded-full font-label-sm text-[10px] flex items-center justify-center font-bold">3</span></button><div class="flex items-center"><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-2 ring-primary-fixed" src="https://lh3.googleusercontent.com/aida/AEtjO1VRU1NQ84lDxXeiay8II1Z6kNBdZUu9NYUc0L75bHS3WMQeVrUo9yYPmwN3X45z7gjy_JWmXrbsTNsOJrFAaLIADzHPAGuf7HQFDQKWTgzgUjj0MwXgkUc8TX6DJt5Z66U48yt8N784BAO0oKe3wIl16Mz_ky3M43_aaFwCSRl9JnSye2SCw0dt-82eyxzrM47zPkJdgS2eG9sYkeKVAVY2y-RQghgXujWT3IeMR7Cs5THb8uH8WyVyLaNNzcshW3t3oDmF0KtBNQ"/></div></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-20 bg-surface"><div class="flex flex-col w-full">
+<!-- Title & Search Area -->
+<section class="px-4 pt-3 pb-2 flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<div>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary tracking-tight">Your Orders</h1>
+<p class="font-body-sm text-body-sm text-muted-text mt-0.5">Farm-fresh harvest tracked directly to Sedam Road</p>
+</div>
+<button aria-label="Support History" class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary active:scale-95 transition-transform shadow-sm">
+<span class="material-symbols-outlined text-[20px]">help_center</span>
+</button>
+</div>
+<!-- Search Input -->
+<div class="relative w-full">
+<div class="absolute inset-y-0 left-3 flex items-center pointer-events-none text-muted-text">
+<span class="material-symbols-outlined text-[18px]">search</span>
+</div>
+<input class="w-full bg-surface-container-lowest text-deep-text font-body-sm text-body-sm pl-10 pr-4 py-2.5 rounded-xl shadow-sm focus:outline-none placeholder:text-muted-text/80 transition-all" placeholder="Search past harvest items, ID, or dates..." type="search"/>
+</div>
+<!-- Horizontal Category Filter Pills -->
+<div class="flex gap-2 overflow-x-auto no-scrollbar py-1 -mx-4 px-4">
+<button class="px-3.5 py-1.5 rounded-full font-label-md text-label-md shrink-0 bg-primary-container text-on-primary shadow-sm flex items-center gap-1.5 transition-all">
+<span>All Orders</span>
+<span class="bg-surface-container-lowest/20 text-on-primary px-1.5 py-0.2 rounded-full text-[10px]">14</span>
+</button>
+<button class="px-3.5 py-1.5 rounded-full font-label-md text-label-md shrink-0 bg-soft-green text-deep-text flex items-center gap-1.5 active:scale-95 transition-all">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<span>Active (1)</span>
+</button>
+<button class="px-3.5 py-1.5 rounded-full font-label-md text-label-md shrink-0 bg-surface-container-lowest text-muted-text shadow-sm hover:text-deep-text active:scale-95 transition-all">
+        Delivered (12)
+      </button>
+<button class="px-3.5 py-1.5 rounded-full font-label-md text-label-md shrink-0 bg-surface-container-lowest text-muted-text shadow-sm hover:text-deep-text active:scale-95 transition-all">
+        Subscriptions (1)
+      </button>
+</div>
+</section>
+<!-- Section 1: Active Order Spotlight -->
+<section class="px-4 py-3">
+<div class="bg-surface-container-lowest rounded-xl shadow-md p-4 relative overflow-hidden flex flex-col gap-3.5">
+<!-- Ambient decorative leaf accent -->
+<div class="absolute -top-10 -right-10 w-28 h-28 rounded-full bg-soft-green/30 blur-2xl pointer-events-none"></div>
+<!-- Top Row: Status & Live ETA -->
+<div class="flex items-center justify-between gap-2">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-soft-green text-deep-text font-label-md text-label-md">
+<span class="material-symbols-outlined text-[15px] text-primary" style="font-variation-settings: 'FILL' 1;">local_shipping</span>
+<span class="font-semibold">Out for Delivery</span>
+</div>
+<div class="text-right">
+<span class="font-label-sm text-label-sm text-muted-text">Expected by</span>
+<span class="font-headline-sm text-headline-sm text-primary block leading-none">3:45 PM</span>
+</div>
+</div>
+<!-- Order ID, Time, Address -->
+<div class="bg-surface-container-low rounded-lg p-3 flex flex-col gap-2">
+<div class="flex items-center justify-between text-muted-text font-label-sm text-label-sm">
+<span class="font-medium text-deep-text">#HO-89241</span>
+<span>Today, 2:15 PM</span>
+</div>
+<div class="flex items-start gap-2 text-deep-text">
+<span class="material-symbols-outlined text-secondary text-[18px] shrink-0 mt-0.5">pin_drop</span>
+<p class="font-body-sm text-body-sm leading-tight text-deep-text line-clamp-1">
+            Flat 402, Green Meadows, Sedam Road
+          </p>
+</div>
+</div>
+<!-- Delivery Partner Info -->
+<div class="flex items-center justify-between py-0.5 px-1">
+<div class="flex items-center gap-2.5">
+<div class="w-9 h-9 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-headline-sm text-[14px]">
+            SK
+          </div>
+<div>
+<p class="font-title-card text-title-card text-deep-text leading-tight">Somnath K.</p>
+<div class="flex items-center gap-1 text-secondary font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[13px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span>4.9 Champion Partner</span>
+</div>
+</div>
+</div>
+<button aria-label="Call Delivery Champion" class="w-8 h-8 rounded-full bg-surface-container-low text-primary flex items-center justify-center hover:bg-soft-green transition-colors">
+<span class="material-symbols-outlined text-[18px]">phone_in_talk</span>
+</button>
+</div>
+<!-- Delivery Route Mini Progress -->
+<div class="flex flex-col gap-1.5 pt-1">
+<div class="flex justify-between items-center font-label-sm text-label-sm">
+<span class="text-primary font-medium flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+            Harvest Packed
+          </span>
+<span class="text-primary font-medium flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-ping"></span>
+            Sedam Hub En Route
+          </span>
+<span class="text-muted-text">At Doorstep</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-high rounded-full overflow-hidden flex">
+<div class="bg-primary w-2/3 h-full rounded-full transition-all duration-500"></div>
+</div>
+</div>
+<!-- Item Thumbnail Strip -->
+<div class="pt-1">
+<div class="flex items-center justify-between pb-1.5">
+<span class="font-label-sm text-label-sm text-muted-text">3 Organic Items</span>
+<span class="font-headline-sm text-headline-sm text-primary">₹148 <span class="font-label-sm text-label-sm font-normal text-muted-text">(Paid UPI)</span></span>
+</div>
+<div class="grid grid-cols-3 gap-2">
+<div class="bg-surface-container-low rounded-lg p-1.5 flex flex-col items-center text-center">
+<img class="w-12 h-12 rounded object-cover mb-1 shadow-sm" data-alt="Plump, freshly plucked organic Indian country desi tomatoes resting in an earthen woven basket with soft natural sunbeam lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJnhAA3dnXauFOu7-J4Z-gGFQxHhvLjtw2c0DwZuOpqC5S_10FhDeMUJbKklBV9R5pE62Z2mgnnsa-hChZIYOtJXrEd_h0g4g4yAlIiRglT11e30YwbCELfZnQIQiUsxEu0msf6QnmldS4nzzUcfk_-M2blTgCYdflU6Pweh0L5bj2yUHSbJ2O1NC_5l6XAoWWZuSbfme9-uEuzdhh4RRmRWzbl-IWd5z5EIUNgjSkuVUVYtWX6kcg"/>
+<span class="font-label-sm text-label-sm text-deep-text line-clamp-1">Country Tomato</span>
+<span class="text-[10px] text-muted-text">500g</span>
+</div>
+<div class="bg-surface-container-low rounded-lg p-1.5 flex flex-col items-center text-center">
+<img class="w-12 h-12 rounded object-cover mb-1 shadow-sm" data-alt="Crisp, deep green desi organic palak spinach bundle tied with natural coir string against an artisanal wooden table." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLqUjlOrDV7Td5xr0Od0NnDxA30pGZbuU_P_opfolVe-NTa0vAY6OWh4sUbYtXLwtqTvmvDD5uHO--qSCS3GHMjcMwZ-xFPUWUCDxvlu4ezwHQirNDqgP8rhNq5_ftOziJMsHEtHFotCmro2kYcgTHmGHH8eiHzwMco2C2D1mDbg5Td0xhNGmeQ2a_az9m3dav5ovie8G59nIyKxHje2OEV-6fchSf_KTcVNG_QcjfBXbANzauhMta"/>
+<span class="font-label-sm text-label-sm text-deep-text line-clamp-1">Farm Palak</span>
+<span class="text-[10px] text-muted-text">250g</span>
+</div>
+<div class="bg-surface-container-low rounded-lg p-1.5 flex flex-col items-center text-center">
+<img class="w-12 h-12 rounded object-cover mb-1 shadow-sm" data-alt="Vintage glass bottle containing pure white fresh Gir cow A2 milk with a parchment paper neck tie sitting on rustic linen." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7dIYzqCouqH-iEyjZ7-c20tVuR3jP55hKxTPo5RdL56mj98R96SAcWc9AqJPvB-aleXXlRJe6JBVqztejHtJSAmW9kgE4KzbHTzei3yKQrHLExXDNWKGZqG7dvVEt9EQr0cfHKQio37JY-b7KMoUL0k04rKEYXLo1DvMlxOBR-8i683Dt21RRjtS5Wdv4Cx1ZZ6DFgOk28X02eegWe_s_zWo_9isgiEyNmpOKBBc6K6yGR61ySt5x"/>
+<span class="font-label-sm text-label-sm text-deep-text line-clamp-1">Gir A2 Milk</span>
+<span class="text-[10px] text-muted-text">1L Glass</span>
+</div>
+</div>
+</div>
+<!-- CTA Row -->
+<div class="grid grid-cols-2 gap-2 pt-1">
+<button class="bg-primary-container text-on-primary font-label-lg text-label-lg py-2.5 px-3 rounded-xl flex items-center justify-center gap-1.5 shadow-sm active:opacity-90 transition-all">
+<span class="material-symbols-outlined text-[18px]">near_me</span>
+<span>Track Live</span>
+</button>
+<button class="bg-surface-container-low text-primary font-label-lg text-label-lg py-2.5 px-3 rounded-xl flex items-center justify-center gap-1.5 hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[18px]">support_agent</span>
+<span>Help &amp; Notes</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Section 2: Active Harvest Subscription Banner -->
+<section class="px-4 py-2">
+<div class="bg-secondary-container/50 rounded-xl p-3.5 shadow-sm flex items-start gap-3 relative">
+<div class="w-10 h-10 rounded-xl bg-secondary-container text-on-secondary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[22px]">calendar_month</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-secondary font-bold uppercase tracking-wider">Recurring Harvest</span>
+<span class="inline-flex items-center gap-1 text-[11px] font-semibold text-primary bg-surface-container-lowest px-2 py-0.5 rounded-full">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+            Active
+          </span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-deep-text mt-0.5">Daily A2 Vedic Milk Subscription</h2>
+<p class="font-body-sm text-body-sm text-deep-text/80 mt-0.5">1L Sunrise Slot (6:30 AM) • Tomorrow morning delivery on schedule</p>
+<div class="mt-2.5 flex items-center gap-3">
+<button class="font-label-md text-label-md text-primary font-bold flex items-center gap-0.5 hover:underline">
+            Manage or Pause Dates
+            <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 3: Past Harvest Orders -->
+<section class="px-4 pt-3 pb-2 flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<h2 class="font-headline-md text-headline-md text-deep-text">Past Harvests</h2>
+<span class="font-label-sm text-label-sm text-muted-text">Showing 3 of 12</span>
+</div>
+<!-- Past Order 1 -->
+<article class="bg-surface-container-lowest rounded-xl p-4 shadow-sm flex flex-col gap-3">
+<div class="flex items-start justify-between">
+<div>
+<span class="font-label-sm text-label-sm text-muted-text">Delivered Yesterday, 7:15 AM</span>
+<h3 class="font-headline-sm text-headline-sm text-deep-text mt-0.5">Morning Batch #HO-88910</h3>
+</div>
+<span class="font-headline-sm text-headline-sm text-primary">₹340</span>
+</div>
+<!-- Item descriptions -->
+<p class="font-body-sm text-body-sm text-muted-text leading-snug">
+        Gir Cow A2 Milk (2L), Fresh Coriander (1 bunch), Kalaburagi Toor Dal (1kg), Country Eggs (6 pcs)
+      </p>
+<!-- Glass bottle return eco credit badge -->
+<div class="bg-soft-green/60 rounded-lg p-2.5 flex items-center justify-between text-deep-text">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">recycling</span>
+<span class="font-body-sm text-body-sm">2 Glass bottles returned to partner</span>
+</div>
+<span class="font-label-md text-label-md text-primary font-bold">+₹40 Credited</span>
+</div>
+<!-- Star Rating Confirmation -->
+<div class="flex items-center justify-between text-muted-text pt-0.5">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-secondary text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-md text-label-md text-deep-text">Rated 5.0</span>
+<span class="font-label-sm text-label-sm text-muted-text">• "Loved the fresh dal aroma"</span>
+</div>
+<button class="font-label-sm text-label-sm text-muted-text hover:text-deep-text">Receipt</button>
+</div>
+<!-- Action buttons -->
+<div class="grid grid-cols-2 gap-2 pt-1">
+<button class="bg-primary-container text-on-primary font-label-lg text-label-lg py-2 rounded-xl flex items-center justify-center gap-1.5 shadow-sm active:scale-98 transition-all">
+<span class="material-symbols-outlined text-[17px]">sync</span>
+<span>1-Tap Reorder</span>
+</button>
+<button class="bg-surface-container-low text-deep-text font-label-lg text-label-lg py-2 rounded-xl flex items-center justify-center gap-1.5 hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[17px]">description</span>
+<span>View Invoice</span>
+</button>
+</div>
+</article>
+<!-- Past Order 2 -->
+<article class="bg-surface-container-lowest rounded-xl p-4 shadow-sm flex flex-col gap-3">
+<div class="flex items-start justify-between">
+<div>
+<span class="font-label-sm text-label-sm text-muted-text">Delivered 14 Oct, 8:00 AM</span>
+<h3 class="font-headline-sm text-headline-sm text-deep-text mt-0.5">Morning Batch #HO-87520</h3>
+</div>
+<span class="font-headline-sm text-headline-sm text-primary">₹285</span>
+</div>
+<p class="font-body-sm text-body-sm text-muted-text leading-snug">
+        Organic Methi (2 bunches), Cold Pressed Groundnut Oil (1L Wood Pressed), Farm Carrots (500g)
+      </p>
+<div class="flex items-center justify-between text-muted-text">
+<span class="font-label-sm text-label-sm">Paid via Farm Wallet &amp; Card</span>
+<button class="font-label-sm text-label-sm text-primary font-medium hover:underline">Rate Harvest ★</button>
+</div>
+<div class="grid grid-cols-2 gap-2 pt-1">
+<button class="bg-surface-container-low text-primary font-label-lg text-label-lg py-2 rounded-xl flex items-center justify-center gap-1.5 hover:bg-surface-container active:scale-98 transition-all">
+<span class="material-symbols-outlined text-[17px]">replay</span>
+<span>Reorder</span>
+</button>
+<button class="bg-surface-container-low text-muted-text font-label-lg text-label-lg py-2 rounded-xl flex items-center justify-center gap-1.5 hover:bg-surface-container transition-colors">
+<span>Details</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+</article>
+<!-- Past Order 3 -->
+<article class="bg-surface-container-lowest rounded-xl p-4 shadow-sm flex flex-col gap-3">
+<div class="flex items-start justify-between">
+<div>
+<span class="font-label-sm text-label-sm text-muted-text">Delivered 08 Oct, 7:30 AM</span>
+<h3 class="font-headline-sm text-headline-sm text-deep-text mt-0.5">Order #HO-86104</h3>
+</div>
+<span class="font-headline-sm text-headline-sm text-primary">₹620</span>
+</div>
+<p class="font-body-sm text-body-sm text-muted-text leading-snug">
+        Gir Cow A2 Bilona Ghee (500ml), Nati Country Tomatoes (1kg)
+      </p>
+<div class="grid grid-cols-2 gap-2 pt-1">
+<button class="bg-surface-container-low text-primary font-label-lg text-label-lg py-2 rounded-xl flex items-center justify-center gap-1.5 hover:bg-surface-container active:scale-98 transition-all">
+<span class="material-symbols-outlined text-[17px]">replay</span>
+<span>Reorder</span>
+</button>
+<button class="bg-surface-container-low text-muted-text font-label-lg text-label-lg py-2 rounded-xl flex items-center justify-center gap-1.5 hover:bg-surface-container transition-colors">
+<span>Details</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+</article>
+</section>
+<!-- Section 4: Circular Economy & Trust Card -->
+<section class="px-4 py-3">
+<div class="bg-surface-container-low rounded-xl p-4 flex flex-col gap-3">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-[22px]">nature_people</span>
+<h3 class="font-headline-sm text-headline-sm">Your Sustainable Impact</h3>
+</div>
+<p class="font-body-sm text-body-sm text-deep-text/90">
+        You have returned <span class="font-semibold text-primary">14 glass bottles</span> and saved <span class="font-semibold text-primary">5.8kg of plastic</span> across your Kalaburagi deliveries!
+      </p>
+<!-- Instant support pill -->
+<div class="bg-surface-container-lowest rounded-lg p-3 flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[20px]">assignment_turned_in</span>
+<div class="leading-tight">
+<span class="font-title-card text-title-card text-deep-text block">Harvest Guarantee</span>
+<span class="font-label-sm text-label-sm text-muted-text">Instant Replacement &amp; Support</span>
+</div>
+</div>
+<button class="px-3 py-1.5 rounded-lg bg-soft-green text-primary font-label-sm text-label-sm font-semibold active:scale-95 transition-transform">
+          Report Issue
+        </button>
+</div>
+</div>
+</section>
+<!-- Bottom Spacing for App Shell Dock -->
+<div class="h-6"></div>
+</div>
+<!-- Micro-interaction script to highlight active Orders tab on global navigation -->
+<script>
+  (function() {
+    // Sync bottom navigation to highlight Orders tab as per brief
+    const navLinks = document.querySelectorAll('nav a');
+    navLinks.forEach(link => {
+      const path = link.getAttribute('data-path');
+      if (path === 'orders') {
+        link.classList.remove('text-muted-text');
+        link.classList.add('text-primary-container', 'font-bold', 'relative');
+        // add active indicator dot if missing
+        if (!link.querySelector('.nav-indicator-dot')) {
+          const dot = document.createElement('span');
+          dot.className = 'nav-indicator-dot absolute bottom-1.5 w-1.5 h-1.5 bg-primary-container rounded-full';
+          link.appendChild(dot);
+        }
+      } else {
+        link.classList.remove('text-primary-container', 'font-bold');
+        link.classList.add('text-muted-text');
+        const existingDot = link.querySelector('.nav-indicator-dot');
+        if (existingDot) existingDot.remove();
+      }
+    });
+  })();
+</script></main><nav class="fixed bottom-0 inset-x-0 z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-1px_8px_rgba(0,0,0,0.04)]" data-active-classes="text-primary-container font-bold relative after:content-[''] after:absolute after:bottom-1.5 after:w-1.5 after:h-1.5 after:bg-primary-container after:rounded-full"><div class="flex justify-around items-center h-16 px-2"><a class="flex flex-col items-center justify-center gap-0.5 min-w-[56px] min-h-[44px] py-1 text-muted-text hover:text-primary transition-all" data-path="home" href="#"><span class="material-symbols-outlined text-[22px]">home</span><span class="font-label-md text-label-md">Home</span></a><a class="flex flex-col items-center justify-center gap-0.5 min-w-[56px] min-h-[44px] py-1 text-muted-text hover:text-primary transition-all" data-path="categories" href="#"><span class="material-symbols-outlined text-[22px]">category</span><span class="font-label-md text-label-md">Categories</span></a><a class="flex flex-col items-center justify-center gap-0.5 min-w-[56px] min-h-[44px] py-1 text-muted-text hover:text-primary transition-all" data-path="search" href="#"><span class="material-symbols-outlined text-[22px]">search</span><span class="font-label-md text-label-md">Search</span></a><a class="flex flex-col items-center justify-center gap-0.5 min-w-[56px] min-h-[44px] py-1 text-muted-text hover:text-primary transition-all" data-path="orders" href="#"><span class="material-symbols-outlined text-[22px]">receipt_long</span><span class="font-label-md text-label-md">Orders</span></a><a class="flex flex-col items-center justify-center gap-0.5 min-w-[56px] min-h-[44px] py-1 text-muted-text hover:text-primary transition-all" data-path="profile" href="#"><span class="material-symbols-outlined text-[22px]">person</span><span class="font-label-md text-label-md">Profile</span></a></div></nav></body></html>

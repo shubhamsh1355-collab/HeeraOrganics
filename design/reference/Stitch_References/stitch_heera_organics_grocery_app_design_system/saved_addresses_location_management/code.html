@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Literata:wght@100..900&amp;family=Source+Serif+4:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "primary-fixed-dim": "#a4d1b4", "inverse-on-surface": "#f8f0e4", "deep-text": "#243126", "surface-container-highest": "#e9e1d6", "error-container": "#ffdad6", "border-subtle": "#E5DDCF", "error": "#ba1a1a", "inverse-primary": "#a4d1b4", "secondary": "#685f30", "surface-bright": "#fff8f1", "on-tertiary": "#ffffff", "on-secondary-container": "#6c6333", "surface": "#fff8f1", "secondary-fixed-dim": "#d3c78e", "surface-tint": "#3e674f", "white-surface": "#FFFFFF", "secondary-container": "#ede0a5", "on-primary-fixed-variant": "#264f38", "primary": "#093521", "on-background": "#1e1b14", "on-error-container": "#93000a", "outline": "#717972", "on-surface": "#1e1b14", "on-error": "#ffffff", "on-primary-fixed": "#002111", "surface-container-high": "#efe7db", "tertiary-fixed": "#cdeda3", "primary-fixed": "#bfedcf", "on-tertiary-fixed-variant": "#354e16", "primary-container": "#234c36", "surface-container": "#f5ede1", "tertiary": "#1d3400", "surface-variant": "#e9e1d6", "on-primary": "#ffffff", "on-tertiary-fixed": "#102000", "secondary-fixed": "#f0e3a8", "on-secondary-fixed-variant": "#4f471a", "surface-dim": "#e1d9cd", "muted-text": "#706F63", "tertiary-container": "#324b13", "on-surface-variant": "#414943", "surface-container-low": "#fbf3e7", "outline-variant": "#c1c8c1", "on-tertiary-container": "#9cbb76", "tertiary-fixed-dim": "#b1d18a", "surface-container-lowest": "#ffffff", "on-secondary-fixed": "#211c00", "error-alert": "#B42318", "on-primary-container": "#8fbc9f", "soft-green": "#DBF5D1", "background": "#fff8f1", "on-secondary": "#ffffff", "inverse-surface": "#343028" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "margin": "1rem", "margin-desktop": "2.5rem", "space-md": "0.75rem", "space-sm": "0.5rem", "space-xxl": "2rem", "gutter-desktop": "1.5rem", "space-xs": "0.25rem", "gutter": "1rem", "space-xl": "1.5rem", "space-lg": "1rem", "margin-tablet": "1.5rem" }, "fontFamily": { "title-card": ["Literata"], "display-hero-mobile": ["Literata"], "label-lg": ["\"Source Serif 4\""], "headline-lg-mobile": ["Literata"], "display-hero": ["Literata"], "body-lg": ["\"Source Serif 4\""], "headline-sm": ["Literata"], "headline-md": ["Literata"], "body-md": ["\"Source Serif 4\""], "label-sm": ["\"Source Serif 4\""], "label-md": ["\"Source Serif 4\""], "headline-lg": ["Literata"], "body-sm": ["\"Source Serif 4\"" ] }, "fontSize": { "title-card": ["1rem", { "lineHeight": "1.375rem", "fontWeight": "600" }], "display-hero-mobile": ["1.875rem", { "lineHeight": "2.25rem", "fontWeight": "700" }], "label-lg": ["0.875rem", { "lineHeight": "1.25rem", "fontWeight": "600" }], "headline-lg-mobile": ["1.5rem", { "lineHeight": "2rem", "fontWeight": "600" }], "display-hero": ["2.5rem", { "lineHeight": "3rem", "fontWeight": "700" }], "body-lg": ["1.125rem", { "lineHeight": "1.75rem", "fontWeight": "400" }], "headline-sm": ["1.125rem", { "lineHeight": "1.5rem", "fontWeight": "600" }], "headline-md": ["1.25rem", { "lineHeight": "1.75rem", "fontWeight": "600" }], "body-md": ["0.9375rem", { "lineHeight": "1.5rem", "fontWeight": "400" }], "label-sm": ["0.6875rem", { "lineHeight": "0.875rem", "fontWeight": "600" }], "label-md": ["0.75rem", { "lineHeight": "1rem", "fontWeight": "600" }], "headline-lg": ["2rem", { "lineHeight": "2.5rem", "fontWeight": "700" }], "body-sm": ["0.8125rem", { "lineHeight": "1.25rem", "fontWeight": "400" }] } } } };</script><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-body-md text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-margin flex items-center justify-between"><div class="flex items-center gap-space-sm"><button aria-label="Go back" class="w-11 h-11 flex items-center justify-center rounded-full text-deep-text hover:bg-surface-container active:scale-95 transition-all" onclick="history.back()"><span class="material-symbols-outlined text-[22px]">arrow_back</span></button><h1 class="font-headline-sm text-headline-sm text-deep-text font-semibold">Check Delivery area</h1></div><div class="flex items-center gap-space-sm"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida/AEtjO1VRU1NQ84lDxXeiay8II1Z6kNBdZUu9NYUc0L75bHS3WMQeVrUo9yYPmwN3X45z7gjy_JWmXrbsTNsOJrFAaLIADzHPAGuf7HQFDQKWTgzgUjj0MwXgkUc8TX6DJt5Z66U48yt8N784BAO0oKe3wIl16Mz_ky3M43_aaFwCSRl9JnSye2SCw0dt-82eyxzrM47zPkJdgS2eG9sYkeKVAVY2y-RQghgXujWT3IeMR7Cs5THb8uH8WyVyLaNNzcshW3t3oDmF0KtBNQ"/></div></div></header><main class="flex flex-col relative w-full pt-16 bg-surface min-h-screen"><div class="flex flex-col w-full pb-10">
+<!-- Sub-header Editorial Banner -->
+<div class="px-margin pt-2 pb-4 bg-surface-container-low flex flex-col gap-1.5 shadow-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-primary-container">location_on</span>
+<span class="font-headline-sm text-headline-sm text-deep-text">Saved Addresses</span>
+</div>
+<div class="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-soft-green text-primary font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+<span>Sedam Cluster Active</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-muted-text leading-relaxed">
+      Manage delivery drop points across Kalaburagi for farm-fresh morning harvests.
+    </p>
+</div>
+<div class="px-margin flex flex-col gap-space-lg mt-space-lg">
+<!-- Section 1: Active / Default Location Card -->
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between px-1">
+<span class="font-label-md text-label-md uppercase tracking-wider text-muted-text">Active Harvest Route</span>
+<span class="font-label-sm text-label-sm text-primary font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">bolt</span> Next slot 6:30 AM
+        </span>
+</div>
+<div class="relative bg-white-surface rounded-xl p-4 shadow-sm flex flex-col gap-3 transition-all duration-200">
+<!-- Accent indicator line on left edge -->
+<div class="absolute left-0 top-3 bottom-3 w-1 bg-primary-container rounded-r-full"></div>
+<!-- Header row with Tag, verified pill, and active radio -->
+<div class="flex items-start justify-between gap-2 pl-2">
+<div class="flex items-center gap-2 flex-wrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container font-label-md text-label-md text-deep-text">
+<span class="material-symbols-outlined text-[16px] text-primary-container" style="font-variation-settings: 'FILL' 1;">home</span>
+<span>HOME</span>
+</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-soft-green text-primary-container font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[12px]">verified</span>
+<span>Default • Verified</span>
+</span>
+</div>
+<!-- Radio representation -->
+<div class="w-5 h-5 rounded-full bg-primary-container flex items-center justify-center shrink-0 mt-0.5">
+<span class="w-2 h-2 rounded-full bg-white-surface"></span>
+</div>
+</div>
+<!-- Recipient & Address -->
+<div class="pl-2 flex flex-col gap-1">
+<div class="flex items-center gap-2">
+<h2 class="font-title-card text-title-card text-deep-text">Ananya K.</h2>
+<span class="font-body-sm text-body-sm text-muted-text">• +91 98452 31204</span>
+</div>
+<p class="font-body-md text-body-md text-deep-text leading-snug">
+            Flat 402, Green Meadows, Opp. District Stadium, Sedam Road, Kalaburagi – 585105
+          </p>
+</div>
+<!-- Doorstep instruction pill -->
+<div class="ml-2 p-2.5 rounded-lg bg-surface-container-low flex items-start gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary shrink-0 mt-0.5">front_hand</span>
+<p class="font-body-sm text-body-sm text-deep-text leading-snug">
+<span class="font-label-sm text-label-sm text-secondary font-semibold">Drop Instruction:</span>
+            Leave at doorstep in jute bag / Ring bell once.
+          </p>
+</div>
+<!-- Serviceability status tag -->
+<div class="ml-2 flex items-center gap-2 py-1 px-2.5 rounded-lg bg-soft-green/40">
+<span class="material-symbols-outlined text-[16px] text-primary-container">wb_twilight</span>
+<span class="font-label-sm text-label-sm text-primary font-medium">Sunrise Slot (6:30 AM) &amp; Express Slot available</span>
+</div>
+<!-- Action Row -->
+<div class="pl-2 pt-1 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<button class="inline-flex items-center gap-1 text-primary-container font-label-md text-label-md py-1 active:opacity-75">
+<span class="material-symbols-outlined text-[16px]">edit</span>
+<span>Edit</span>
+</button>
+<span class="text-outline-variant text-[12px]">•</span>
+<button class="inline-flex items-center gap-1 text-primary-container font-label-md text-label-md py-1 active:opacity-75">
+<span class="material-symbols-outlined text-[16px]">note_alt</span>
+<span>Delivery Notes</span>
+</button>
+</div>
+<span class="font-label-sm text-label-sm text-muted-text">Selected for next delivery</span>
+</div>
+</div>
+</div>
+<!-- Section 2: Other Saved Addresses -->
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between px-1">
+<span class="font-label-md text-label-md uppercase tracking-wider text-muted-text">Other Saved Addresses</span>
+<span class="font-label-sm text-label-sm text-muted-text">2 Locations</span>
+</div>
+<!-- Parents' Home Card -->
+<div class="bg-white-surface rounded-xl p-4 shadow-sm flex flex-col gap-3 transition-all duration-200">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-center gap-2 flex-wrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container font-label-md text-label-md text-deep-text">
+<span class="material-symbols-outlined text-[16px] text-secondary">family_restroom</span>
+<span>PARENTS' HOME</span>
+</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-surface-container-high text-muted-text font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[12px]">schedule</span>
+<span>Standard Slot Only</span>
+</span>
+</div>
+<!-- Unchecked Radio Button Target -->
+<button aria-label="Select Parents Home as delivery address" class="w-5 h-5 rounded-full bg-surface-container-high flex items-center justify-center shrink-0 mt-0.5 active:scale-95 transition-transform" onclick="selectAddress(this)">
+<span class="w-2 h-2 rounded-full bg-transparent"></span>
+</button>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2">
+<h3 class="font-title-card text-title-card text-deep-text">Kashinath K.</h3>
+<span class="font-body-sm text-body-sm text-muted-text">• +91 94481 77210</span>
+</div>
+<p class="font-body-md text-body-md text-deep-text leading-snug">
+            Plot 18, Old Jewargi Road, Near Anand Hotel, Kalaburagi – 585102
+          </p>
+</div>
+<div class="flex items-center justify-between pt-1">
+<div class="flex items-center gap-3">
+<button class="inline-flex items-center gap-1 text-primary-container font-label-md text-label-md active:opacity-75">
+<span class="material-symbols-outlined text-[16px]">edit</span>
+<span>Edit</span>
+</button>
+<span class="text-outline-variant text-[12px]">•</span>
+<button class="inline-flex items-center gap-1 text-error font-label-md text-label-md active:opacity-75">
+<span class="material-symbols-outlined text-[16px]">delete_outline</span>
+<span>Delete</span>
+</button>
+</div>
+<button class="px-3 py-1.5 rounded-lg bg-surface-container text-primary-container font-label-md text-label-md hover:bg-soft-green active:scale-95 transition-all" onclick="makeActiveAddress(this, 'Kashinath K.')">
+            Deliver Here
+          </button>
+</div>
+</div>
+<!-- Office / Studio Card -->
+<div class="bg-white-surface rounded-xl p-4 shadow-sm flex flex-col gap-3 transition-all duration-200">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-center gap-2 flex-wrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container font-label-md text-label-md text-deep-text">
+<span class="material-symbols-outlined text-[16px] text-secondary">work_outline</span>
+<span>OFFICE / STUDIO</span>
+</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-secondary-container/40 text-on-secondary-container font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[12px]">business</span>
+<span>Commercial Gate</span>
+</span>
+</div>
+<!-- Unchecked Radio Button Target -->
+<button aria-label="Select Office as delivery address" class="w-5 h-5 rounded-full bg-surface-container-high flex items-center justify-center shrink-0 mt-0.5 active:scale-95 transition-transform" onclick="selectAddress(this)">
+<span class="w-2 h-2 rounded-full bg-transparent"></span>
+</button>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2">
+<h3 class="font-title-card text-title-card text-deep-text">Ananya K.</h3>
+<span class="font-body-sm text-body-sm text-muted-text">• +91 98452 31204</span>
+</div>
+<p class="font-body-md text-body-md text-deep-text leading-snug">
+            Suite 3B, Pragati IT Tower, MSK Mill Area, Kalaburagi – 585103
+          </p>
+</div>
+<div class="p-2.5 rounded-lg bg-surface-container-low flex items-start gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary shrink-0 mt-0.5">info</span>
+<p class="font-body-sm text-body-sm text-deep-text leading-snug">
+<span class="font-label-sm text-label-sm text-secondary font-semibold">Drop Policy:</span>
+            Deliver between 9:30 AM – 5:00 PM only at security reception desk.
+          </p>
+</div>
+<div class="flex items-center justify-between pt-1">
+<button class="inline-flex items-center gap-1 text-primary-container font-label-md text-label-md active:opacity-75">
+<span class="material-symbols-outlined text-[16px]">edit</span>
+<span>Edit</span>
+</button>
+<button class="px-3 py-1.5 rounded-lg bg-surface-container text-primary-container font-label-md text-label-md hover:bg-soft-green active:scale-95 transition-all" onclick="makeActiveAddress(this, 'Office / Studio')">
+            Deliver Here
+          </button>
+</div>
+</div>
+</div>
+<!-- Section 3: Add New Address Callout Button -->
+<button class="w-full p-4 rounded-xl bg-surface-container-low hover:bg-surface-container-high active:scale-[0.99] transition-all flex items-center justify-between text-left shadow-sm group">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-container text-white-surface flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[20px]">add_location_alt</span>
+</div>
+<div class="flex flex-col">
+<span class="font-title-card text-title-card text-deep-text">+ Add New Address / Map Pin</span>
+<span class="font-body-sm text-body-sm text-muted-text">Auto-detects GPS coordinates or enter Kalaburagi pincode</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-muted-text text-[20px] group-hover:translate-x-0.5 transition-transform">chevron_right</span>
+</button>
+<!-- Section 4: Circular Milk Bottle & Crate Exchange Card -->
+<div class="bg-surface-container-low rounded-xl p-4 shadow-sm flex flex-col gap-3">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-secondary-container/60 flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined text-[18px]">recycling</span>
+</div>
+<div class="flex flex-col">
+<span class="font-title-card text-title-card text-deep-text">Doorstep Glass Bottle Exchange</span>
+<span class="font-label-sm text-label-sm text-secondary font-semibold">Zero-Waste Dairy Loop</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-deep-text leading-relaxed">
+        Ensure empty A2 glass bottles from your previous order are placed in the door basket before <span class="font-semibold text-primary">6:00 AM</span> for instant <span class="font-semibold text-primary">₹20 deposit credit</span> per bottle directly to your Heera Wallet.
+      </p>
+<!-- Interactive Switch Toggle -->
+<div class="flex items-center justify-between pt-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-muted-text">notifications_active</span>
+<label class="font-label-md text-label-md text-deep-text cursor-pointer select-none" for="bottle-notify">
+            Notify driver about empty bottle pickup
+          </label>
+</div>
+<button aria-checked="true" class="w-11 h-6 bg-primary-container rounded-full relative transition-colors duration-200 cursor-pointer focus:outline-none" id="bottle-toggle-btn" onclick="toggleBottleSwitch(this)" role="switch" type="button">
+<span class="block w-4 h-4 bg-white-surface rounded-full absolute top-1 left-6 shadow-sm transition-transform duration-200" id="bottle-toggle-dot"></span>
+</button>
+</div>
+</div>
+<!-- Section 5: Service Coverage Guarantee & Pincode expansion -->
+<div class="p-4 rounded-xl bg-surface-container flex flex-col gap-2.5 shadow-sm text-center items-center">
+<div class="w-8 h-8 rounded-full bg-soft-green text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">local_shipping</span>
+</div>
+<div class="flex flex-col gap-1 max-w-xs">
+<p class="font-body-sm text-body-sm text-muted-text leading-snug">
+          Heera Organics currently delivers to <strong class="text-deep-text font-semibold">18 verified pin-zones</strong> in Kalaburagi with direct farm cold-chain vans.
+        </p>
+</div>
+<button class="inline-flex items-center gap-1 font-label-md text-label-md text-primary-container hover:underline active:opacity-75 pt-1">
+<span>Request Pincode Expansion</span>
+<span class="material-symbols-outlined text-[14px]">open_in_new</span>
+</button>
+</div>
+<!-- Farm Harvest Freshness Pledge Badge -->
+<div class="flex items-center justify-center gap-2 text-muted-text py-2">
+<span class="material-symbols-outlined text-[16px] text-primary">spa</span>
+<span class="font-label-sm text-label-sm tracking-wide">Harvested 4:00 AM • At Door by 7:00 AM</span>
+</div>
+</div>
+</div>
+<script>
+  function toggleBottleSwitch(btn) {
+    const isChecked = btn.getAttribute('aria-checked') === 'true';
+    const dot = document.getElementById('bottle-toggle-dot');
+    if (isChecked) {
+      btn.setAttribute('aria-checked', 'false');
+      btn.classList.remove('bg-primary-container');
+      btn.classList.add('bg-outline-variant');
+      dot.classList.remove('left-6');
+      dot.classList.add('left-1');
+    } else {
+      btn.setAttribute('aria-checked', 'true');
+      btn.classList.remove('bg-outline-variant');
+      btn.classList.add('bg-primary-container');
+      dot.classList.remove('left-1');
+      dot.classList.add('left-6');
+    }
+  }
+
+  function selectAddress(radioBtn) {
+    // Micro feedback for radio click
+    radioBtn.classList.add('scale-125');
+    setTimeout(() => radioBtn.classList.remove('scale-125'), 150);
+  }
+
+  function makeActiveAddress(btn, name) {
+    const originalText = btn.innerText;
+    btn.innerText = 'Activated ✓';
+    btn.classList.remove('bg-surface-container', 'text-primary-container');
+    btn.classList.add('bg-soft-green', 'text-primary');
+    setTimeout(() => {
+      btn.innerText = originalText;
+      btn.classList.remove('bg-soft-green', 'text-primary');
+      btn.classList.add('bg-surface-container', 'text-primary-container');
+    }, 1800);
+  }
+</script></main>
+</body></html>

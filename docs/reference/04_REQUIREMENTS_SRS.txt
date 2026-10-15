@@ -1,0 +1,741 @@
+# Heera Organics — Software Requirements Specification
+
+**Document ID:** HO-SRS-001  
+**Version:** 1.5 — Consolidated business decisions; draft for review  
+**Status:** Proposed requirements baseline; requires business approval before design sign-off  
+**Development approach:** Waterfall SDLC  
+**Product:** Heera Organics customer grocery app plus internal dairy operations interface  
+**Tagline:** Naturally Grown, Honestly Delivered
+
+---
+
+## Document Change History
+
+| Version | Date | Change | Status |
+|---|---|---|---|
+| 1.0 | 2026-10-10 | Initial customer grocery application requirements | Draft |
+| 1.1 | 2026-10-14 | Added internal dairy milk logs, daily milk delivery routes, delivery-staff workflows, access roles and shared Odoo integration requirements | Draft for review |
+| 1.2 | 2026-10-14 | Reviewed the existing dairy-farm repository; documented the as-is Expo/FastAPI/MongoDB baseline, identified architecture decision and migration requirements, and added production-readiness constraints | Draft for review |
+| 1.3 | 2026-10-14 | Recorded business approval to reuse the existing dairy frontend and move shared operational records/business logic to Odoo; added phased migration and cutover controls | Draft for review |
+| 1.4 | 2026-10-14 | Confirmed Odoo-only target backend; removed MongoDB and separate FastAPI backend from target architecture; specified secure Odoo controllers and one-time legacy data migration/decommissioning | Draft for review |
+| 1.5 | 2026-10-14 | Consolidated confirmed dairy workflows: GPS-required invite registration, scheduled quantity changes/extras/pauses, shortest-route optimization, exact vehicle loading, return quantities, offline sync, reconciliation, role permissions, audit, reports and notifications | Draft for review |
+
+---
+
+## 1. Purpose of This Document
+
+This Software Requirements Specification (SRS) defines what the Heera Organics customer shopping application and its authorized internal dairy operations interface must do, who they serve, the business rules they must follow, and how completion will be verified. It is the requirements baseline for the Waterfall lifecycle and should be approved before detailed system design and implementation begin.
+
+This document defines **what the product must do**. The companion `02_Heera_Organics_System_Design.md` proposes **how the product and its technical components should be structured**.
+
+### 1.1 Intended readers
+
+- Business owner and decision-makers
+- UI/UX designer using Google Stitch
+- Frontend/mobile application developer
+- Odoo implementer or backend developer
+- QA/test engineer
+- Hosting and operations provider
+- Payment, OTP, delivery and other integration providers, when selected
+
+### 1.2 Requirement wording
+
+- **MUST** means required for the agreed release.
+- **SHOULD** means strongly recommended; any exception must be recorded.
+- **MAY** means optional or dependent on a future decision.
+- **TBD** means the business or technical owner must decide before the affected requirement can be finalized.
+
+---
+
+## 2. Product Overview
+
+Heera Organics is a B2C local grocery and dairy business focused on responsibly sourced food, freshness, convenient online ordering, and a farm-to-family experience. The customer application will allow people in eligible delivery areas to discover products, search and browse the catalogue, maintain a cart, place orders, and view order information. An internal dairy operations interface will support authorized staff with daily milk production/collection logs, customer-wise milk delivery records, delivery-route planning and route completion. Both interfaces should use one approved operational backend, with Odoo Community as the current working assumption.
+
+The brand's primary market is expected to begin in Kalaburagi and eligible nearby areas. The business may expand to more locations and physical retail outlets over time. The initial release should therefore support configurable delivery coverage rather than permanently hard-coding a single city.
+
+### 2.1 Product goals
+
+1. Make online grocery shopping convenient and easy to understand.
+2. Help customers discover available groceries, produce, and dairy products.
+3. Build trust through accurate product information, sourcing transparency, and honest claims.
+4. Check delivery availability early and validate the delivery address before checkout.
+5. Use Odoo as the main operational source for catalogue, pricing, stock, customers, and orders, subject to the modules and customizations confirmed for the project.
+6. Establish a foundation that can expand to more delivery areas and physical retail operations.
+7. Give authorized dairy staff accurate, auditable milk logs and route-level delivery visibility without creating a separate conflicting source of truth.
+
+### 2.2 Target customers
+
+- Working professionals, approximately 22–45 years old
+- Families seeking convenient grocery shopping
+- Customers who value freshness, sourcing information, and responsible farming practices
+- Customers ordering daily or weekly household essentials
+
+### 2.3 Brand positioning
+
+**Tagline:** Naturally Grown, Honestly Delivered.  
+**Brand promise:** From Our Farm to Your Family.
+
+The app should communicate a natural, honest, warm, family-focused, and convenient brand experience. Product-specific organic/certification claims must be shown only when supported by approved evidence.
+
+---
+
+## 3. Scope
+
+### 3.1 In scope for the customer application
+
+- App launch/welcome experience
+- Location permission, manual location/pincode entry, and serviceability checks
+- Mobile-number and OTP authentication, subject to selected provider and agreed guest-browsing policy
+- Home page with animated hero, category grid, value propositions, promotional cards/banners, horizontal product sliders, curated collections, farm story, comparison section, testimonials, FAQ preview, and footer/support entry points as applicable to the selected app format
+- Product categories, subcategories, category browsing, and product listings
+- Product search, suggestions, filters, and sorting
+- Product detail pages and quick-view sheets
+- Cart and server-revalidated totals
+- Checkout, delivery address, enabled delivery options, payment selection, and order confirmation
+- Customer profile, saved addresses, order history, order details, and supported tracking/status views
+- Wishlist, if enabled for the initial release
+- Help, FAQs, support entry points, and chatbot entry point
+- Referral/rewards screens only if the programme is configured and approved
+- Loading, empty, error, retry, unavailable, and network-failure states
+- Integration with Odoo through secure API endpoints/custom HTTP controllers implemented in approved Odoo modules; no separate FastAPI business backend in the target architecture
+- Responsive layouts and accessibility considerations
+- Basic operational logging and error reporting for application support
+
+### 3.2 In scope for backend configuration/integration
+
+- Product and category data
+- Prices, units, variants, and stock/availability
+- Customer identity/profile mapping
+- Saved delivery addresses where supported
+- Cart/order lifecycle and order history
+- Promotions and coupons, if configured
+- Delivery zones, serviceability, slots, and ETA, if supported by the configured system
+- Payment status integration with a selected payment provider
+- Customer support configuration and product/content metadata
+
+### 3.3 In scope for the internal dairy operations interface
+
+- Daily milk production entries by date and shift (morning/evening), keeping cow and buffalo milk quantities separate.
+- Customer registration through owner/admin-generated invitation links, including required GPS capture, and customer/driver assignment management.
+- Customer regular daily cow/buffalo quantities, date-specific extra-milk quantities, and date-specific delivery pauses. Regular daily-quantity changes are owner-only; other agreed administrative actions follow the role matrix below.
+- Daily route assignment, automatic shortest-driving-route stop ordering, temporary full-route reassignment, and route progress/completion.
+- Delivery-boy actions: Delivered, Partial, Skip Cow, Skip Buffalo and Skip Both; actual quantity capture for partial delivery; exact target loading checks before route start; and actual returned milk quantities at route end.
+- Offline capture of production and delivery records, visible sync state, retry, duplicate prevention, and app-admin alerts for sync failures.
+- An owner/admin audit-history view and Excel exports of production, delivery, reconciliation and audit reports.
+- Integration with Odoo through approved APIs/custom modules; Odoo owns the official records and calculations.
+- Reuse of the existing interface at https://dairy-farm-w8p6.vercel.app as a workflow/reference input, subject to code review and Odoo integration.
+
+**Dairy app boundary:** The dairy app is for daily milk logging and daily delivery operations, including customer registration, assignments, route execution, corrections and their operational reports. Overall inventory management, milk usage for product manufacturing, wastage, closing-stock accounting, billing, product sales, herd management and other business operations are handled in Odoo, not as separate dairy-app modules. The app may capture operational facts that Odoo needs, but it must not create an independent inventory/billing system.
+
+### 3.4 Out of scope unless separately approved
+
+- A full herd-management system covering veterinary care, breeding, animal records and feed formulation
+- A separate full-featured retailer/POS application
+- A new inventory-management system duplicating Odoo
+- Building a custom payment gateway or SMS carrier
+- Guaranteed delivery in ten minutes or any other unverified SLA
+- Unconfigured loyalty, cashback, gift, referral, subscription, or recurring-order programmes
+- Medical, nutritional, or disease-prevention advice
+- Certification claims without documentary substantiation
+- Multi-vendor marketplace settlement, unless the business model is formally expanded
+- Advanced demand forecasting or AI-powered product recommendations for the initial release
+
+### 3.5 Existing dairy repository baseline (As-Is)
+
+A read-only source review of [the existing dairy-farm repository](https://github.com/shubhamsh1355-collab/dairy-farm) found an existing prototype with the following stack and workflows:
+
+- **Frontend:** Expo / React Native with TypeScript and Expo Router; web export is also configured.
+- **Backend:** FastAPI / Python.
+- **Database:** MongoDB accessed through Motor/PyMongo.
+- **Existing workflows:** daily dashboard, cow/buffalo milk log, shift-based production entry, milk inventory, dairy-product inventory and sales, customer records and daily requirements, delivery-staff management, assigned customer route list, delivery outcomes, skips/monthly billing, analytics, herd records, invitations and WhatsApp broadcast flow.
+
+This describes the current codebase only. It does **not** mean these features are production-ready, fully tested, or connected to Odoo. Many as-is screens (product inventory/sales, herd management, billing/analytics and broadcast tools) are not part of the dairy app's agreed responsibility in the target state; their applicable business data and back-office operations belong in Odoo. The reviewed source contains prototype authentication and data-integrity concerns that must be resolved before real customer/business data is used. See `Dairy_Farm_Repository_Audit.md` for the source review and findings.
+
+**Approved target decision:** Odoo is the only business backend and operational database system for the integrated solution. Odoo uses its supported PostgreSQL database internally; neither customer nor dairy clients connect directly to PostgreSQL. The current FastAPI/MongoDB implementation is legacy-only. MongoDB may be accessed only for a controlled, one-time export/migration and approved backup/retention period. It must not remain an active target datastore after cutover. FastAPI will not be deployed as a separate target backend; required app-specific APIs and business logic will be implemented in approved Odoo modules/controllers.
+
+### 3.6 Platform assumption to confirm
+
+
+The design is mobile-first. The current direction is a Next.js/TypeScript customer frontend, the existing Expo/React Native + TypeScript dairy frontend, and Odoo Community as the sole business backend and operational data store. Secure app-specific API endpoints will be implemented inside Odoo through approved modules/controllers; no separate FastAPI service or MongoDB database is part of the target architecture. The business must confirm the release platform for the customer app and the internal operations interface. For the customer app, confirm whether release 1 is:
+
+1. a responsive web application/PWA;
+2. a web application packaged for iOS/Android distribution; or
+3. a separately implemented cross-platform/native mobile app.
+
+This choice affects authentication, push notifications, app-store packaging, deep links, and device integration. The internal operations interface must also be confirmed as a responsive web app/PWA or another approved client. Business direction is to retain the existing Expo/React Native frontend as the starting point, subject to UX/security review and Odoo integration work. Both clients must use Odoo and consistent server-side authorization. Platform packaging and detailed implementation choices must be resolved before build sign-off.
+
+---
+
+## 4. Stakeholders and User Classes
+
+| Stakeholder / class | Main needs | Access boundary |
+|---|---|---|
+| Guest visitor | Browse available products and understand delivery coverage | Public catalogue and public content only, if guest browsing is enabled |
+| Registered customer | Search, cart, checkout, addresses, orders, support | Their own account and orders only |
+| Customer support staff | Resolve order and delivery issues | Access through authorized Odoo/support tools; no unrestricted app-client access |
+| Owner | Full control of the dairy app; sole role allowed to change a customer's regular daily milk quantities; can review all operational records and reports | Full owner permissions |
+| Dairy app admin | Manage daily operations, customer registration/assignments, extra-milk schedules, delivery pauses, user accounts/roles, corrections, reports and alerts | Admin permissions; cannot change regular daily milk quantities |
+| Delivery staff/driver | Use PIN login, view assigned route and necessary stop details, record delivery actions, actual loaded/returned quantities, and correct their own submitted delivery records | Assigned routes/stops only; no customer phone number or full delivery history |
+| Grocery customer | Browse/order groceries in the customer app | Own account and orders only; dairy delivery history is not exposed |
+| Application developer/operator | Maintain app integration, deployment and diagnostics | Environment-specific least-privilege access |
+| External providers | OTP, payment, mapping, analytics, AI support, where selected | Only the specific data and actions required for the integration |
+
+The customer app must never expose Odoo administrator credentials or allow a customer to access another customer's information.
+
+---
+
+## 5. Business Requirements
+
+| ID | Requirement | Priority | Verification |
+|---|---|---|---|
+| BR-01 | The business shall provide a simple online shopping experience for eligible local customers. | Must | End-to-end shopping UAT |
+| BR-02 | Customers shall be able to determine whether their delivery location is serviceable before relying on delivery promises. | Must | Location/serviceability tests |
+| BR-03 | Catalogue, pricing, inventory and order status shown to customers shall reflect the configured operational source as closely as practical. | Must | Integration tests and reconciliation |
+| BR-04 | The brand shall communicate responsible sourcing and freshness without unverified or misleading claims. | Must | Content/legal review |
+| BR-05 | The application shall reduce friction in product discovery and repeat shopping. | Must | Usability UAT; agreed analytics after launch |
+| BR-06 | The solution shall allow delivery coverage and promotions to be configured without redesigning the app. | Should | Configuration demonstration |
+| BR-07 | The system design shall support expansion to additional service areas and larger catalogues. | Should | Architecture review |
+| BR-08 | Business operations shall use Odoo as the primary operational system where the required Odoo modules/configuration support the workflow. | Must | Odoo integration review |
+| BR-09 | Authorized dairy staff shall be able to record and review milk production/collection and customer-wise milk deliveries by date and shift. | Must | Dairy operations UAT |
+| BR-10 | Authorized staff shall be able to plan delivery routes, assign route stops, and record completion or delivery exceptions. | Must | Route-planning and driver UAT |
+| BR-11 | Customer-facing shopping and internal dairy operations shall use a shared, approved source of truth for the applicable customer, product, stock, delivery and order data. | Must | Data mapping and reconciliation tests |
+| BR-12 | Milk logs and route-stop changes shall be attributable to a staff user and auditable according to the approved retention policy. | Must | Audit/access-control tests |
+
+---
+
+## 6. Functional Requirements
+
+### 6.1 First launch, location and authentication
+
+| ID | Requirement | Priority | Acceptance condition |
+|---|---|---|---|
+| FR-ONB-01 | The app MUST show a brief branded launch/welcome state when appropriate. | Should | The experience does not impose an unnecessary delay before shopping. |
+| FR-LOC-01 | The app MUST explain why location is requested before triggering the device permission prompt. | Must | Explanation is shown before the permission request. |
+| FR-LOC-02 | The app MUST offer GPS-based location detection after user action, where the platform supports it. | Must | User can initiate detection and see success/failure feedback. |
+| FR-LOC-03 | The app MUST offer manual pincode/address entry if location permission is denied or GPS fails. | Must | Manual fallback remains available. |
+| FR-LOC-04 | The app MUST check delivery serviceability against configured backend rules. | Must | The returned state shows serviceable, not serviceable, or unable to verify. |
+| FR-LOC-05 | The app MUST allow users to review or change the selected delivery location. | Must | Location can be corrected without restarting the app. |
+| FR-LOC-06 | The app MUST validate the final address/location at checkout. | Must | An invalid/unserviceable address blocks order placement with an explanation. |
+| FR-AUTH-01 | The app MUST support mobile-number OTP login using an approved authentication provider/flow. | Must | Valid OTP succeeds; invalid, expired and resend cases are handled. |
+| FR-AUTH-02 | The app SHOULD support OTP autofill/paste where the platform supports it. | Should | OTP input remains usable with manual entry. |
+| FR-AUTH-03 | The app MUST provide clear validation, rate-limit and retry states for OTP flows. | Must | Failures are handled without exposing secrets or internal errors. |
+| FR-AUTH-04 | The business MUST decide whether guest catalogue access is allowed and when login is required. | Must/TBD | The chosen policy is recorded before build. |
+| FR-ONB-02 | The app MAY show a first-order incentive when an active, eligible offer is configured. | Could | Offer, expiry, terms and eligibility are obtained from approved configuration. |
+
+### 6.2 Navigation and home page
+
+| ID | Requirement | Priority | Acceptance condition |
+|---|---|---|---|
+| FR-NAV-01 | The app MUST provide navigation to Home, Categories, Search, Orders and Profile on primary shopping screens, adapted to the selected platform. | Must | Every destination is reachable and the active destination is identifiable. |
+| FR-NAV-02 | The app MUST provide visible access to the cart and its item count when items are present. | Must | Cart count updates after successful cart changes. |
+| FR-NAV-03 | The app SHOULD provide quick links to key collections such as Shop All, Vegetables, Fruits, Dairy, Grains & Pulses, Essentials and Offers when available. | Should | Links open the correct collection or destination. |
+| FR-HOME-01 | The home page MUST provide an animated hero with approved headline, supporting copy and primary/secondary CTAs. | Must | Motion is usable, responsive, and does not block the CTAs. |
+| FR-HOME-02 | The hero MAY rotate through multiple approved campaign slides. | Could | Controls and indicators work; auto-rotation is restrained and respects reduced-motion preferences. |
+| FR-HOME-03 | The home page MUST provide a category grid linked to relevant collections. | Must | Each category opens the correct collection. |
+| FR-HOME-04 | The home page SHOULD display value proposition cards covering farm-to-family, responsible practices, quality/transparency and convenience. | Should | Cards use approved copy and consistent styles. |
+| FR-HOME-05 | The home page SHOULD support featured promotional cards and/or a promotional banner carousel. | Should | Only valid configured promotions are shown. |
+| FR-HOME-06 | The home page MUST provide at least one product discovery section such as bestsellers/popular products when data is available. | Must | Product cards show live/authoritative product data and open product details or support add-to-cart. |
+| FR-HOME-07 | The app SHOULD support horizontally scrollable product card lists/sliders for configured collections. | Should | Slider works with touch and visible desktop controls where applicable. |
+| FR-HOME-08 | The home page MAY show lifestyle or concern-based collections (e.g. vegan or high-protein) only when product tagging/data has been verified. | Could | Collection membership is based on maintained attributes, not invented claims. |
+| FR-HOME-09 | The home page SHOULD include a farm-to-family story, benefit/why-us section, comparison section, ordering steps, testimonials, FAQ preview and final shopping CTA as approved in the content design. | Should | Sections render responsively and do not obstruct fast product discovery. |
+| FR-HOME-10 | All promotional, customer count, rating, testimonial and delivery-time claims MUST be verified before publication. | Must | Content review records evidence/approval. |
+
+### 6.3 Category, listing, filter and sort
+
+| ID | Requirement | Priority | Acceptance condition |
+|---|---|---|---|
+| FR-CAT-01 | The app MUST show available top-level product categories. | Must | Categories load from backend/configuration and each valid category can be opened. |
+| FR-CAT-02 | The app MUST support category/subcategory browsing and product listing. | Must | Selected category context is preserved when returning from product details. |
+| FR-CAT-03 | Product listing MUST display product name, image, price/unit and availability when supplied. | Must | No false price/stock values are shown as live information. |
+| FR-CAT-04 | Listings MUST support pagination or incremental loading appropriate to the API. | Must | The user can reach additional results without duplicate/missing items. |
+| FR-FLTR-01 | The app MUST support applicable filters, such as category, price and in-stock state, where backend data supports them. | Must | Filter selections apply correctly and can be cleared. |
+| FR-FLTR-02 | Filter selection MUST remain staged until Apply/Clear is chosen where a sheet design is used. | Should | Dismissing a sheet does not unexpectedly apply partial selections. |
+| FR-SORT-01 | The app MUST support price ascending and descending sorts. | Must | Results are ordered correctly. |
+| FR-SORT-02 | Recommended, popularity, newest and rating sorts MUST be shown only where the underlying data/logic exists. | Must | Unsupported sort choices are hidden. |
+
+### 6.4 Search
+
+| ID | Requirement | Priority | Acceptance condition |
+|---|---|---|---|
+| FR-SRCH-01 | The app MUST provide a search field for products and supported categories. | Must | Search can be submitted by tapping the control or keyboard action. |
+| FR-SRCH-02 | The app SHOULD show relevant suggestions as the user types. | Should | Suggestions are debounced, selectable and handle loading/failure. |
+| FR-SRCH-03 | The app MAY show recent searches with an available clear-history control. | Could | History follows the documented privacy/retention choice. |
+| FR-SRCH-04 | Search results MUST reuse product listing, filters and sorting behaviours. | Must | Query context is preserved when opening/returning from a product. |
+| FR-SRCH-05 | No-result searches MUST provide a helpful recovery path. | Must | User can clear the query or browse related categories. |
+
+### 6.5 Product details and quick view
+
+| ID | Requirement | Priority | Acceptance condition |
+|---|---|---|---|
+| FR-PDP-01 | Product detail MUST show product name, images, price/unit, availability and applicable variants. | Must | Display matches the selected backend product/variant. |
+| FR-PDP-02 | Selecting a variant MUST update price, SKU/identifier and availability where applicable. | Must | Selected variant and add-to-cart payload remain consistent. |
+| FR-PDP-03 | Product detail SHOULD show descriptions, ingredients/attributes, storage, freshness and sourcing details when available. | Should | Missing data is omitted rather than invented. |
+| FR-PDP-04 | Product detail MAY show customer reviews when a valid review source is implemented. | Could | No fabricated reviews or star ratings. |
+| FR-PDP-05 | The app SHOULD provide a product quick-view sheet from product cards where useful. | Should | Sheet includes key purchase information and a link to full details. |
+| FR-PDP-06 | Add to Cart MUST be disabled or explain the reason if the selected item/variant cannot be purchased. | Must | Unavailable items cannot be silently added. |
+| FR-PDP-07 | Product-specific certification or organic claims MUST be backed by approved product records/evidence. | Must | Unverified claims do not appear. |
+
+### 6.6 Cart
+
+| ID | Requirement | Priority | Acceptance condition |
+|---|---|---|---|
+| FR-CART-01 | The customer MUST be able to add available products/variants to the cart. | Must | Cart shows the correct product, variant, quantity and price. |
+| FR-CART-02 | The customer MUST be able to increase/decrease quantity and remove items. | Must | Changes update line totals and cart totals consistently. |
+| FR-CART-03 | The cart MUST show subtotal, eligible discounts, fees/taxes and payable total as calculated/validated by the backend. | Must | Displayed amounts match the server-calculated quote. |
+| FR-CART-04 | The cart MUST have a useful empty state with a route back to shopping. | Must | User can return to products. |
+| FR-CART-05 | Prices, offers and stock MUST be revalidated before checkout/order placement. | Must | Outdated values are updated with an explanatory message and user confirmation when needed. |
+| FR-CART-06 | Cart contents SHOULD persist according to the chosen guest/authenticated cart policy. | Should | Behaviour is documented and tested across app restart/login. |
+| FR-CART-07 | Coupon entry MAY be displayed only if coupon support is enabled. | Could | Invalid/expired/ineligible coupons show a clear explanation. |
+
+### 6.7 Checkout, payment and order placement
+
+| ID | Requirement | Priority | Acceptance condition |
+|---|---|---|---|
+| FR-CHK-01 | Checkout MUST allow the user to select or add a delivery address. | Must | Required address fields are validated and saved only according to policy. |
+| FR-CHK-02 | Checkout MUST check serviceability for the final delivery address. | Must | An unserviceable address cannot proceed to order placement. |
+| FR-CHK-03 | Checkout MUST display delivery slot/ETA only when supported and confirmed by configured backend data. | Must | No hard-coded delivery promise is presented as live. |
+| FR-CHK-04 | Checkout MUST show the confirmed order summary and total before payment/order submission. | Must | Customer can review products, fees, discounts and total. |
+| FR-CHK-05 | Checkout MUST display only payment methods enabled for the deployment. | Must | Disabled/unconfigured methods are not offered. |
+| FR-CHK-06 | The app MUST handle payment pending, success, failure and retry states. | Must | User receives accurate feedback and is not prompted to pay again incorrectly. |
+| FR-CHK-07 | Duplicate taps/retries MUST NOT create duplicate orders or charges where idempotency can be applied. | Must | Repeated submission is safely handled. |
+| FR-ORD-01 | The app MUST display order confirmation only after backend confirmation. | Must | Confirmation includes the server-generated order identifier. |
+| FR-ORD-02 | The app MUST display order history and order details for the authenticated customer. | Must | Only that customer's orders are returned. |
+| FR-ORD-03 | Order status/timeline MUST use backend-confirmed status. | Must | Client does not fabricate status progression. |
+| FR-ORD-04 | Tracking, cancellation, return, replacement and reorder actions MUST appear only if implemented and allowed by order state/policy. | Must | Unsupported or disallowed actions are hidden or explained. |
+
+### 6.8 Profile, saved addresses, wishlist and referral
+
+| ID | Requirement | Priority | Acceptance condition |
+|---|---|---|---|
+| FR-PROF-01 | Authenticated users MUST be able to view basic profile information. | Must | Data belongs to the current account. |
+| FR-PROF-02 | Users SHOULD be able to edit supported profile fields. | Should | Validation and save feedback are provided. |
+| FR-ADDR-01 | Users MUST be able to add, select, edit and delete saved addresses if account/address support is configured. | Must | Address changes are reflected correctly; deletion requires confirmation. |
+| FR-WISH-01 | The app MAY support a wishlist if persistence and account policy are agreed. | Could | Add/remove and add-to-cart work; empty state is provided. |
+| FR-REF-01 | Refer-and-earn MUST be feature-gated and shown only if the programme is configured. | Must | Code, reward, progress and terms come from approved configuration. |
+| FR-AUTH-05 | Users MUST have a clear log-out option, and authenticated sessions must be invalidated according to the chosen session design. | Must | Logged-out users cannot continue using protected account views. |
+
+### 6.9 Help, chatbot and content
+
+| ID | Requirement | Priority | Acceptance condition |
+|---|---|---|---|
+| FR-HELP-01 | The app MUST provide access to FAQs and support contact options once confirmed by the business. | Must | Links and contact actions lead to active destinations. |
+| FR-HELP-02 | The app MAY provide an AI chatbot for general product, policy and order-support questions. | Could | Chatbot is clearly identified, obeys privacy rules and does not claim an action succeeded without confirmation. |
+| FR-HELP-03 | The chatbot SHOULD direct sensitive order/account requests to an authenticated, approved flow or human support. | Should | It does not expose customer data based only on an unverified message. |
+| FR-CONT-01 | Marketing banners, seasonal content, product stories and homepage collection configuration SHOULD be updateable without a new app release where the chosen CMS/Odoo setup supports it. | Should | Authorized business staff can update supported content using documented configuration. |
+| FR-CONT-02 | The app MUST display approved terms, privacy, delivery, refund/replacement and contact information. | Must | Links are accessible and content is approved before launch. |
+
+### 6.10 Dairy operations: milk logs and delivery routes
+
+These requirements apply to the internal dairy operations interface, which may be a separate frontend from the customer shopping experience. Access must be authenticated and role-based. The scope is milk logging and milk delivery operations, not a complete livestock/veterinary farm-management system.
+
+#### Milk logs
+
+| ID | Requirement | Priority | Acceptance condition |
+|---|---|---|---|
+| FR-DAIRY-01 | The internal interface MUST require staff authentication and role-based authorization for milk logs, route plans, customer delivery information and operational reports. | Must | Unauthenticated users are redirected/denied; each role sees only permitted actions and records. |
+| FR-MILK-01 | Authorized staff MUST be able to create a dated milk production/collection entry with a configurable shift (for example, morning/evening), milk type, quantity and unit. | Must | Valid entries save and appear against the selected date and shift. |
+| FR-MILK-02 | Milk types and standard units MUST be configured for the dairy operation; production, delivery, loaded, returned, usage, wastage and stock quantities are stored as litres. Optional source/location fields or quality notes MAY be captured if used. | Must | Values are selectable and validated; the system rejects invalid types, units or quantities. |
+| FR-MILK-03 | Authorized staff MUST be able to view, search and filter milk logs by date range, shift, milk type and source where those fields are enabled. | Must | Filters return only matching records and totals reflect the filtered result. |
+| FR-MILK-04 | The system MUST show totals by date and shift for recorded milk quantities and MUST identify incomplete or invalid entries. | Must | Totals match the saved entries and validation messages are actionable. |
+| FR-MILK-05 | The system MUST support customer-wise milk delivery records, including planned quantity, actual delivered quantity, unit, date/shift, delivery outcome and optional note/reason. | Must | Each delivery record is linked to the relevant customer and route stop where a route is used. |
+| FR-MILK-06 | Changes to a saved milk log or delivery record MUST record the staff identity, time of change, reason and before/after values or an equivalent audit reference. Operational records MUST NOT be hard-deleted through the app. | Must | An authorized reviewer can identify who changed a record, when, why and how; unauthorized users cannot alter it. |
+| FR-MILK-07 | The operations interface SHOULD compare planned delivery volume with actual delivered volume and recorded production/collection totals where both datasets exist. | Should | Difference/exception totals are calculated from saved records and can be traced to contributing entries. |
+| FR-MILK-08 | The system MUST prevent negative quantities and validate numeric quantities, units and required fields before saving. | Must | Invalid quantities are rejected with field-level messages. |
+
+#### Delivery route planning and execution
+
+| ID | Requirement | Priority | Acceptance condition |
+|---|---|---|---|
+| FR-ROUTE-01 | Authorized staff MUST be able to create or manage a delivery route for a date and shift, including route name/area and an assigned delivery staff member where assignments are used. | Must | Saved route details and assigned staff are visible to authorized users. |
+| FR-ROUTE-02 | A route MUST contain an ordered list of delivery stops with the relevant customer, delivery address/instructions, planned milk type/product and quantity where applicable. | Must | Every stop resolves to the correct customer and planned delivery details. |
+| FR-ROUTE-03 | The system MUST automatically order route stops to produce the shortest practical driving route using the customers' stored GPS coordinates and an approved routing provider. | Must | The saved route is ordered automatically; the provider and route optimization behavior are verified before production. |
+| FR-ROUTE-04 | A delivery staff member MUST be able to open only assigned routes and see the information needed to complete those deliveries. | Must | Access to unassigned routes and unrelated customer data is denied. |
+| FR-ROUTE-05 | At each stop, the delivery staff member MUST be able to use the existing actions Delivered, Partial, Skip Cow, Skip Buffalo and Skip Both. A Partial action must capture actual litres delivered for each relevant milk type and a reason; skip actions must capture a reason. Reason options include Customer unavailable, Customer requested skip, Insufficient milk, and Other (with a note). | Must | The selected action, actual quantities, reason and completion time are saved; Delivered uses the scheduled quantity and skip actions set the skipped milk type to zero. |
+| FR-ROUTE-06 | The system MUST show route progress, completed/remaining stops, planned quantity, delivered quantity and exceptions for a route. | Must | Route summary reconciles with the underlying stop records. |
+| FR-ROUTE-07 | The system MUST provide navigation for the automatically optimized driving route through the selected and verified routing/maps integration. | Must | The delivery boy can follow the optimized route; the routing capability is configured and tested before production. |
+| FR-ROUTE-08 | When a stop is skipped, the system MUST record the outcome and reason, then recalculate navigation to the next best pending stop. | Must | The next pending stop is selected using the optimized route and the skipped stop is not treated as pending. |
+| FR-ROUTE-09 | The system MUST handle duplicate submit attempts and temporary network/API errors without creating duplicate delivery records or falsely marking a stop complete. | Must | Repeated submission is idempotent or safely reconciled and the UI shows the authoritative saved state. |
+| FR-ROUTE-10 | At route completion, authorized staff MUST be able to review all Delivered, Partial, Skip Cow, Skip Buffalo and Skip Both outcomes, plus planned-versus-actual quantities and exceptions. | Must | A route completion summary is available and every exception is traceable to an individual stop. |
+
+### 6.11 Backend ownership and API boundary
+
+| ID | Requirement | Priority | Acceptance condition |
+|---|---|---|---|
+| FR-ARCH-01 | The target solution MUST use Odoo as the sole business backend and operational system of record for shared grocery and dairy workflows. | Must | Architecture review shows both customer and dairy clients using the same Odoo-owned records and rules. |
+| FR-ARCH-02 | All client access MUST use secured Odoo API endpoints/custom HTTP controllers implemented in approved Odoo modules. Client apps MUST NOT connect directly to PostgreSQL or use privileged generic Odoo RPC credentials. | Must | Security and integration tests verify authentication, authorization, validation and absence of privileged secrets in client builds. |
+| FR-ARCH-03 | The production target MUST NOT use MongoDB or a separate FastAPI backend to operate business workflows after cutover. | Must | Deployment inventory shows no production dependency on MongoDB/FastAPI for target business operations. |
+| FR-ARCH-04 | Existing MongoDB records MAY be read/exported for one-time migration and retained as a restricted backup/archive only for the approved retention period. | Must | Migration sign-off is complete; legacy writes are disabled; archive access and disposal/retention date are documented. |
+| FR-ARCH-05 | The Odoo custom API layer MUST enforce role-based access, record ownership, input validation, audit attribution and safe error handling for customer and dairy operations endpoints. | Must | Unauthorized cross-customer, cross-route and cross-role tests fail safely. |
+
+### 6.12 System states
+
+| ID | Requirement | Priority | Acceptance condition |
+|---|---|---|---|
+| FR-STATE-01 | Screens loading remote data MUST provide clear loading feedback, using skeleton loaders where suitable. | Must | Users understand that content is loading. |
+| FR-STATE-02 | Empty catalogue, empty cart, no results and empty order history MUST have useful empty states. | Must | Each state gives a relevant next action. |
+| FR-STATE-03 | Network, authentication, server and payment errors MUST provide safe, actionable messages and retry options where safe. | Must | No internal stack traces, tokens or credentials are shown. |
+| FR-STATE-04 | In the grocery app, disabled location permissions and unavailable delivery coverage MUST not trap the user in a dead end. Dairy customer invite registration is different: successful GPS capture is mandatory, and a denied/unavailable GPS blocks registration with retry guidance. | Must | Grocery users can correct location through the approved alternative; dairy registration cannot complete without GPS. |
+
+---
+
+### 6.13 Confirmed dairy operations rules
+
+The following rules were confirmed during business-requirements discussion and form the current dairy-app baseline. They supplement and, where more specific, take precedence over earlier generic descriptions in this draft.
+
+#### Customer registration and requirements
+
+| ID | Requirement | Priority | Acceptance condition |
+|---|---|---|---|
+| FR-CREG-01 | The owner/admin MUST be able to generate and share a customer registration link. The link remains valid until successful registration; after success it cannot register another customer and displays **“You have already registered.”** | Must | Reopening a completed link shows the specified message; an unused link remains usable. |
+| FR-CREG-02 | Registration MUST collect the customer's name, phone number, required daily cow-milk litres and required daily buffalo-milk litres, then capture GPS coordinates. GPS is mandatory; manual location entry and map-pin confirmation are not part of this workflow. | Must | A registration without successful GPS capture cannot be completed; the app explains how to retry or enable GPS permission. |
+| FR-CREG-03 | Dairy customer registration MUST NOT require phone OTP in the initial version, MUST NOT block a registration solely because the phone number already exists, and MUST NOT require owner/admin cancellation of unused links. | Must | A customer can finish the invited flow without OTP; duplicate phone numbers are not rejected solely for duplication. |
+| FR-CREG-04 | Only the owner may change a customer's regular daily milk quantities. The owner may make a change effective immediately for not-yet-completed deliveries or select an effective date (tomorrow by default). Completed delivery records MUST remain unchanged. | Must | Future schedule uses the new quantities from the selected date; completed stops preserve original planned and actual figures; the change is recorded in audit history. |
+| FR-CREG-05 | The owner/admin MUST be able to pause a customer's deliveries for selected dates without changing the regular quantity. The customer is excluded from those routes and regular service resumes automatically after the selected pause period. | Must | Paused dates produce no route stop; the normal schedule resumes afterward. Customer is notified through both WhatsApp and SMS when a pause or resume is applied. |
+
+#### Extra milk and route assignment
+
+| ID | Requirement | Priority | Acceptance condition |
+|---|---|---|---|
+| FR-EXTRA-01 | A customer must request extra milk at least one day before it is needed. The owner/admin then schedules the one-time extra cow/buffalo milk litres by selecting one or more delivery dates. Extra quantities apply only to the selected dates and do not alter regular daily requirements. | Must | Each selected date has its own approved target; same-day new requests are not accepted; regular quantity remains unchanged on other dates. |
+| FR-EXTRA-02 | The owner/admin MUST be able to edit or cancel a scheduled extra-milk request before its route starts. Once the route starts, that route's extra-milk request and target are locked. | Must | Edits/cancellations are blocked after route start; changes before route start update the target. The customer receives WhatsApp and SMS notifications when an extra-milk request is scheduled, changed or cancelled. |
+| FR-ROUTE-11 | The owner/admin MUST be able to temporarily reassign an entire day's route to another delivery boy for a defined date range. The temporary assignment expires automatically and the regular assignment resumes; the permanent assignment and audit history are preserved. | Must | A replacement can see the route only for the approved period; the normal driver returns automatically after the period. Upcoming routes must be reassigned before a delivery-boy account is deactivated. |
+| FR-ROUTE-12 | Before starting a route, the delivery boy MUST enter actual cow-milk and buffalo-milk litres loaded. The quantities must exactly match the approved target load for each type, including any approved extra-milk requests; unapproved excess or a shortage blocks route start. No safety-buffer milk is loaded. | Must | Route start remains disabled until both values are entered and match the target; any shortage/excess must be resolved at the farm. |
+| FR-ROUTE-13 | At route end, the delivery boy MUST enter actual cow-milk and buffalo-milk litres returned to the farm. The route closes automatically after every stop has a recorded outcome and both return quantities are entered. A return discrepancy does not require a reason in the initial version. | Must | Route closure stores both return quantities and closes the route; discrepancy remains available for Odoo reconciliation. |
+| FR-ROUTE-14 | When a stop is skipped, the app MUST save the selected skip and reason, then guide the driver to the next best pending stop. The app MUST preserve the five existing delivery actions: Delivered, Partial, Skip Cow, Skip Buffalo and Skip Both. | Must | Skip state/reason are retained, route progress updates, and navigation is recalculated. |
+
+#### Offline sync, reconciliation, corrections and reporting
+
+| ID | Requirement | Priority | Acceptance condition |
+|---|---|---|---|
+| FR-SYNC-01 | Milk production logs and delivery records MUST be capturable offline. They must be queued locally until sent to Odoo and show Pending Sync or Synced status to the delivery boy for their submissions. | Must | A test route and production entry can be saved without connectivity and later reach Odoo; the delivery boy can inspect status. |
+| FR-SYNC-02 | The app MUST automatically retry sync using either Wi-Fi or mobile data until successful. It must show the last attempt and failure reason. Duplicate submissions must be detected, and a genuine conflict must be preserved and flagged for owner/admin review rather than silently overwriting data. | Must | Retried submissions do not create duplicates; conflicting records remain available for review. |
+| FR-SYNC-03 | If any record remains Pending Sync for over 30 minutes, an alert MUST be sent by both WhatsApp and SMS to the designated dairy-app admin only. The destination number is configurable by the owner or an authorized admin and takes effect immediately when saved; number-change audit history is not required. | Must | Only the designated app admin receives the alert, and the app continues automatic retry. |
+| FR-MILK-09 | Odoo MUST provide a consolidated daily milk reconciliation view showing morning/evening production, total produced, actual customer deliveries, milk used for products, wastage, calculated balance, physical closing-stock counts, discrepancy, unsynced records and exceptions. Cow and buffalo figures must be separate, with totals also shown. | Must | Values can be traced to saved source records and display per milk type and combined totals. |
+| FR-MILK-10 | The owner MUST enter physical closing-stock counts in Odoo. Odoo compares physical counts with calculated balances and flags differences; any stock adjustment requires a reason and an approval/history record. | Must | Differences create reviewable discrepancies; adjustments without the required reason/approval are rejected. |
+| FR-MILK-11 | Milk discrepancies MUST generate persistent in-app alerts for owner/admin, remain visible until reviewed, and contribute to an unresolved-discrepancy count on the main Odoo dashboard. Resolving an issue requires a reason and preserves the resolution actor and time. | Must | Pending count updates when issues are resolved; resolution history remains available. A discrepancy itself does not silently adjust stock. |
+| FR-AUD-01 | Milk production and delivery records MUST be editable but never hard-deleted through the app. Every correction requires a reason and preserves original/corrected values, actor and timestamp. Both owner and admin may correct authorized records from any prior date; a delivery boy may correct only their own submitted delivery record. | Must | Audit history displays the before/after values and metadata; there is no permanent-delete action. |
+| FR-AUD-02 | The dairy app MUST provide an Audit History screen for owner/admin. Audit entries themselves cannot be edited or deleted. | Must | Authorized reviewers can filter/review changes and access is denied to delivery boys. |
+| FR-REP-01 | Owner/admin MUST be able to export milk production, delivery, reconciliation and audit-history reports to Excel, filtering by date range, delivery boy, customer and milk type (cow/buffalo). | Must | Exported records match the applied filters and authoritative Odoo data. |
+
+#### Access, visibility and notifications
+
+| ID | Requirement | Priority | Acceptance condition |
+|---|---|---|---|
+| FR-ROLE-01 | The owner has full control. Admins can manage daily operations and user access/security actions, including PIN reset, delivery-boy activation/deactivation and role changes. The owner alone can change regular daily milk quantities. | Must | Server-side permissions enforce the role matrix for every endpoint. |
+| FR-ROLE-02 | Delivery boys use PIN-based login. Owner/admin can reset a PIN and activate/deactivate/reactivate an existing account. PINs must be stored securely and repeated failed attempts must be rate-limited. | Must | Old PIN stops working after reset; deactivation blocks login; reactivation reuses the existing account and history. |
+| FR-ROLE-03 | Delivery boys may see only assigned route/current stop details necessary for delivery. They must not see customer phone numbers or customers' full delivery history; customer delivery history is available only to owner/admin. | Must | Direct API attempts to read out-of-scope customer data are denied, not merely hidden in the UI. |
+| FR-NOTIFY-01 | Customer notifications MUST be sent through both WhatsApp and SMS for delivery pause/resume and extra-milk schedule/change/cancellation. | Must | Both channels are invoked for each applicable event, subject to provider delivery status. |
+| FR-NOTIFY-02 | Customer notifications for regular quantity changes and delivery completion are not required for the initial version. | Must | No such notification is triggered in the initial release. |
+
+**Explicitly deferred for the initial version:** customer-facing delivery-history access; customer notifications for daily completed deliveries or regular quantity changes; delivery-boy access to customer phone numbers; OTP and duplicate-phone blocking for dairy customer registration; manual cancellation of unused invite links; a required reason for a returned-milk discrepancy; and audit history specifically for changing the designated app-admin phone number.
+
+---
+
+## 7. Business Rules
+
+| ID | Rule |
+|---|---|
+| BRULE-01 | Odoo/configured backend is the authoritative source for product data, price, inventory, checkout totals and order state, subject to confirmed implementation. |
+| BRULE-02 | The client MUST NOT be trusted to calculate the final payable amount or decide stock availability. |
+| BRULE-03 | Price, stock, promotion eligibility and serviceability must be revalidated at checkout and again as needed during order submission. |
+| BRULE-04 | A successful payment response alone is not sufficient to show an order as confirmed; the order status must be verified with the backend. |
+| BRULE-05 | Order/payment operations must use idempotency or equivalent duplicate protection where supported by the provider/system. |
+| BRULE-06 | Customer records, address details, order history and support information must be restricted to authorized parties. |
+| BRULE-07 | GPS permission is requested only after the user initiates the location action; manual entry must remain available. |
+| BRULE-08 | Delivery areas, fees, slots and promised times are configuration-driven, not hard-coded. |
+| BRULE-09 | Promotions must include valid eligibility, timing, terms and server-side validation. |
+| BRULE-10 | Certified-organic, chemical-free, pesticide-free, freshness guarantee, customer count and rating claims require evidence and business approval. |
+| BRULE-11 | An unsupported capability must be hidden or clearly identified as unavailable; a visual prototype must not imply a completed integration. |
+| BRULE-12 | Odoo administrator credentials and private integration secrets must never be sent to or stored in the public client application. |
+| BRULE-13 | Milk production/collection logs and customer delivery records must be stored in the approved operational source, expected to be Odoo or a confirmed Odoo-backed custom module. |
+| BRULE-14 | Every milk quantity must have an explicit unit and applicable date/shift; totals must be calculated from saved records rather than manually trusted client totals. |
+| BRULE-15 | Route-stop status, planned quantity and actual delivered quantity must remain distinct; partial, skipped and failed deliveries must not be reported as fully delivered. |
+| BRULE-16 | Delivery staff may access only their assigned route data and the customer information necessary to complete those stops. |
+| BRULE-17 | The dairy route must be ordered automatically using shortest-driving-route optimization; the chosen routing provider must be configured and verified before production. |
+| BRULE-18 | Production and delivery records may be temporarily queued on the client for offline operation, but Odoo remains the authoritative source once synchronized; queues require idempotency and conflict handling. |
+| BRULE-19 | Cow and buffalo quantities must remain separate across production, loaded milk, delivered milk, returned milk, usage, wastage, balance and physical stock, with combined totals available as a derived view. |
+| BRULE-20 | The dairy app must not duplicate Odoo inventory, manufacturing usage, wastage, closing-stock accounting, billing or other back-office responsibilities. |
+
+---
+
+## 8. External Interface Requirements
+
+The exact providers are **TBD**; choose and approve them before integration implementation.
+
+| Interface | Purpose | Minimum requirement |
+|---|---|---|
+| Odoo Community | Catalogue, pricing, stock, customers, cart/order operations and other configured business data | Server-to-server integration; least privilege; authenticated requests; documented mappings and error handling |
+| OTP/SMS provider | Send and verify one-time passwords if external OTP is used | Rate limits, expiry, resend rules, delivery failure handling and privacy controls |
+| Payment gateway | Process supported online payments and report status | Secure redirect/SDK/tokenized flow; signed server-side notifications/webhooks; retry and reconciliation behaviour |
+| Maps/geolocation service | Convert GPS/address/pincode and optionally allow pin adjustment | User consent, manual fallback and clear handling for unavailable results |
+| Delivery/serviceability rules | Determine customer delivery zone, slot, charge and ETA when supported | Backend/configuration is authoritative; no invented delivery estimate |
+| Maps/routing provider (internal route operations, required) | Optimize stops by shortest driving route using stored customer GPS coordinates and recalculate after a stop is skipped | Provider/credentials must be selected and tested before production; route optimization is a required business capability |
+| Notification providers | WhatsApp and SMS for delivery pause/resume, extra-milk events and designated app-admin sync-failure alerts | Provider selection remains open; templates, retry/status handling and failure reporting must be configured; do not send daily delivery confirmation/regular quantity-change notifications in the initial version |
+| AI chatbot/support service | Optional customer self-service | Minimize personal data; do not expose protected account information without authentication |
+| Analytics/error monitoring | Optional product analytics and diagnostics | Privacy-conscious, access-controlled and free of secrets/payment credentials |
+
+---
+
+## 9. Data Requirements
+
+The following conceptual entities are needed. Exact Odoo models and field mappings must be confirmed during system design and Odoo discovery.
+
+| Entity | Important data (illustrative) | Data owner/source |
+|---|---|---|
+| Product | ID/SKU, name, description, images, active status, attributes | Odoo catalogue |
+| Product Variant | Variant ID, pack size, unit, barcode/SKU, availability | Odoo catalogue/inventory |
+| Category | ID, name, parent category, display order/image | Odoo or approved content configuration |
+| Price/Offer | Applicable price, currency, rules, dates, eligibility | Odoo/pricing or configured promotion service |
+| Inventory/Availability | Product/variant, quantity/status, location/warehouse as configured | Odoo inventory |
+| Customer | Customer reference, verified mobile, approved profile fields | Odoo + approved authentication mapping |
+| Address | Label, recipient, phone, address lines, pincode, coordinates if consented | Customer/account service and/or Odoo mapping |
+| Cart | Session/customer reference, lines, quantity, selected variant | Cart service/Odoo integration as designed |
+| Order | Order ID, customer, lines, totals, payment and fulfilment status | Odoo/order integration |
+| Payment Reference | Provider reference, amount, state, reconciliation reference | Payment provider and server-side adapter |
+| Delivery | Address, serviceability, selected slot, delivery state/ETA if supported | Odoo or configured delivery system |
+| Promotion | Campaign ID, type, terms, dates, eligibility | Approved configuration/Odoo if enabled |
+| Review/Testimonial | Text, approved identity display, rating, consent/status | Approved review/content source |
+| Referral | Code, eligibility, progress, reward status | Referral service/configuration if enabled |
+| Staff User / Role | Staff reference, role, active status, assigned route scope | Approved authentication and Odoo access-control setup |
+| Milk Log | Log ID, date, shift, milk type, source if used, quantity, unit, notes, created/updated audit data | Odoo or approved Odoo-backed dairy module |
+| Dairy Customer Delivery | Customer reference, date/shift, planned and actual quantity, unit, status, time and exception reason | Odoo or approved Odoo-backed dairy module |
+| Delivery Route | Route ID, date, shift, area/name, assigned driver, route status and totals | Odoo or approved Odoo-backed route module |
+| Route Stop | Route/stop ID, optimized sequence, customer reference, planned and actual cow/buffalo quantities, action/status, reason, completion time and correction audit | Odoo custom dairy module |
+| Registration Invite | Single-use invite identifier, active/completed state, created by, completed customer reference | Odoo custom dairy module |
+| Customer Milk Requirement Change | Old/new daily cow/buffalo quantities, effective date, actor and timestamp | Odoo custom dairy module |
+| Extra Milk Schedule | Customer, selected date(s), extra cow/buffalo quantities, state and route lock state | Odoo custom dairy module |
+| Customer Delivery Pause | Customer, start/end dates, creator, notification state | Odoo custom dairy module |
+| Route Assignment / Temporary Cover | Regular and temporary driver, route date/range, expiry and audit reference | Odoo custom dairy module |
+| Route Milk Load / Return | Target, actual loaded and actual returned litres for cow and buffalo milk; route link | Odoo custom dairy module |
+| Milk Reconciliation / Discrepancy | Production totals, delivered totals, usage, wastage, calculated balance, physical count, difference, state and resolution details | Odoo business layer |
+| Offline Sync Receipt | Client-generated unique submission ID, state, last attempt, failure reason, server reference and conflict status | Odoo record plus client outbox metadata |
+
+### Data-quality requirements
+
+- Every product/variant must have a stable identifier.
+- Prices must include explicit currency and selling unit/pack size.
+- Availability must have a clear meaning (for example, available/unavailable); do not infer exact stock counts unless exposed intentionally.
+- Image, description, storage, ingredients and certification fields may be optional; missing fields should not be fabricated.
+- Customer addresses and coordinates must be stored/processed only for legitimate delivery purposes with appropriate access controls.
+- Order totals must reconcile against the authoritative backend and payment provider.
+- Milk quantities must be numeric, unit-labelled and associated with a valid date/shift.
+- Milk log corrections and route-stop status changes must be attributable to an authorized staff user.
+- Planned delivery quantities, actual delivery quantities, actual loaded quantities, actual returned quantities and production/collection quantities must be stored separately so reports do not conflate them.
+- All cow/buffalo production, load, delivery, return, usage, wastage, calculated-balance and physical-count values must be kept separate; totals are derived.
+- Offline submissions require stable idempotency identifiers, and sync state/error metadata must not be treated as business quantity data.
+
+---
+
+## 10. Non-Functional Requirements
+
+The measurable targets below are **proposed engineering targets for approval**, not claims about current performance or vendor guarantees.
+
+| ID | Category | Requirement / proposed target | Verification |
+|---|---|---|---|
+| NFR-PERF-01 | Performance | On an agreed representative mobile/network test profile, initial usable shopping content should target 3 seconds or less; final threshold is to be approved after baseline testing. | Performance test |
+| NFR-PERF-02 | Performance | Common catalogue/search API responses should target p95 under 1 second excluding declared third-party/provider delays; measure and tune after baseline. | API/load test |
+| NFR-PERF-03 | Responsiveness | Main shopping journeys must remain usable on narrow phone screens without horizontal page overflow. | Device/browser tests |
+| NFR-AVAIL-01 | Availability | Set an agreed service availability objective and maintenance policy before launch; initial proposed target is 99.5% monthly for the application layer, excluding explicitly defined planned maintenance. | Monitoring/reporting |
+| NFR-SEC-01 | Security | Use HTTPS/TLS for all network traffic and secure secret storage for server-side credentials. | Configuration review/security test |
+| NFR-SEC-02 | Security | No private Odoo keys, admin credentials, payment secrets or OTP secrets may be embedded in client bundles. | Static/config review |
+| NFR-SEC-03 | Security | Apply least privilege, server-side authorization, input validation, rate limiting and safe error responses. | Security test/review |
+| NFR-SEC-04 | Privacy | Collect only information necessary for account, delivery, support and legal needs; disclose applicable privacy practices. | Privacy review |
+| NFR-SEC-05 | Payments | Do not store raw card details or payment credentials in the app/backend unless a compliant, explicitly approved provider architecture requires it. Prefer provider-hosted/tokenized handling. | Payment integration review |
+| NFR-DATA-01 | Data integrity | Checkout must use server-validated prices, promotions, availability and totals. | Integration test |
+| NFR-DATA-02 | Data integrity | Order and payment transitions must be idempotent/reconcilable where provider capabilities permit. | Fault-injection and integration tests |
+| NFR-DATA-03 | Operational data integrity | Milk log changes, route-stop status changes and delivery quantity corrections must be auditable and protected from unauthorized modification. | Audit-log and authorization tests |
+| NFR-SEC-06 | Role-based access | Internal dairy roles must be enforced server-side; a hidden UI control alone is not authorization. | Negative authorization tests |
+| NFR-ACCESS-01 | Accessibility | Target WCAG 2.2 AA for web experiences where applicable, with keyboard support, accessible labels, contrast and reduced-motion handling. Confirm platform-specific criteria for native packaging. | Accessibility audit |
+| NFR-UX-01 | Usability | A first-time user should reach product browsing with no unnecessary survey/profile steps; the exact guest/login policy must be approved. | Moderated UAT/usability review |
+| NFR-COMP-01 | Compatibility | Support the agreed current and previous versions of target mobile browsers/OS versions; list exact targets in the release plan. | Compatibility matrix tests |
+| NFR-OBS-01 | Observability | Record actionable application/API errors with correlation identifiers while excluding secrets and unnecessary personal data. | Operational test |
+| NFR-REC-01 | Recovery | Backup, restore and disaster-recovery objectives for Odoo and the application data must be defined and tested before production. | Restore drill |
+| NFR-MAINT-01 | Maintainability | Reuse shared UI components, centralize design tokens, document API contracts and keep environment configuration separate. | Code/design review |
+| NFR-SCALE-01 | Scalability | Support additional service areas and increasing catalogue/order volume through configuration and measured capacity planning. | Architecture/load review |
+
+---
+
+## 11. Content, Legal and Trust Requirements
+
+1. The business must approve final wording for organic, chemical-free, pesticide, responsible-farming and certification claims.
+2. “100% chemical-free”, “certified organic”, “fresh guarantee”, “10-minute delivery”, discounts, free gifts, customer counts, review ratings and Google ratings must not be displayed as facts unless substantiated and currently valid.
+3. The business must provide approved Privacy Policy, Terms & Conditions, Shipping/Delivery Policy, Returns/Refunds/Replacement Policy and customer support details before production launch.
+4. Testimonial text, customer names and photos may be published only with appropriate confirmation/permission.
+5. The application must disclose when a product's sourcing/certification details are unknown rather than guessing.
+6. Phone number, address, email, social links and delivery coverage must be confirmed before publication.
+
+---
+
+## 12. Error and Edge-Case Requirements
+
+The app must handle at minimum:
+
+- Location permission denied, GPS unavailable, invalid pincode, or area not served
+- OTP incorrect, expired, resend not available, rate limited, or provider unavailable
+- Search with no results or failed search request
+- Empty category/product list
+- Product becoming unavailable after it is displayed
+- Product price/offer changing before checkout
+- Network loss during cart update, checkout or order submission
+- Payment success with delayed order confirmation
+- Payment failure or cancellation
+- Duplicate order-submit action
+- Out-of-stock or invalid cart line at checkout
+- Delivery address edited to a non-serviceable area
+- Missing optional product information/images
+- Expired/invalid promotion
+- Unauthorized access to profile/order/address endpoints
+- Chatbot/support provider unavailable
+- Staff user attempts to access an unassigned delivery route
+- Duplicate route-stop completion submission
+- Milk log has missing date/shift, invalid unit or negative quantity
+- Actual delivered milk quantity differs from planned quantity
+- Route contains an invalid, inactive or non-deliverable customer/address
+- Map/navigation provider is unavailable while manual route order is still needed
+
+Each error state should explain what happened in simple language, preserve user input where safe, and show an appropriate recovery action. The app must not expose stack traces, internal hostnames or credentials.
+
+---
+
+## 13. Acceptance and Release Criteria
+
+The initial release is acceptable only when all Must requirements are implemented and verified, known exceptions are approved, and the business signs off on the unresolved decisions that affect release.
+
+### 13.1 Core end-to-end acceptance scenarios
+
+1. A customer can set a serviceable location and reach the catalogue.
+2. A customer denied GPS permission can enter a pincode/address manually.
+3. A customer can authenticate through the approved OTP flow, including error and retry cases.
+4. A customer can browse categories, search products, filter and sort supported results.
+5. A customer can open a product, select an available variant and add it to the cart.
+6. A customer can update quantities/remove items and see server-validated totals.
+7. A customer can enter/select an address and see only supported delivery options and payment methods.
+8. An order is confirmed only after backend confirmation; payment/order failure is handled without a misleading success state.
+9. An authenticated customer can see only their own orders and addresses.
+10. A customer can recover from empty results, empty cart and network/API errors.
+11. Home page promotions, hero messages, product sliders and trust claims render accurately and link to correct destinations.
+12. The interface is usable on the agreed target screen sizes and passes the agreed accessibility review.
+13. No secret or administrator credential is present in the client application bundle.
+14. Odoo and external integrations are tested in a non-production environment before production cutover.
+15. Authorized staff can create, view and correct date/shift-based milk production/collection logs, and the displayed totals match the saved entries.
+16. Staff can create a milk delivery route, order stops, assign it to a delivery staff member and see the same route plan in the authorized driver view.
+17. Delivery staff can record delivered, partial, skipped and failed outcomes with actual quantities and required exception reasons.
+18. The route summary reconciles completed/remaining stops and planned-versus-actual quantities; production/collection-versus-delivery comparison is shown only when both data sets exist.
+19. Unassigned staff cannot read or change route stops or operational records outside their permissions; changes have an audit trail.
+20. Production authentication never returns a real OTP to the client, and production startup fails if required signing secrets are missing.
+21. Cross-farm tests prove that drivers cannot access or modify another farm's customers, skips, deliveries or milk inventory.
+22. Backend validation rejects negative quantities, invalid milk types/shifts/statuses, and invalid partial-delivery quantities.
+23. Daily and monthly milk/stock figures reconcile from the approved canonical record model, including shift production and customer deliveries.
+
+### 13.2 Release blockers
+
+- Any unresolved critical security/privacy issue
+- Incorrect order totals or customer-data exposure
+- Duplicate order/payment risk without a mitigation
+- A path that allows placing an order for an unserviceable delivery address
+- False order confirmation or false payment-success messaging
+- Unapproved material business claims or invalid promotions
+- Missing production policies/contact details required for launch
+- Unverified production backups and restore procedure
+- Milk logs or route completion can be modified without authorized access or an audit trail
+- Delivery route totals/statuses do not reconcile with individual stop records
+
+---
+
+## 14. Waterfall SDLC Plan and Deliverables
+
+| Phase | Main activity | Outputs / exit gate |
+|---|---|---|
+| 1. Feasibility and planning | Confirm product objectives, stakeholders, platform target, budget, timeline and provider dependencies | Project plan, risks, decision log |
+| 2. Requirements analysis | Review this SRS with the business and turn TBD items into approved decisions | Signed-off SRS baseline, acceptance criteria, requirements traceability matrix |
+| 3. System/design | Finalize application architecture, Odoo mappings, data flows, API contracts, UI flows and security design | Approved System Design Document (SDD), interface specifications, design sign-off |
+| 4. Implementation | Build the customer and internal operations UIs, application integration layer, Odoo configuration/custom modules and external integrations | Versioned source code, configuration, build artifacts |
+| 5. Testing | Run unit, integration, end-to-end, security, performance, accessibility and UAT tests | Test plan/results, defects, requirement coverage, UAT approval |
+| 6. Deployment | Configure production environments, migrate/configure data, verify integrations and release | Deployment record, rollback plan, operations runbook |
+| 7. Maintenance | Monitor issues, fix defects, manage approved change requests and improve safely | Incident/change records, release notes, backup/restore checks |
+
+### 14.1 Waterfall change control
+
+After the SRS baseline is approved, changes to scope or requirements must be recorded as a change request containing the reason, affected requirement IDs, impact on design/code/tests, schedule/cost impact and approval. Update the SRS, System Design Document, traceability matrix and test cases together. Do not silently change signed-off requirements during implementation.
+
+---
+
+## 15. Open Decisions / TBD Register
+
+These decisions should be closed during requirements sign-off or before the affected design is finalized. The business has approved retaining the existing dairy frontend and using Odoo as the sole business backend and operational data system. MongoDB and the separate FastAPI backend are excluded from the target. Detailed Odoo model/controller mapping, provider choices and migration acceptance criteria remain open.
+
+| ID | Decision needed | Why it matters | Responsible party / status |
+|---|---|---|---|
+| TBD-01 | First release target: responsive web/PWA, app-store packaged web app, or native/cross-platform app | Affects platform, authentication, push, deep links, navigation and release process | Business + technical lead / Open |
+| TBD-02 | Exact Next.js frontend deployment and hosting approach | Affects frontend routing, Odoo endpoint configuration and operations | Technical lead / Proposed Next.js, confirm |
+| TBD-03 | Odoo version, hosting topology, installed modules and customizations | Determines models, API capabilities, auth and order workflow | Odoo implementer / Open |
+| TBD-04 | Customer grocery app OTP/SMS provider and authentication/session strategy | Required for grocery-app login, resend, rate limits and security; dairy invite registration does not use OTP in the initial version | Business + technical lead / Open |
+| TBD-05 | Payment gateway and permitted payment methods | Required for checkout, webhooks and reconciliation | Business / Open |
+| TBD-06 | Delivery-zone model, pincode/GPS rules, delivery fee, slots and ETA source | Required to avoid inaccurate delivery promises | Operations / Open |
+| TBD-07 | Guest browsing and checkout login policy | Affects onboarding friction and cart persistence | Business / Open |
+| TBD-08 | Whether wishlists, reviews, coupons and referral rewards are in release 1 | Affects data model and scope | Business / Open |
+| TBD-09 | AI chatbot provider, permissions and human escalation process | Affects privacy and support experience | Business + support / Open |
+| TBD-10 | Approved organic/certification wording and evidence by product | Prevents misleading product claims | Business / Open |
+| TBD-11 | Policies, business address, contact numbers, email and social URLs | Required for production footer/support/legal screens | Business / Open |
+| TBD-12 | Supported languages for release 1 (English only or also Kannada/other languages) | Affects content design and testing | Business / Open |
+| TBD-13 | Expected order volume, service hours and service availability target | Supports performance/hosting sizing | Business + technical lead / Open |
+| TBD-14 | Analytics, consent and retention requirements | Affects instrumentation and privacy controls | Business + technical lead / Open |
+| TBD-15 | Finalize Odoo model mapping for shift production, customer-wise deliveries, loaded/returned milk and reconciliation | Determines exact model names/fields and integration contracts | Odoo implementer / Business rules confirmed; model mapping open |
+| TBD-16 | Confirm exact Odoo version/modules and the approved routing provider, notification providers and credentials | Determines implementation and deployment choices | Odoo implementer + technical lead / Open |
+| TBD-17 | Confirm platform packaging and hosting details for the customer app and the reused Expo dairy app | Determines distribution, device capabilities and release path | Business + technical lead / Open |
+| TBD-18 | Define final migration mapping, retention period, trial reconciliation tolerances and cutover window | Protects historical records and rollback readiness | Business + technical lead / Open |
+| TBD-19 | Confirm when broader Odoo capabilities (inventory/manufacturing, wastage, billing and other business operations) will be configured/migrated; they are not separate dairy-app modules | Sets Odoo workstream scope and sequence | Business + Odoo implementer / App boundary confirmed; sequencing open |
+| TBD-20 | Confirm exact customer grocery authentication, payment, serviceability and customer-app release policy | Determines customer app integration requirements | Business + technical lead / Open |
+| TBD-21 | Specify the secure Odoo custom addon/controller endpoints, authentication model and app-specific request/response contracts | Determines secure client integration without a separate backend | Odoo-only target approved; endpoint/module design open |
+| TBD-22 | Finalize migration mappings, data cleanup rules, reconciliation totals, trial migration, cutover window and rollback plan for existing dairy records | Protects historical milk logs, customers, billing, inventory and delivery history | Migration approved in principle; mapping, trial and cutover sign-off open |
+| TBD-23 | Confirm whether the existing delivery PIN and mock OTP flows are strictly development-only and select the production authentication approach | Required before production authentication can be approved | Business + technical lead / Open |
+
+---
+
+## 15.1 Approved Architectural Direction (Business Decision)
+
+The business has approved the following direction for planning purposes:
+
+1. Retain the existing Expo/React Native + TypeScript dairy frontend as the starting point; improve it only where the audit, brand requirements, usability or integration work requires changes.
+2. Use Odoo as the sole business backend and operational system of record for both the customer grocery app and dairy operations app.
+3. Implement required app-specific endpoints and business rules inside approved Odoo modules/custom controllers. Do not deploy a separate FastAPI business backend.
+4. Do not use MongoDB in the target solution. Treat the current MongoDB database only as a temporary legacy source for controlled data export/migration and a restricted backup/archive during an approved retention period. Disable legacy operational writes after cutover and decommission the legacy service when its retention/rollback window closes.
+5. Odoo's own supported PostgreSQL database is the persistent database for the target system. Neither client connects to PostgreSQL directly.
+6. Do not switch production traffic or decommission the legacy environment until backups, trial migration, reconciliation, acceptance testing and a rollback plan are approved.
+
+This decision approves the destination and direction, not the implementation details. Odoo version/modules, model mapping, the API adapter, migration mechanics, and release gates remain subject to technical sign-off.
+
+---
+
+## 16. Requirements Traceability Matrix (Initial)
+
+The detailed test case IDs will be assigned during the test-planning phase. This initial matrix links requirements to design areas and expected verification.
+
+| Requirement group | Design destination | Verification method |
+|---|---|---|
+| FR-LOC / FR-AUTH | Location screens, serviceability states, phone/OTP screens | Location and authentication integration tests; UAT |
+| FR-NAV / FR-HOME | App shell, home screen, navigation and shared home components | UI tests; navigation UAT; responsive review |
+| FR-CAT / FR-FLTR / FR-SORT | Category browse, product list, filters and sort sheet | Catalogue integration tests; UI tests |
+| FR-SRCH | Search screen, suggestions, result list and no-result state | Search tests and no-results UAT |
+| FR-PDP | Product detail, quick view and variant selection | Product/variant tests |
+| FR-CART | Cart and shared cart state | Cart recalculation, stock/price-change and persistence tests |
+| FR-CHK / FR-ORD | Checkout, payment states, order confirmation and history | Payment/order integration and end-to-end tests |
+| FR-PROF / FR-ADDR / FR-WISH / FR-REF | Profile, addresses, wishlist and feature-gated referral | Authorization and account-flow tests |
+| FR-HELP / FR-CONT | FAQ, help, chatbot and policy content | Content review; support flow and privacy tests |
+| FR-CREG / FR-ROLE | Dairy customer invite registration, role permissions, PIN/account lifecycle and customer-data visibility | Registration, GPS-permission, role-matrix and negative authorization tests |
+| FR-EXTRA / FR-ROUTE | Extra-milk schedules, date-based pauses, shortest-route optimization, exact loading, delivery actions, route reassignment and returned milk | Route optimization, lock-state, load validation, driver-flow and route-close tests |
+| FR-SYNC | Offline production/delivery capture, automatic retry, status visibility, conflict handling and 30-minute admin alert | Offline/fault-injection, idempotency, retries and notification tests |
+| FR-MILK-09..11 / FR-AUD / FR-REP | Odoo reconciliation, discrepancies, audit history and Excel exports | Calculated-versus-physical stock tests, correction/audit tests and filtered-export checks |
+| FR-STATE / NFR | Loaders, empty/error states, security, accessibility, performance | Error-path testing, audits, load tests and security review |
+
+---
+
+## 17. Approval
+
+This document is a proposed baseline. It becomes the approved requirements specification only after the business owner and technical lead review the Must requirements, close or formally accept outstanding TBD items, and record approval.
+
+| Role | Name | Decision | Date |
+|---|---|---|---|
+| Business owner | TBD | Pending | TBD |
+| Technical lead / Odoo implementer | TBD | Pending | TBD |
+| QA/UAT representative | TBD | Pending | TBD |

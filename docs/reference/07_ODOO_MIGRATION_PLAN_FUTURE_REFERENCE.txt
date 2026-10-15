@@ -1,0 +1,385 @@
+# Heera Organics — Dairy App and Odoo Migration Plan
+
+**Document ID:** HO-MIG-PLAN-001  
+**Version:** 1.2 — Confirmed dairy workflows and migration scope  
+**Date:** 2026-10-14  
+**Method:** Waterfall SDLC  
+**Status:** Odoo-only target approved; technical discovery and detailed design remain pending  
+**Related documents:** `01_Heera_Organics_Requirements.md`, `02_Heera_Organics_System_Design.md`, `Dairy_Farm_Repository_Audit.md`
+
+---
+
+## 1. Purpose in Simple Words
+
+Heera Organics has two user experiences:
+
+1. The customer grocery app, where customers browse groceries and place orders.
+2. The existing dairy operations app, used for milk production logs, customer registration/requirements, route assignments and daily milk delivery execution.
+
+The dairy app will not become a separate inventory, manufacturing-usage, wastage, billing, herd-management or general back-office system. Odoo owns those wider business operations and their official records. The dairy app captures the operational production/delivery facts needed by Odoo and provides the agreed route, customer, sync, correction and audit experiences.
+
+The business has approved keeping the existing dairy frontend as the starting point and moving shared operational records and business rules to Odoo. Odoo is the sole operational source of truth so the apps do not maintain competing business records. The dairy frontend scope is limited to milk production logging, customer registration/requirements/assignments and daily route execution; Odoo owns official inventory, product-use/wastage, closing-stock, billing and other back-office operations.
+
+Odoo is the only target business backend and operational data system. Required application APIs will be implemented in approved Odoo modules/custom HTTP controllers. The target will not include MongoDB or a separate FastAPI service. The legacy MongoDB database is a one-time migration/export source and may be retained only as a restricted backup/archive during an approved retention period. This plan describes the Waterfall migration stages and formal sign-off gates; it does **not** authorize production data changes or GitHub modifications by itself.
+
+## 2. Existing Repository — What We Can Reuse
+
+Repository: https://github.com/shubhamsh1355-collab/dairy-farm  
+Current deployed reference: https://dairy-farm-w8p6.vercel.app
+
+The source code currently contains:
+
+- **Frontend:** Expo / React Native + TypeScript, with Expo Router and web export configuration.
+- **Backend:** FastAPI / Python.
+- **Database:** MongoDB through Motor.
+- **Existing workflows:** shift-wise milk production; daily cow/buffalo milk log; remaining milk calculation; milk stock; dairy product inventory and sales; customer/contact management; delivery partner management; assigned customer route; delivered/skipped/partial status handling; customer skips and monthly billing; analytics; cattle/herd records; invites and broadcast messaging. These are as-is repository observations, not a commitment to keep every feature in the dairy app. In the target app scope, customer invites/requirements/assignments and delivery workflows remain; product inventory/sales, monthly billing, general analytics and cattle/herd workflows are Odoo/back-office responsibilities or excluded from the dairy frontend.
+
+The current implementation is not connected to Odoo. The target is Odoo-only: do not keep MongoDB or FastAPI for day-to-day business operations after cutover. Use the current MongoDB data only for controlled export/trial migration/final migration, then archive or decommission it under the approved retention policy.
+
+The repository review was source-only. No live MongoDB data was inspected and no build, test suite or production endpoint was run. Confirm all findings in a safe development environment before acting on them.
+
+## 3. Target Architecture
+
+```mermaid
+flowchart TD
+    Customer[Heera Organics Customer App\nNext.js / TypeScript]
+    Dairy[Existing Dairy App\nExpo / React Native + TypeScript]
+    API[Odoo Custom HTTP Controllers\nSecure App APIs + Role Checks]
+    Models[Odoo Standard and Custom Models\nBusiness Rules + Audit Trail]
+    DB[(Odoo PostgreSQL Database)]
+    External[Approved OTP / Payment / Maps / Notifications]
+    Legacy[(Legacy MongoDB\nOne-time migration/export only)]
+
+    Customer <--> API
+    Dairy <--> API
+    API <--> Models
+    Models <--> DB
+    API <--> External
+    Legacy -. controlled export and reconciliation .-> Models
+```
+
+### Simple explanation
+
+- Keep the existing dairy frontend as the starting point and connect it to Odoo.
+- Connect the customer grocery app to the same Odoo system.
+- Odoo modules/controllers expose the APIs, check permissions, apply business rules and save records using Odoo's own supported PostgreSQL database. Those controllers run inside Odoo; they are not a separate FastAPI server.
+- MongoDB is not part of the target. It is used only to export old records once; after successful migration and the agreed retention period, archive/decommission the old store and service.
+- Do not allow the frontend/mobile apps to connect directly to PostgreSQL or carry privileged Odoo credentials.
+
+## 4. Waterfall Phase Plan
+
+Each phase produces named deliverables and must pass its exit gate before the next phase begins.
+
+### Phase 0 — Protect the Existing Project
+
+**Goal:** Reduce the risk of losing data or carrying unsafe development settings into production.
+
+Tasks:
+- Freeze the current source revision and record the commit hash used for the audit.
+- Store a verified, access-controlled MongoDB backup; test restoring it into a non-production database.
+- Review environment variables and the tracked `memory/test_credentials.md` file. Do not copy secrets into documentation or Git. Rotate any real credentials found in the repository or deployment.
+- Confirm who can access the GitHub repository, Vercel deployment and backend hosting.
+- Fix or create tickets for the audit's production blockers: mock OTP exposure, default JWT secret, MongoDB TLS certificate verification disabled, broad CORS, readable delivery PINs, route/farm authorization, numeric validation and inventory race/duplicate-submission risks.
+
+Deliverables:
+- Tagged source baseline
+- Backup and restore evidence
+- Secret/credential review record
+- Prioritized security remediation list
+
+**Exit gate:** Owner/technical lead confirm the baseline can be restored and critical credentials are secured before any migration work.
+
+### Phase 1 — Odoo and Workflow Discovery
+
+**Goal:** Understand the actual Odoo environment before designing integrations.
+
+Tasks:
+- Record Odoo edition/version, hosting model, installed modules and access-control configuration.
+- Check which Odoo modules can support products, sales, contacts, stock, invoicing, employees and delivery operations.
+- List required custom dairy models/modules that standard Odoo functionality does not cover.
+- Design the required Odoo custom HTTP controllers and addon modules; no separate FastAPI API/BFF service will be deployed.
+- Confirm business rules: production vs customer delivery records, shift definitions, customer quantities, partial/skipped delivery semantics, stock deductions, billing and route ordering.
+
+Deliverables:
+- Odoo environment discovery report
+- Approved current-to-target workflow map
+- Odoo controller/API contract and security design
+- Final in-scope/out-of-scope list for release 1
+
+**Exit gate:** Odoo version/modules, system boundaries and operational rules are reviewed and approved.
+
+### Phase 2 — Requirements and Data Design Sign-Off
+
+**Goal:** Decide exactly what data means before migrating it.
+
+Create mapping sheets for:
+- Owner/admin/delivery-boy accounts, roles, active status and PIN-reset/deactivation lifecycle
+- Customer records, phone, mandatory GPS coordinates, regular cow/buffalo quantities and effective-date history
+- Registration invitations and completed-registration state (single-use invite behavior)
+- Morning/evening shift production logs by cow/buffalo milk type
+- Regular/temporary route assignments and effective/expiry dates
+- Route stops, planned quantities, five delivery actions, actual delivered quantities, reasons and correction history
+- Date-specific extra-milk schedules and customer delivery pauses
+- Actual cow/buffalo milk loaded and returned for each route
+- Offline client identifiers/sync receipts as needed for reconciliation and duplicate prevention
+- Odoo-owned inventory/manufacturing usage, wastage, physical closing-stock, discrepancy and billing records if required for historic continuity; these are migrated/configured for Odoo operations and are not separate dairy-app modules
+
+Important rules:
+- Identify which fields are source facts and which are calculated totals. Do not import derived totals as duplicate independent facts without an approved reconciliation rule.
+- Establish a canonical timezone, date keys, quantity units, status values and unique identifiers.
+- Document duplicate customer/log handling, idempotency identifiers and what to do when offline submissions conflict with existing Odoo records.
+- Specify who can create, edit, approve or close each record type. Operational records are edited with a reason and audit trail, not hard-deleted through the app.
+- Keep cow and buffalo quantities separate at every step; derive combined totals rather than importing them as independent facts.
+- Preserve completed deliveries when regular customer quantities change; store the new effective date and history separately.
+
+Deliverables:
+- Approved data dictionary and source-to-Odoo mapping
+- Approved model/relationship diagram
+- API contracts and role matrix
+- Updated SRS/SDD and requirements-to-test traceability matrix
+
+**Exit gate:** Business owner and technical/Odoo lead approve data semantics and mappings before implementation.
+
+### Phase 3 — Build the Odoo Business Layer
+
+**Goal:** Make Odoo responsible for the agreed business records and validations.
+
+Tasks:
+- Configure standard Odoo modules where suitable.
+- Build and review custom models/modules for dairy production/collection logs, milk inventory movements, route plans/stops and delivery outcomes where required.
+- Enforce server-side quantity, status, ownership and role checks.
+- Record who made changes and when; implement controlled corrections for closed logs.
+- Ensure inventory changes and delivery outcome updates are safe against duplicate submissions and concurrent actions.
+- Define an auditable relationship between production, inventory, customer deliveries and billing.
+
+Deliverables:
+- Version-controlled Odoo configuration/custom module code
+- Model and validation tests
+- Role/permission tests
+- Technical documentation for supported Odoo interfaces
+
+**Exit gate:** Odoo staging supports the approved core workflows and passes model/permission tests.
+
+### Phase 4 — Build Odoo API Controllers and Integration Modules
+
+**Goal:** Allow both frontends to use Odoo safely and consistently, without a separate backend service.
+
+Tasks:
+- Implement approved Odoo addon models and custom HTTP controllers for catalogue, customer, checkout/order, milk-log, inventory, route/stop and reporting workflows.
+- Enforce Odoo authentication, role/record permissions, input validation, safe response mapping and audit attribution.
+- Integrate approved OTP/payment/maps/notification providers through Odoo-side modules/controllers and verified webhooks.
+- Add idempotency/duplicate protection for order, payment, stock and delivery mutations.
+- Normalize controller request/response contracts so both frontends can call Odoo consistently.
+- Use Odoo's ORM for business records; do not create a separate database or backend write path.
+
+Deliverables:
+- Odoo addon/controller specification
+- Custom module source and configuration
+- Unit/integration/security tests
+- Odoo staging deployment notes
+
+**Exit gate:** Both clients can complete core workflows through Odoo staging; there is no separate FastAPI target service and no new MongoDB write path.
+
+### Phase 5 — Adapt the Existing Dairy Frontend
+
+**Goal:** Reuse the frontend and switch its data source in controlled, testable slices.
+
+Recommended sequence:
+1. PIN-based delivery-boy login, owner/admin roles, account reset/activation and server-side permissions.
+2. Customer invite registration (single-use link, required GPS), customer list and regular daily quantity rules.
+3. Date-based delivery pauses and extra-milk schedules with WhatsApp/SMS notification events.
+4. Owner/admin regular and temporary route assignments, including automatic expiry/restoration.
+5. Automatic shortest-driving-route optimization and re-optimization after a skipped stop.
+6. Pre-start exact target-load entry for cow/buffalo milk, stop actions, partial litres/reasons, return quantities and automatic route close.
+7. Offline production/delivery queues, retry/idempotency, sync status/details and designated-admin alerts.
+8. Correction/audit-history screen, discrepancy review links and filtered Excel exports.
+
+Tasks:
+- Keep existing Expo/React Native UI where fit for purpose.
+- Replace API contracts one feature at a time, using adapters where useful.
+- Align visual branding to Heera Organics where required.
+- Remove exposed mock OTP behaviour, debug bypass headers and hard-coded secrets from production builds.
+- Add loading, failed-save, offline/network error and retry states.
+- Do not rebuild inventory, manufacturing usage, wastage, billing, herd management or other back-office modules in the dairy frontend; connect needed operational facts to Odoo.
+- Enforce exact target load: route start is blocked unless entered cow/buffalo litres match approved targets; the target includes scheduled extra milk and no unapproved buffer/excess is permitted.
+- Make offline retry idempotent and conflict-aware; a pending record is never silently discarded or used to overwrite conflicting Odoo data.
+
+Deliverables:
+- Dairy frontend connected to Odoo-backed staging APIs
+- Feature-by-feature regression test results
+- Updated UI and operations guide
+
+**Exit gate:** A staff member can complete the approved end-to-end dairy workflow from the existing app using Odoo as the sole operational source of truth.
+
+### Phase 6 — Connect the Customer Grocery App
+
+**Goal:** Connect the customer-facing grocery experience to the same API boundary and Odoo catalogue/order source.
+
+Tasks:
+- Map categories, products, pack sizes/variants, price, availability, customers and orders.
+- Implement or validate location/serviceability, cart quote, checkout, payment callbacks and order history.
+- Ensure customer grocery operations cannot access internal dairy administration endpoints.
+- Apply the same API security, observability and error handling standards.
+
+Deliverables:
+- Customer application integrated with Odoo staging
+- End-to-end shopping test report
+- Payment sandbox and webhook verification evidence
+
+**Exit gate:** Customer order and internal dairy operations workflows use consistent shared business data in staging.
+
+### Phase 7 — Trial Data Migration and Reconciliation
+
+**Goal:** Prove historical data can be migrated safely before the production cutover.
+
+Tasks:
+- Take a consistent, access-controlled snapshot/export of the legacy MongoDB data into a controlled migration environment.
+- Transform and import only the approved records into Odoo staging using a repeatable migration script. No live target workflow should read from or write to MongoDB.
+- Generate reconciliation reports for record counts, production volumes by date/type/shift, inventory balances, customer allocations, delivery outcomes, skips and monthly bills.
+- Compare sample bills and reports manually with approved known examples.
+- List every mismatch, its explanation and its disposition. No unexplained material differences should be accepted.
+- Test duplicate handling, rollback and restore from backup.
+
+Deliverables:
+- Migration scripts with repeatable inputs/outputs
+- Trial migration report
+- Data-quality exception register
+- Reconciliation sign-off
+- Tested rollback procedure
+
+**Exit gate:** Business owner approves the migration results and the technical lead confirms rollback readiness.
+
+### Phase 8 — UAT, Security and Operational Readiness
+
+**Goal:** Confirm the whole system is safe and usable for real staff and customers.
+
+Minimum tests:
+- A driver cannot access a customer or route assigned to another driver/farm.
+- Invalid OTP attempts are throttled; production OTPs are never returned by API responses.
+- Missing production secrets prevent unsafe startup.
+- The target tests and deployment contain no MongoDB/FastAPI dependency; if legacy MongoDB must be accessed for final migration, its connection uses verified TLS and its credentials remain restricted.
+- PINs/secrets are never returned by staff listing APIs.
+- Invalid/negative quantities and invalid status transitions are rejected.
+- Duplicate delivery updates do not double-deduct inventory.
+- Daily and monthly totals reconcile from authoritative source records.
+- Customer invite links are single-use after registration; registration requires name, phone, daily cow/buffalo quantities and successful GPS capture, but no OTP or duplicate-phone rejection.
+- Regular milk quantity changes are owner-only and preserve completed delivery history; pauses/extra-milk selections are date-specific and notifications use both WhatsApp and SMS.
+- Route order is automatically optimized; skipped stops trigger next-pending-stop re-optimization.
+- Exact load validation blocks route start for any milk-type shortage or unapproved excess; route closure requires stop outcomes and actual cow/buffalo returns.
+- Offline production and delivery submissions survive connectivity loss, retry over Wi-Fi/mobile data, avoid duplicate records and raise designated-admin WhatsApp/SMS alerts after 30 minutes pending.
+- Corrections require reasons, preserve original/corrected values and actor/time, cannot be hard-deleted through the app, and audit entries are immutable.
+- Odoo reconciliation shows separate cow/buffalo figures, physical stock differences and persistent unresolved discrepancies.
+- Customer delivery history/phone numbers remain hidden from drivers; no daily-delivery or regular-quantity-change customer notifications are sent in the initial version.
+- Customer order totals are calculated/verified server-side.
+- Payment success/failure/pending cases map to correct order states.
+- Access to grocery and dairy functions follows the approved role matrix.
+- Backups, restores, logs and alerts are verified.
+
+Deliverables:
+- QA report and traceability matrix
+- Security remediation evidence
+- UAT sign-off
+- Production runbook and support plan
+
+**Exit gate:** No open critical security, data-integrity or order/payment blocker remains; business and technical sign-offs are recorded.
+
+### Phase 9 — Controlled Production Cutover
+
+**Goal:** Switch to Odoo without losing business records or creating two competing systems.
+
+1. Announce a short write freeze or agreed maintenance window.
+2. Take and verify the final legacy MongoDB export and retain it securely as a migration/retention artifact.
+3. Import the approved final data delta into Odoo using the reviewed migration process.
+4. Run reconciliation checks and smoke tests.
+5. Switch both frontends to Odoo custom-controller endpoints and disable the legacy FastAPI/MongoDB operational path.
+6. Test customer shopping, milk logging, inventory, route stops and billing through Odoo.
+7. Keep only the restricted legacy backup/archive during the approved retention period; do not use it for ongoing business operations.
+8. If rollback criteria trigger, roll back the app release/configuration and restore Odoo from its verified backup as appropriate; reconcile actions performed during the cutover window.
+9. After sign-off and the retention period, decommission the legacy FastAPI service, remove old connection secrets and securely dispose/archive legacy MongoDB data under the approved policy.
+
+**Go-live gate:** Written business-owner and technical-lead approval.
+
+### Phase 10 — Post-Launch Monitoring and Decommissioning
+
+Tasks:
+- Monitor failed API requests, authentication issues, order errors, inventory mismatches and delivery exceptions.
+- Review staff feedback and fix high-priority defects through change control.
+- Confirm Odoo backups and restore drills on the agreed schedule.
+- Disable/retire unused legacy endpoints and credentials after the rollback and retention period.
+
+Deliverables:
+- Launch report
+- Incident and defect log
+- Final legacy decommission checklist
+
+---
+
+## 5. Overall Flow Diagram
+
+```mermaid
+flowchart TD
+    A[0. Back up and secure current project] --> B[1. Inspect actual Odoo and workflows]
+    B --> C[2. Approve requirements and data mapping]
+    C --> D[3. Build Odoo models and business rules]
+    D --> E[4. Build secure Odoo custom controllers]
+    E --> F[5. Adapt existing dairy frontend]
+    E --> G[6. Connect grocery customer app]
+    F --> H[7. Trial migrate legacy records]
+    G --> H
+    H --> I[8. Reconcile, test, UAT and security review]
+    I --> J{All gates passed?}
+    J -- No --> K[Fix issues and repeat affected tests]
+    K --> I
+    J -- Yes --> L[9. Controlled production cutover]
+    L --> M[10. Monitor and decommission legacy stack]
+```
+
+## 6. High-Risk Issues to Fix Before Production
+
+Based on the read-only code review, the following need confirmation and remediation before production data/workflows are trusted:
+
+- Mock OTP is returned by the backend API in the current prototype.
+- A default JWT signing secret is present in source as a fallback.
+- Legacy MongoDB TLS certificate verification is disabled in the client configuration. MongoDB is excluded from the target; if it is accessed for migration, fix verified TLS or isolate it and perform a controlled export, then retire it.
+- Broad CORS configuration allows all origins.
+- Delivery PINs are stored and returned in readable form.
+- Delivery endpoints require stronger farm/customer/route ownership checks.
+- Milk production and summary records can be counted through different paths; reconciliation rules are needed to prevent inconsistent analytics.
+- Inventory updates should be atomic and protected against duplicate/concurrent delivery submissions.
+- The repository includes `memory/test_credentials.md`, which must be reviewed for credentials; rotate any real secrets and never copy them into this plan.
+
+These are source-level observations, not runtime-confirmed exploit results. Validate with tests in a controlled environment.
+
+## 7. Waterfall Sign-Off Checklist
+
+| Gate | Approver(s) | Evidence required | Status |
+|---|---|---|---|
+| Current baseline protected | Business owner + technical lead | Commit/tag, backup and restore evidence | Pending |
+| Odoo discovery complete | Odoo implementer + technical lead | Version/modules/security/API discovery report | Pending |
+| Requirements and mapping approved | Business owner + operations + technical lead | Signed SRS, data dictionary, mapping and role matrix | Pending |
+| Odoo design approved | Odoo implementer + technical lead | Model/API design and tests | Pending |
+| API and frontend integration accepted | QA + business representative | Integration and regression results | Pending |
+| Trial migration accepted | Business owner + technical lead | Reconciliation report and exception sign-off | Pending |
+| UAT and production readiness accepted | Business owner + QA + technical lead | UAT, security, backup/restore, rollback evidence | Pending |
+| Cutover authorized | Business owner + technical lead | Final go/no-go record | Pending |
+| Legacy decommission approved | Business owner + technical lead | Rollback window closed, backup retained, migration reconciled | Pending |
+
+## 8. Decisions Still Open
+
+The key dairy business rules are now documented in the SRS/SDD. The remaining open items are implementation choices and formal release approvals:
+
+1. Odoo version, hosting model, installed modules and required custom addons/controllers.
+2. Exact Odoo endpoint contracts, supported session/token design and role/access implementation.
+3. Routing provider for shortest-driving-route optimization, plus WhatsApp/SMS providers, credentials and delivery/failure behavior.
+4. Customer grocery app payment/OTP/serviceability providers and final distribution/hosting model.
+5. Historic migration mappings and whether each legacy back-office dataset remains relevant for Odoo; production/shifts, customer requirements, routes and deliveries must be reconciled.
+6. Data retention period for the one-time legacy export/archive, trial migration tolerances and cutover/rollback window.
+7. Final Odoo UAT/security sign-offs.
+
+**Business rules already confirmed:** the dairy app's limited scope; GPS-required registration; owner-only regular quantity changes; date-specific pauses/extra milk; automatic route optimization; exact target loading; returned-milk entry/route auto-close; offline retry and 30-minute designated-admin alerts; reconciliation; reasoned corrections/audit; role permissions; Excel exports; and the specified WhatsApp/SMS events.
+
+**Waterfall rule:** Do not start production migration until mapping, test cases, acceptance criteria and rollback are approved. A successful import alone is not proof that the system is ready.
+
+## 9. Business Rules Baseline Note
+
+The confirmed workflow baseline is maintained in `01_Heera_Organics_Requirements.md` section 6.13 and `02_Heera_Organics_System_Design.md` sections 9.6, 11.3 and 13.4–13.5. This migration plan aligns implementation and testing with that baseline. No source code, production service or live database was changed by this document update.

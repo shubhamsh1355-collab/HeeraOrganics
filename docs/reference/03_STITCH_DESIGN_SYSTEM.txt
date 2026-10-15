@@ -1,0 +1,283 @@
+---
+name: Heera Organics
+colors:
+  surface: '#fff8f1'
+  surface-dim: '#e1d9cd'
+  surface-bright: '#fff8f1'
+  surface-container-lowest: '#ffffff'
+  surface-container-low: '#fbf3e7'
+  surface-container: '#f5ede1'
+  surface-container-high: '#efe7db'
+  surface-container-highest: '#e9e1d6'
+  on-surface: '#1e1b14'
+  on-surface-variant: '#414943'
+  inverse-surface: '#343028'
+  inverse-on-surface: '#f8f0e4'
+  outline: '#717972'
+  outline-variant: '#c1c8c1'
+  surface-tint: '#3e674f'
+  primary: '#093521'
+  on-primary: '#ffffff'
+  primary-container: '#234c36'
+  on-primary-container: '#8fbc9f'
+  inverse-primary: '#a4d1b4'
+  secondary: '#685f30'
+  on-secondary: '#ffffff'
+  secondary-container: '#ede0a5'
+  on-secondary-container: '#6c6333'
+  tertiary: '#1d3400'
+  on-tertiary: '#ffffff'
+  tertiary-container: '#324b13'
+  on-tertiary-container: '#9cbb76'
+  error: '#ba1a1a'
+  on-error: '#ffffff'
+  error-container: '#ffdad6'
+  on-error-container: '#93000a'
+  primary-fixed: '#bfedcf'
+  primary-fixed-dim: '#a4d1b4'
+  on-primary-fixed: '#002111'
+  on-primary-fixed-variant: '#264f38'
+  secondary-fixed: '#f0e3a8'
+  secondary-fixed-dim: '#d3c78e'
+  on-secondary-fixed: '#211c00'
+  on-secondary-fixed-variant: '#4f471a'
+  tertiary-fixed: '#cdeda3'
+  tertiary-fixed-dim: '#b1d18a'
+  on-tertiary-fixed: '#102000'
+  on-tertiary-fixed-variant: '#354e16'
+  background: '#fff8f1'
+  on-background: '#1e1b14'
+  surface-variant: '#e9e1d6'
+  soft-green: '#DBF5D1'
+  deep-text: '#243126'
+  muted-text: '#706F63'
+  white-surface: '#FFFFFF'
+  border-subtle: '#E5DDCF'
+  error-alert: '#B42318'
+typography:
+  display-hero:
+    fontFamily: Literata
+    fontSize: 2.5rem
+    fontWeight: '700'
+    lineHeight: 3rem
+  display-hero-mobile:
+    fontFamily: Literata
+    fontSize: 1.875rem
+    fontWeight: '700'
+    lineHeight: 2.25rem
+  headline-lg:
+    fontFamily: Literata
+    fontSize: 2rem
+    fontWeight: '700'
+    lineHeight: 2.5rem
+  headline-lg-mobile:
+    fontFamily: Literata
+    fontSize: 1.5rem
+    fontWeight: '600'
+    lineHeight: 2rem
+  headline-md:
+    fontFamily: Literata
+    fontSize: 1.25rem
+    fontWeight: '600'
+    lineHeight: 1.75rem
+  headline-sm:
+    fontFamily: Literata
+    fontSize: 1.125rem
+    fontWeight: '600'
+    lineHeight: 1.5rem
+  title-card:
+    fontFamily: Literata
+    fontSize: 1rem
+    fontWeight: '600'
+    lineHeight: 1.375rem
+  body-lg:
+    fontFamily: Source Serif 4
+    fontSize: 1.125rem
+    fontWeight: '400'
+    lineHeight: 1.75rem
+  body-md:
+    fontFamily: Source Serif 4
+    fontSize: 0.9375rem
+    fontWeight: '400'
+    lineHeight: 1.5rem
+  body-sm:
+    fontFamily: Source Serif 4
+    fontSize: 0.8125rem
+    fontWeight: '400'
+    lineHeight: 1.25rem
+  label-lg:
+    fontFamily: Source Serif 4
+    fontSize: 0.875rem
+    fontWeight: '600'
+    lineHeight: 1.25rem
+  label-md:
+    fontFamily: Source Serif 4
+    fontSize: 0.75rem
+    fontWeight: '600'
+    lineHeight: 1rem
+  label-sm:
+    fontFamily: Source Serif 4
+    fontSize: 0.6875rem
+    fontWeight: '600'
+    lineHeight: 0.875rem
+rounded:
+  sm: 0.25rem
+  DEFAULT: 0.5rem
+  md: 0.75rem
+  lg: 1rem
+  xl: 1.5rem
+  full: 9999px
+spacing:
+  gutter: 1rem
+  gutter-desktop: 1.5rem
+  margin: 1rem
+  margin-tablet: 1.5rem
+  margin-desktop: 2.5rem
+  space-xs: 0.25rem
+  space-sm: 0.5rem
+  space-md: 0.75rem
+  space-lg: 1rem
+  space-xl: 1.5rem
+  space-xxl: 2rem
+---
+
+## Brand & Style
+
+### Brand Personality & Core Philosophy
+The design system embodies an honest, earth-rooted, and caring aesthetic tailored for modern quick-commerce grocery delivery. The emotional target is domestic warmth, uncompromised freshness, and rural transparency translated into high-efficiency mobile utility. The interface rejects synthetic hyper-bright delivery app visual noise in favor of an artisanal, farm-to-table editorial language.
+
+### Visual Style Direction: Editorial Tactile & Warm Naturalism
+This system couples tactile agricultural warmth with structured, rapid-commerce clarity:
+- **Serif Editorial Anchors**: High-character serif headlines grounded by legible, traditional body serif typography cultivate literary trust, reminiscent of heirloom seed packets and heritage estate pantries.
+- **Surface-Driven Warmth**: A generous cream canvas replaces clinical stark white, punctuated by crisp white product containers and pastoral leafy accents.
+- **Restrained Materiality**: Natural tactile structure supported by delicate vegetable-tanned borderlines, avoiding heavy synthetic skeuomorphism, noisy neo-brutalism, or glassy blurs.
+
+## Colors
+
+### Hierarchy & Chromatic Roles
+- **Primary (`#234C36` - Forest Green)**: The anchor of clarity and intent. Reserved for primary conversion triggers (CTAs, stepper increments), active bottom tab navigation states, critical headers, and high-priority icon markers.
+- **Secondary (`#EEE1A6` - Harvest Yellow)**: The seasonal and promotional accent. Applied to badge containers, organic certification stamps, celebratory promotion cards, and harvest banners.
+- **Tertiary (`#D9FAAF` - Lime Green)**: Interactive spark. Used strictly in sparing micro-doses—selected pill chips, interactive flash deals, and novelty tags.
+- **Neutral Canvas (`#FAF2E6` - Cream)**: The warm backdrop for all application views, conveying natural parchment, unbleached grain, and daylight tranquility.
+
+### Contextual Color Roles
+- **`soft-green` (`#DBF5D1`)**: Used for background tiers of benefit summaries, reassurance banners, and highlighted comparison columns.
+- **`deep-text` (`#243126`)**: The single primary reading color for maximum contrast and readability against cream and white surfaces without the starkness of pure black.
+- **`muted-text` (`#706F63`)**: Applied to secondary metadata, weights, pack sizes, and timestamp captions.
+- **`white-surface` (`#FFFFFF`)**: Strictly designated for product cards, bottom sheets, form inputs, and checkout surfaces.
+- **`border-subtle` (`#E5DDCF`)**: Hairline delineation across cards, tables, search containers, and dividers.
+- **`error-alert` (`#B42318`)**: Critical inventory warnings, out-of-stock badges, form errors, and checkout failure toasts.
+
+## Typography
+
+### Structural Decisions
+- **Display & Headlines (`Literata`)**: Conveys physical craft and botanical authenticity. Used for banner slogans, category banners, product names on detail views, and high-impact headlines.
+- **Editorial Body & Labels (`Source Serif 4`)**: Selected for high-density rendering on retina displays, preserving readability in tabular product specs, ingredient breakdowns, delivery instructions, and micro-labels.
+- **Numeric Figures & Prices**: Render tabular figures in `Source Serif 4` at weight 600 or 700 to ensure clear vertical alignment in receipt summaries and checkout calculations.
+- **Case Formatting**: Never use all-caps for body copy or card titles. Sentence case maintains an honest, conversational, and welcoming tone.
+
+## Layout & Spacing
+
+### Layout Architecture
+- **Mobile First Framework (360px – 480px)**: 
+  - Standard edge canvas margin is `1rem` (16px).
+  - Main product grid: 2 columns with `0.75rem` (12px) horizontal and vertical gaps.
+  - Horizontal carousel rows display a `16px` right-edge peek on subsequent cards to signal swipeability.
+  - Value propositions: 2×2 grid layout with `0.5rem` internal item spacing.
+  - Bottom navigation fixed at viewport base with 64px structural height + safe-area insets.
+- **Tablet (481px – 1024px)**:
+  - Margins expand to `1.5rem` (24px).
+  - Product grids scale dynamically to 3 or 4 columns.
+  - Value proposition blocks shift into a single 4-card horizontal banner row.
+  - Modals convert to docked side drawers or centered floating dialogs.
+- **Desktop (1025px+)**:
+  - Max canvas container constrained to `1200px` centered.
+  - Standard 12-column layout with `1.5rem` gutters.
+  - PDP (Product Detail Page) employs a dedicated 2-column layout: Sticky product media presentation (7 columns) and purchasing meta-flow (5 columns).
+  - Bottom bar collapses in favor of a fixed utility header.
+
+## Elevation & Depth
+
+### Surface Tiers & Flat Depth Philosophy
+The design avoids deep drop shadows, heavy glassmorphism, or synthetic blurs. Depth is communicated strictly via tonal surface layering and low-contrast borders:
+
+1. **Base Layer (`#FAF2E6` - Cream)**: The canvas upon which the entire interface rests.
+2. **Container Tier (`#FFFFFF` - White Surface)**: Clean cards, search modules, and inputs sit on the cream canvas with an explicit 1px outline of `#E5DDCF`.
+3. **Accent Highlight Layer (`#DBF5D1` & `#EEE1A6`)**: Inset containers for key product traits, certifications, and delivery alerts sit inside white cards or directly on cream.
+4. **Interactive Hover Elevation (Desktop Only)**: A delicate, warm ambient shadow:
+   - `box-shadow: 0 4px 12px rgba(36, 49, 38, 0.06);` with a border color transition to `#234C36`.
+5. **Overlay Tier (Bottom Sheets, Menus)**:
+   - Backdrop scrim: `rgba(36, 49, 38, 0.4)` (deep forest charcoal tint).
+   - Elevated sheet surface: Solid `#FFFFFF` anchored with top borders rounded at `1rem`. No background blur is applied.
+
+## Shapes
+
+### Geometry & Radius Rules
+- **Base Components (Rounded Level 2 - `0.5rem` / `8px` to `1rem` / `16px`)**:
+  - Product Cards & Value Prop Cards: `1rem` (16px).
+  - Form Fields, Search Bars, Quantity Steppers: `0.75rem` (12px).
+  - Dialogs & Bottom Sheet Tops: `1rem` (16px).
+- **Pill Shape (`9999px`)**:
+  - Filter chips, dietary requirement badges (e.g., "100% Organic", "Cold Pressed"), cart count badges, and sub-category quick navigation pills.
+- **Borders & Dividers**:
+  - Consistent hairline width: `1px solid #E5DDCF`.
+  - Nested media: Produce photos within product cards share a top border radius of `0.75rem` (12px), aligning cleanly within the parent card container.
+
+## Components
+
+### Buttons
+- **Primary Action (CTA)**:
+  - Background: `#234C36` (Forest Green), Text: `#FFFFFF`, Radius: `0.75rem` (12px).
+  - Padding: `0.75rem 1.5rem`, Font: `label-lg`.
+  - Active/Pressed: Darkens by 10% brightness. Focus ring: `2px solid #234C36` with 2px offset.
+- **Secondary Action**:
+  - Background: `#FAF2E6`, Border: `1px solid #234C36`, Text: `#234C36`, Radius: `0.75rem` (12px).
+- **Tertiary / Ghost Button**:
+  - Transparent background, Text: `#234C36`, subtle underline on hover.
+
+### Product Cards
+- Surface: `#FFFFFF` with `1px solid #E5DDCF` border, Radius: `1rem`.
+- Media Aspect Ratio: `1:1` square, set against soft natural daylight backgrounds with zero clipping.
+- Content Stack:
+  - Sub-label: `#706F63` (`label-md`) indicating weight/pack size (e.g., `500 g`, `1 bunch`).
+  - Title: `#243126` (`title-card`).
+  - Price: Tabular figures in `#234C36` (`headline-sm`).
+  - Action: Bottom right "+" or quantity stepper embedded inside the card boundary.
+
+### Chips & Badges
+- **Tag / Category Chip (Unselected)**:
+  - Background: `#FFFFFF`, Border: `1px solid #E5DDCF`, Text: `#706F63`, Radius: `9999px` (Pill).
+- **Tag / Category Chip (Selected)**:
+  - Background: `#DBF5D1`, Border: `1px solid #234C36`, Text: `#234C36`, Radius: `9999px` (Pill).
+- **Promotional Badge**:
+  - Background: `#EEE1A6`, Text: `#243126`, Radius: `9999px`.
+- **Accent Micro-Badge**:
+  - Background: `#D9FAAF`, Text: `#234C36`, Radius: `9999px`.
+
+### Quantity Stepper
+- Compact inline component: 32px height.
+- Background: `#FAF2E6`, Border: `1px solid #E5DDCF`, Radius: `0.5rem`.
+- Decrement/Increment triggers: `#234C36` with a central numeric counter rendered in `label-lg`.
+
+### Form Fields & Inputs
+- Background: `#FFFFFF`, Border: `1px solid #E5DDCF`, Radius: `0.75rem`, Text: `#243126`.
+- Placeholder text: `#706F63`.
+- Active Focus State: Border switches directly to `1.5px solid #234C36`.
+- Error State: Border switches to `1.5px solid #B42318` accompanied by helper text in `label-sm`.
+
+### Checkboxes & Radios
+- Size: 20px × 20px.
+- Unchecked: Border `1.5px solid #E5DDCF`, background `#FFFFFF`.
+- Checked: Border `1.5px solid #234C36`, background `#234C36`, check mark icon `#FFFFFF`.
+- Radio retains concentric circle geometry; checkbox retains soft `4px` radius.
+
+### Mobile Bottom Navigation Bar
+- Fixed base position with background `#FFFFFF` and top hairline border `1px solid #E5DDCF`.
+- Height: 64px + safe area padding.
+- Unselected tab icon & label: `#706F63`.
+- Active tab icon & label: `#234C36` with a micro underline indicator dot (`#234C36`).
+- Icons: Crisp 1.5px outline style across Home, Categories, Search, Orders, and Profile.
+
+### Sticky Purchase Drawer / Checkout Bar
+- Background: `#FFFFFF`, Border-top: `1px solid #E5DDCF`.
+- Split distribution: Left side contains total checkout sum and delivery ETA; right side houses the primary conversion CTA button.
